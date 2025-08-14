@@ -1855,18 +1855,18 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       }
     }
 
-    // تهيئة نظام التحليلات
-    const analytics = new VotingAnalytics();
-
-    // تحديث الوظائف لتسجيل الأحداث
-    const originalStartVotingSetup = startVotingSetup;
-    startVotingSetup = function() {
-      analytics.logEvent('voting_setup_started', { 
-        class: currentClass, 
-        mode: document.getElementById("voteMode").value 
-      });
-      return originalStartVotingSetup.apply(this, arguments);
-    };
+  // تهيئة نظام التحليلات
+  const analytics = new VotingAnalytics();
+    
+// تحديث الوظائف لتسجيل الأحداث بعد تعريف الدالة الأصلية
+const originalStartVotingSetup = startVotingSetup;
+startVotingSetup = function() {
+  analytics.logEvent('voting_setup_started', { 
+    class: currentClass, 
+    mode: document.getElementById("voteMode").value 
+  });
+  return originalStartVotingSetup.apply(this, arguments);
+};
 
     // إضافة مؤقت للنشاط
     let activityTimer = {
