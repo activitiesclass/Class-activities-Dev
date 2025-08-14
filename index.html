@@ -1,6 +1,11 @@
-// زر الإعدادات يعمل بنفس منطق الصفحة 2.html
-document.getElementById('settingsBtn').addEventListener('click', function() {
-  showSettingsModal();
+
+window.addEventListener('DOMContentLoaded', function() {
+  var settingsBtn = document.getElementById('settingsBtn');
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', function() {
+      showSettingsModal();
+    });
+  }
 });
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
