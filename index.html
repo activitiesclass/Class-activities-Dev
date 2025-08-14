@@ -1,12 +1,4 @@
 
-window.addEventListener('DOMContentLoaded', function() {
-  var settingsBtn = document.getElementById('settingsBtn');
-  if (settingsBtn) {
-    settingsBtn.addEventListener('click', function() {
-      showSettingsModal();
-    });
-  }
-});
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -3031,5 +3023,15 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     });
   </script>
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  var settingsBtn = document.getElementById('settingsBtn');
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', function() {
+      showSettingsModal();
+    });
+  }
+});
+</script>
 </body>
 </html>
