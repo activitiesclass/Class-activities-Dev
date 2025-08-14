@@ -2771,15 +2771,19 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       voterCard.style.opacity = '0';
       voterCard.style.transform = 'translateX(-100%)';
       setTimeout(() => {
+        // إزالة البطاقة من DOM بشكل قاطع
         if (voterCard.parentNode) {
           voterCard.parentNode.removeChild(voterCard);
         } else {
-          console.warn(`تنبيه: بطاقة المصوت ${voterName} لم تُحذف بعد التصويت!`);
+          // محاولة إزالة البطاقة بالقوة إذا بقيت لأي سبب
+          const allCards = document.querySelectorAll('.voter-card');
+          allCards.forEach(card => {
+            const name = card.querySelector('.voter-name')?.textContent?.trim();
+            if (name === voterName) {
+              card.remove();
+            }
+          });
         }
-  // فحص برمجي: عرض قائمة المصوتين وقائمة البطاقات الظاهرة
-  const visibleCards = Array.from(document.querySelectorAll('.voter-card')).map(card => card.querySelector('.voter-name')?.textContent?.trim() || 'بدون اسم');
-  console.log('🟢 المصوتون (voted):', Array.from(voted));
-  console.log('🟡 البطاقات الظاهرة بعد التصويت:', visibleCards);
       }, 500);
 
       voted.add(voterName);
