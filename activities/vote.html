@@ -2828,9 +2828,11 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
     // تحديث حالة التصويت
     function updateVotingStatus() {
       const statusElement = document.getElementById('votingStatus');
-      const remaining = voterList.length - voted.size;
-      const percentage = Math.round((voted.size / voterList.length) * 100);
-      
+      // حساب عدد طلاب الصف عدا المرشحين
+      const totalVoters = studentData[currentClass]?.length ? studentData[currentClass].length - candidateList.length : voterList.length;
+      const remaining = totalVoters - voted.size;
+      const percentage = totalVoters > 0 ? Math.round((voted.size / totalVoters) * 100) : 0;
+
       if (remaining > 0) {
         statusElement.className = 'voting-status active';
         visualEffects.typewriterEffect(statusElement.querySelector('p'), 
