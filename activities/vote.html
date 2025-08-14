@@ -1857,16 +1857,15 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
 
   // تهيئة نظام التحليلات
   const analytics = new VotingAnalytics();
-    
-// تحديث الوظائف لتسجيل الأحداث بعد تعريف الدالة الأصلية
-const originalStartVotingSetup = startVotingSetup;
-startVotingSetup = function() {
-  analytics.logEvent('voting_setup_started', { 
-    class: currentClass, 
-    mode: document.getElementById("voteMode").value 
-  });
-  return originalStartVotingSetup.apply(this, arguments);
-};
+  // تحديث الوظائف لتسجيل الأحداث بعد تعريف الدالة الأصلية
+  const originalStartVotingSetup = startVotingSetup;
+  startVotingSetup = function() {
+    analytics.logEvent('voting_setup_started', { 
+      class: currentClass, 
+      mode: document.getElementById("voteMode").value 
+    });
+    return originalStartVotingSetup.apply(this, arguments);
+  };
 
 // إضافة مؤقت للنشاط
     let activityTimer = {
@@ -2886,12 +2885,12 @@ startVotingSetup = function() {
           labels: labels.map(name => winners.includes(name) ? `👑 ${name}` : name),
           datasets: [{
             label: 'عدد الأصوات',
-            data,
+            data: data,
             backgroundColor: colors,
-            borderColor: colors.map(color => color.replace('0.8)', '1)')),
+            borderColor: colors.map(color => typeof color === 'string' ? color : '#333'),
             borderWidth: 3,
             borderRadius: 8,
-            borderSkipped: false,
+            borderSkipped: false
           }]
         },
         options: {
@@ -2902,16 +2901,16 @@ startVotingSetup = function() {
             easing: 'easeOutBounce'
           },
           plugins: {
-            legend: { 
-              display: false 
+            legend: {
+              display: false
             },
             tooltip: {
               callbacks: {
-                title: (context) => {
+                title: function(context) {
                   const name = context[0].label.replace('👑 ', '');
                   return winners.includes(name) ? `🏆 ${name} (الفائز)` : name;
                 },
-                label: (context) => {
+                label: function(context) {
                   const votes = context.raw;
                   const percentage = ((votes / data.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
                   return `${votes} ${votes === 1 ? 'صوت' : 'أصوات'} (${percentage}%)`;
@@ -2954,7 +2953,9 @@ startVotingSetup = function() {
               }
             }
           }
-        });
+        }
+      });
+// ...existing code...
       // إنشاء جدول النتائج التفصيلي
       createDetailedResultsTable(labels, data, winners, maxVotes);
       
