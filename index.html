@@ -2192,7 +2192,6 @@
     function showSettingsModal() {
       hideModal(); // إغلاق نافذة المصمم إذا كانت مفتوحة
       if (!isLoggedIn) {
-       
         showLoginModal();
         return;
       }
@@ -2200,9 +2199,10 @@
       elements.settingsModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       console.log('⚙️ تم فتح نافذة الإعدادات');
-      
-      // بدء فحص الملفات
-      checkSystemFiles();
+      // بدء فحص الملفات عند فتح نافذة الإعدادات
+      if (typeof checkSystemFiles === 'function') {
+        checkSystemFiles();
+      }
     }
 
     function hideSettingsModal() {
