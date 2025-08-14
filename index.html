@@ -2350,12 +2350,8 @@
           isLoggedIn = true;
           loginAttempts = 0;
           showLoginMessage(result.message, 'success');
-          // لا تغلق النافذة تلقائياً، فقط أظهر نافذة الإعدادات
+          // لا تغلق النافذة تلقائياً، فقط أظهر نافذة الإعدادات (تشغّل الفحص تلقائياً)
           showSettingsModal();
-          // تشغيل فحص الملفات تلقائياً بعد الدخول
-          if (typeof checkSystemFiles === 'function') {
-            checkSystemFiles();
-          }
           console.log('✅ تم تسجيل الدخول بنجاح:', currentUser.fullName);
         } else {
           loginAttempts++;
