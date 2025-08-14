@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="theme-color" content="#00796B"/>
-  <meta name="description" content="برنامج الأنشطة الصفية التفاعلي"/>
+  <meta name="description" content="برنامج الأنشطة الصفية التفاعلي - مدرسة أبو القاسم الزهراوي"/>
   <meta name="keywords" content="تعليم, أنشطة, تفاعلي, مدرسة, عُمان"/>
-  <meta name="author" content=""/>
+  <meta name="author" content="الأستاذ أحمد بن عبدالله الضامري"/>
 
-  <title>برنامج الأنشطة الصفية</title>
+  <title>برنامج الأنشطة الصفية - مدرسة أبو القاسم الزهراوي</title>
 
   <!-- الخطوط والأيقونات -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
@@ -1774,7 +1773,7 @@
   </div>
 
   <!-- زر المصمم -->
-  <button class="designer-btn" id="openDesigner" title="معلومات عن البرنامج" aria-label="معلومات عن البرنامج">
+  <button class="designer-btn" id="openDesigner" title="معلومات المصمم" aria-label="معلومات المصمم">
     👨‍💻
   </button>
 
@@ -1872,17 +1871,17 @@
   <!-- نافذة المصمم المحسنة -->
   <div id="designerModal" class="modal" role="dialog" aria-labelledby="designerTitle" aria-hidden="true">
     <div class="modal-content">
-  <h3 id="designerTitle">👨‍💻 معلومات عن البرنامج</h3>
+      <h3 id="designerTitle">👨‍💻 مصمم البرنامج</h3>
       <div class="designer-info">
-        <div class="designer-info">
-          <div class="designer-name">منصة تعليمية تفاعلية متكاملة</div>
-          <div class="designer-email"></div>
+        <div class="designer-name">الأستاذ أحمد بن عبدالله الضامري</div>
+        <div class="designer-email">
+          <a href="mailto:Ahm7d@moe.om" aria-label="إرسال بريد إلكتروني للمصمم">
+            📧 Ahm7d@moe.om
+          </a>
         </div>
-        <div class="designer-description" style="margin: var(--spacing-md) 0; color: var(--text-secondary);">
-          منصة تعليمية تفاعلية متكاملة، مصممة لتعزيز التفاعل والمشاركة بين الطلاب والمعلمين داخل الصف، من خلال مجموعة متنوعة من الألعاب والأنشطة التعليمية الحديثة.<br><br>
-          <a href="about.html" target="_blank" style="color: var(--primary); text-decoration: underline;">لمزيد من المعلومات</a>
-        </div>
-        
+      </div>
+      <p style="color: var(--text-secondary); margin: var(--spacing-md) 0;">
+        مطور متخصص في التقنيات التعليمية والحلول التفاعلية
       </p>
       <button class="close-button" id="closeDesigner" aria-label="إغلاق النافذة">
         إغلاق
@@ -2175,35 +2174,34 @@
 
     // إدارة النافذة المنبثقة
     function showModal() {
-      hideSettingsModal(); // إغلاق نافذة الإعدادات إذا كانت مفتوحة
       elements.designerModal.style.display = 'block';
       elements.designerModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      console.log('📧 تم فتح نافذة معلومات عن البرنامج');
+      console.log('📧 تم فتح نافذة معلومات المصمم');
     }
 
     function hideModal() {
       elements.designerModal.style.display = 'none';
       elements.designerModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-  console.log('❌ تم إغلاق نافذة معلومات عن البرنامج');
+      console.log('❌ تم إغلاق نافذة معلومات المصمم');
     }
 
     // إدارة نافذة الإعدادات
     function showSettingsModal() {
-      hideModal(); // إغلاق نافذة المصمم إذا كانت مفتوحة
+      // التحقق من تسجيل الدخول أولاً
       if (!isLoggedIn) {
         showLoginModal();
         return;
       }
+      
       elements.settingsModal.style.display = 'block';
       elements.settingsModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       console.log('⚙️ تم فتح نافذة الإعدادات');
-      // بدء فحص الملفات عند فتح نافذة الإعدادات
-      if (typeof checkSystemFiles === 'function') {
-        checkSystemFiles();
-      }
+      
+      // بدء فحص الملفات
+      checkSystemFiles();
     }
 
     function hideSettingsModal() {
@@ -2349,10 +2347,16 @@
           currentUser = result.user;
           isLoggedIn = true;
           loginAttempts = 0;
+          
           showLoginMessage(result.message, 'success');
-          // لا تغلق النافذة تلقائياً، فقط أظهر نافذة الإعدادات (تشغّل الفحص تلقائياً)
-          showSettingsModal();
+          
+          setTimeout(() => {
+            hideLoginModal();
+            showSettingsModal();
+          }, 1500);
+          
           console.log('✅ تم تسجيل الدخول بنجاح:', currentUser.fullName);
+          
         } else {
           loginAttempts++;
           showLoginMessage(result.message);
@@ -3021,15 +3025,5 @@
       }
     });
   </script>
-<script>
-window.addEventListener('DOMContentLoaded', function() {
-  var settingsBtn = document.getElementById('settingsBtn');
-  if (settingsBtn) {
-    settingsBtn.addEventListener('click', function() {
-      showSettingsModal();
-    });
-  }
-});
-</script>
 </body>
 </html>
