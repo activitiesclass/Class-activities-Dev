@@ -2703,7 +2703,9 @@ startVotingSetup = function() {
       const select = card.querySelector('.vote-select');
       
       select.onchange = (e) => {
-        handleVote(voterName, e.target.value, card);
+  // ضمان تمرير البطاقة الصحيحة دائماً
+  const voterCard = e.target.closest('.voter-card') || card;
+  handleVote(voterName, e.target.value, voterCard);
       };
 
       select.onfocus = () => {
