@@ -2350,10 +2350,8 @@
           isLoggedIn = true;
           loginAttempts = 0;
           showLoginMessage(result.message, 'success');
-          setTimeout(() => {
-            hideLoginModal();
-            showSettingsModal();
-          }, 1200);
+          // لا تغلق النافذة تلقائياً، فقط أظهر نافذة الإعدادات
+          showSettingsModal();
           console.log('✅ تم تسجيل الدخول بنجاح:', currentUser.fullName);
         } else {
           loginAttempts++;
