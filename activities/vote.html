@@ -2777,6 +2777,10 @@ startVotingSetup = function() {
         } else {
           console.warn(`تنبيه: بطاقة المصوت ${voterName} لم تُحذف بعد التصويت!`);
         }
+  // فحص برمجي: عرض قائمة المصوتين وقائمة البطاقات الظاهرة
+  const visibleCards = Array.from(document.querySelectorAll('.voter-card')).map(card => card.querySelector('.voter-name')?.textContent?.trim() || 'بدون اسم');
+  console.log('🟢 المصوتون (voted):', Array.from(voted));
+  console.log('🟡 البطاقات الظاهرة بعد التصويت:', visibleCards);
       }, 500);
 
       voted.add(voterName);
