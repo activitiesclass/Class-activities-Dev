@@ -2772,6 +2772,8 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       setTimeout(() => {
         if (voterCard.parentNode) {
           voterCard.parentNode.removeChild(voterCard);
+        } else {
+          console.warn(`تنبيه: بطاقة المصوت ${voterName} لم تُحذف بعد التصويت!`);
         }
       }, 500);
 
