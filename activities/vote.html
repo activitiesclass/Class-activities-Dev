@@ -2947,7 +2947,45 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
               }
             }
           }
+        }
+      });
+
+      // تأثيرات بصرية للنتائج
+      setTimeout(() => {
+        // الاحتفال بالفائز
+        if (winners.length === 1) {
+          notifications.show(`🎉 الفائز: ${winners[0]} بـ ${maxVotes} ${maxVotes === 1 ? 'صوت' : 'أصوات'}!`, 'success', 8000);
+        } else {
+          notifications.show(`🎉 تعادل بين: ${winners.join(', ')} بـ ${maxVotes} ${maxVotes === 1 ? 'صوت' : 'أصوات'}!`, 'success', 8000);
+        }
+
+        // تأثيرات الاحتفال
+        visualEffects.confettiBlast({
+          particleCount: 300,
+          spread: 180,
+          origin: { y: 0.4 }
         });
+
+        // أصوات الاحتفال
+        smartAudio.playSequence([
+          'kingdom-sounds/battle-victory.mp3',
+          'clap.mp3'
+        ], 1000);
+
+        // تأثيرات إضافية كل 3 ثوان
+        const celebrationInterval = setInterval(() => {
+          visualEffects.confettiBlast({
+            particleCount: 100,
+            spread: 90,
+            origin: { x: Math.random(), y: 0.7 }
+          });
+        }, 3000);
+
+        // إيقاف التأثيرات بعد 15 ثانية
+        setTimeout(() => {
+          clearInterval(celebrationInterval);
+        }, 15000);
+
       }, 2500);
 
       // إنشاء جدول النتائج التفصيلي
@@ -3268,16 +3306,6 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       }
     }
 
-    // دالة التحقق من تصويت الجميع
-    function checkAllVoted() {
-      if (voted.size < voterList.length) {
-        const remaining = voterList.length - voted.size;
-        notifications.show(`⚠️ يجب أن يصوّت جميع الطلاب! المتبقي: ${remaining} مصوت`, 'warning', 4000);
-        return false;
-      }
-      return true;
-    }
-
     // تهيئة النشاط المحسن عند تحميل الصفحة
     window.onload = function() {
       // تهيئة الأنظمة
@@ -3310,11 +3338,7 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       
       // ربط الأحداث المحسنة
       document.getElementById('startNominateBtn').onclick = startVotingSetup;
-      document.getElementById('showResultsBtn').onclick = function() {
-        if (checkAllVoted()) {
-          completeVoting();
-        }
-      };
+      document.getElementById('showResultsBtn').onclick = showEnhancedResults;
       
       // تحديث حالة الأزرار عند التغيير
       document.getElementById("classSelect").onchange = updateButtonStates;
@@ -3410,6 +3434,7 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
         }
       });
     }
+  </script>
   </script>
   
   <!-- Responsive Helper Script -->
