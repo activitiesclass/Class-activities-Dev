@@ -1807,34 +1807,63 @@
       <div class="login-form">
         <div class="login-header">
           <div class="login-icon">🔐</div>
-        <div class="login-modal-modern">
-          <button class="close-button-modern" id="closeLogin" aria-label="إغلاق النافذة">&times;</button>
-          <div class="login-icon"><span style="font-size:3rem;color:#4285f4;">🔒</span></div>
-          <h3 class="login-title-modern" id="loginTitle">تسجيل دخول مدير النظام</h3>
-          <p class="login-subtitle-modern">يرجى إدخال بيانات الدخول للوصول إلى إعدادات النظام</p>
-          <div id="loginMessages"></div>
-          <form id="loginForm">
-            <div class="form-group-modern">
-              <label for="username" class="form-label-modern">اسم المستخدم</label>
-              <input type="text" id="username" name="username" class="form-input-modern" placeholder="أدخل اسم المستخدم" required autocomplete="username" maxlength="50" />
-            </div>
-            <div class="form-group-modern">
-              <label for="password" class="form-label-modern">كلمة المرور</label>
-              <div class="password-toggle-modern">
-                <input type="password" id="password" name="password" class="form-input-modern" placeholder="أدخل كلمة المرور" required autocomplete="current-password" maxlength="100" />
-                <button type="button" class="password-toggle-btn-modern" id="togglePassword" aria-label="إظهار/إخفاء كلمة المرور">👁️</button>
-              </div>
-            </div>
-            <div class="login-actions-modern">
-              <button type="submit" class="login-btn-modern" id="loginSubmit">
-                <span id="loginBtnText">تسجيل الدخول</span>
-                <div id="loginSpinner" class="loading-spinner-modern" style="display: none;"></div>
-              </button>
-              <button type="button" class="contact-admin-btn-modern" id="contactAdmin">📧 لا يمكنني الدخول - تواصل مع المصمم</button>
-            </div>
-            <div class="login-attempts-modern" id="loginAttempts"></div>
-          </form>
+          <h3 class="login-title heading-responsive" id="loginTitle">تسجيل دخول مدير النظام</h3>
+          <p class="login-subtitle text-responsive">يرجى إدخال بيانات الدخول للوصول إلى إعدادات النظام</p>
         </div>
+
+        <div id="loginMessages"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username" class="form-label">اسم المستخدم</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-input"
+              placeholder="أدخل اسم المستخدم"
+              required
+              autocomplete="username"
+              maxlength="50"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">كلمة المرور</label>
+            <div class="password-toggle">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-input"
+                placeholder="أدخل كلمة المرور"
+                required
+                autocomplete="current-password"
+                maxlength="100"
+              />
+              <button type="button" class="password-toggle-btn btn-responsive" id="togglePassword" aria-label="إظهار/إخفاء كلمة المرور">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="login-actions stack-mobile">
+            <button type="submit" class="login-btn btn-responsive" id="loginSubmit">
+              <span id="loginBtnText">تسجيل الدخول</span>
+              <div id="loginSpinner" class="loading-spinner" style="display: none;"></div>
+            </button>
+            
+            <button type="button" class="contact-admin-btn btn-responsive" id="contactAdmin">
+              📧 لا يمكنني الدخول - تواصل مع المصمم
+            </button>
+          </div>
+
+          <div class="login-attempts" id="loginAttempts"></div>
+        </form>
+
+        <button class="close-button" id="closeLogin" style="margin-top: var(--spacing-md);">
+          إلغاء
+        </button>
       </div>
     </div>
   </div>
