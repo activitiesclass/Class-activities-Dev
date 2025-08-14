@@ -3313,11 +3313,11 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
           return;
         }
         
-        candidateList = [...selectedManual];
-        voterList = studentData[currentClass].filter(n => !candidateList.includes(n));
-        renderVotingUI();
-        smartAudio.play('kingdom-sounds/crystal-ping.mp3');
-        notifications.show(`تم تأكيد ${candidateList.length} مرشح وبدء التصويت! 🚀`, 'success');
+  candidateList = [...selectedManual];
+  voterList = studentData[currentClass].filter(n => !candidateList.includes(n));
+  renderVotingUI();
+  smartAudio.play('kingdom-sounds/crystal-ping.mp3');
+  notifications.show(`تم تأكيد ${candidateList.length} مرشح وبدء التصويت! 🚀\nعدد المصوتين المتوقع: ${voterList.length} طالب`, 'success', 6000);
       };
 
       // إضافة زر إعادة التعيين المحسن
