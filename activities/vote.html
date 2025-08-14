@@ -1,0 +1,3443 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>صوّت وقرر ✋🗳️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  
+  <!-- جميع الأنماط مدمجة في الصفحة -->
+  <style>
+    /* Unified Styles Template - مدمج */
+    :root {
+      --primary-color: #DC143C;
+      --secondary-color: #228B22;
+      --accent-color: #FFD700;
+      --omani-red: #DC143C;
+      --omani-green: #228B22;
+      --omani-gold: #FFD700;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-card: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --text-light: #ffffff;
+      --text-muted: #999999;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --error-color: #dc3545;
+      --info-color: #17a2b8;
+      --light-gray: #f8f9fa;
+      --medium-gray: #dee2e6;
+      --dark-gray: #6c757d;
+      --white: #ffffff;
+      --black: #000000;
+      --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+      --shadow-heavy: 0 8px 16px rgba(0,0,0,0.2);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 50px;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --font-size-xs: 0.75rem;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --transition-fast: 0.15s;
+      --transition-normal: 0.3s;
+      --transition-slow: 0.5s;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+    }
+
+    .header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--text-light);
+      padding: var(--space-xl);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-heavy);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--light-gray);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-normal);
+      text-align: center;
+      font-size: var(--font-size-base);
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--text-light);
+    }
+
+    .btn-secondary {
+      background: var(--secondary-color);
+      color: var(--text-light);
+    }
+
+    .btn-accent {
+      background: var(--accent-color);
+      color: var(--text-primary);
+    }
+
+    .btn-large {
+      padding: var(--space-md) var(--space-lg);
+      font-size: var(--font-size-lg);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: var(--space-sm);
+      border: 2px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      background: var(--bg-primary);
+      transition: border-color var(--transition-normal);
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* Responsive Framework */
+    .responsive-container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .mobile-card {
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-light);
+      transition: all var(--transition-normal);
+    }
+
+    .mobile-heading {
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .mobile-subtitle {
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      opacity: 0.8;
+    }
+
+    .mobile-grid {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .mobile-input {
+      width: 100%;
+    }
+
+    .mobile-label {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+    }
+
+    .mobile-btn {
+      min-height: 48px;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .mobile-text {
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
+      line-height: 1.5;
+    }
+
+    .mobile-notification {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+    }
+
+    .mobile-chart {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+    }
+
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    .touch-device .btn {
+      padding: var(--space-md);
+      font-size: var(--font-size-lg);
+    }
+
+    /* إخفاء رابط تخطي المحتوى */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .sr-only:focus {
+      position: static !important;
+      width: auto !important;
+      height: auto !important;
+      padding: var(--space-sm) var(--space-md) !important;
+      margin: 0 !important;
+      overflow: visible !important;
+      clip: auto !important;
+      white-space: normal !important;
+      background: var(--primary-color) !important;
+      color: var(--text-light) !important;
+      text-decoration: none !important;
+      border-radius: var(--radius-sm) !important;
+      z-index: 10000 !important;
+    }
+
+    /* أنماط زر العودة */
+    .back-to-main {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--text-light);
+      padding: 12px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      min-height: 48px;
+      min-width: 48px;
+      justify-content: center;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    }
+
+    .back-btn:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    .back-icon {
+      font-size: 18px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .back-text {
+      font-family: 'Cairo', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* تأثير الانيميشن */
+    @keyframes backButtonGlow {
+      0%, 100% { 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(220, 20, 60, 0.4);
+      }
+      50% { 
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 10px rgba(220, 20, 60, 0.1);
+      }
+    }
+
+    .back-btn:focus {
+      outline: none;
+      animation: backButtonGlow 2s ease-in-out infinite;
+    }
+
+    /* تحسينات للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .back-to-main {
+        top: 15px;
+        left: 15px;
+      }
+
+      .back-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+        border-radius: 40px;
+      }
+
+      .back-icon {
+        font-size: 16px;
+      }
+
+      .back-text {
+        font-size: 12px;
+      }
+
+      /* أدوات التحكم في الصوت للشاشات الصغيرة */
+      .audio-controls {
+        top: 80px !important;
+        left: 15px !important;
+        flex-direction: column !important;
+        gap: 5px !important;
+        padding: 8px !important;
+      }
+    }
+
+    /* للشاشات الصغيرة جداً - إظهار الأيقونة فقط */
+    @media (max-width: 480px) {
+      .back-text {
+        display: none;
+      }
+
+      .back-btn {
+        width: 48px;
+        height: 48px;
+        padding: 12px;
+        border-radius: 50%;
+      }
+
+      .back-icon {
+        font-size: 20px;
+      }
+
+      /* أدوات التحكم في الصوت للشاشات الصغيرة جداً */
+      .audio-controls {
+        top: 75px !important;
+        left: 15px !important;
+        flex-direction: row !important;
+        gap: 5px !important;
+        padding: 6px !important;
+      }
+    }
+
+    /* تأثير عند التمرير */
+    @media (hover: hover) {
+      .back-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.6s;
+        border-radius: inherit;
+      }
+
+      .back-btn:hover::before {
+        left: 100%;
+      }
+    }
+
+    /* تحسينات للأجهزة اللمسية */
+    @media (hover: none) and (pointer: coarse) {
+      .back-btn {
+        min-height: 52px;
+        min-width: 52px;
+        padding: 14px 18px;
+      }
+
+      .back-btn:hover {
+        transform: none;
+      }
+
+      .back-btn:active {
+        transform: scale(0.95);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--space-md);
+      }
+
+      .mobile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-btn {
+        width: 100%;
+        margin: var(--space-xs) 0;
+      }
+    }
+  </style>
+  
+  <!-- Activity-specific styles -->
+  <style>
+    /* Voting activity specific styles */
+    .voting-setup {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-xl) 0;
+    }
+    
+    .candidate-area {
+      background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin: var(--space-lg) 0;
+      border: 3px dashed var(--primary-color);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .candidates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    
+    .candidate-card {
+      background: var(--bg-card);
+      border: 2px solid var(--primary-color);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .candidate-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--omani-red), var(--omani-green), var(--omani-gold));
+    }
+    
+    .candidate-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--accent-color);
+    }
+    
+    .candidate-card.selected {
+      background: var(--primary-color);
+      color: var(--text-light);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-heavy);
+    }
+    
+    .voters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: var(--space-sm);
+      margin: var(--space-lg) 0;
+    }
+    
+    .voter-card {
+      background: var(--bg-card);
+      border: 2px solid var(--secondary-color);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-size: var(--font-size-sm);
+    }
+    
+    .voter-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-light);
+    }
+    
+    .voter-card.voted {
+      background: var(--secondary-color);
+      color: var(--text-light);
+      border-color: var(--secondary-dark);
+    }
+    
+    .results-section {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin: var(--space-xl) 0;
+      border: 2px solid var(--accent-color);
+    }
+    
+    .result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md);
+      margin: var(--space-sm) 0;
+      background: var(--light-gray);
+      border-radius: var(--radius-lg);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .result-item.winner {
+      background: linear-gradient(135deg, var(--accent-light), var(--white));
+      border-left-color: var(--accent-color);
+      animation: pulse 2s infinite;
+    }
+    
+    .vote-count {
+      background: var(--primary-color);
+      color: var(--text-light);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      min-width: 40px;
+      text-align: center;
+    }
+    
+    .progress-bar-custom {
+      width: 100%;
+      height: 8px;
+      background: var(--light-gray);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: var(--space-sm) 0;
+    }
+    
+    .progress-fill-custom {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow);
+    }
+    
+    .voting-status {
+      text-align: center;
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      background: linear-gradient(135deg, var(--light-gray), var(--white));
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--medium-gray);
+    }
+    
+    .voting-status.active {
+      border-color: var(--success-color);
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), var(--white));
+    }
+    
+    .voting-status.completed {
+      border-color: var(--accent-color);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), var(--white));
+    }
+    
+    /* تحسينات المؤثرات البصرية المتطورة */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 5px var(--primary-color); }
+      50% { box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color); }
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 1; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.2); }
+    }
+
+    @keyframes slideInFromLeft {
+      0% { transform: translateX(-100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInFromRight {
+      0% { transform: translateX(100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes countdownPulse {
+      0% { transform: scale(1); background: var(--bg-card); }
+      50% { transform: scale(1.1); background: var(--accent-color); color: white; }
+      100% { transform: scale(1); background: var(--bg-card); }
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* تحسينات تفاعلية متطورة */
+    .enhanced-card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .enhanced-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+      z-index: 1;
+    }
+
+    .enhanced-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-button {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .interactive-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .interactive-button:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .particle-effect {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      animation: sparkle 1s ease-out forwards;
+    }
+
+    .floating-element {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .glowing-border {
+      border: 2px solid var(--primary-color);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .typewriter-text {
+      overflow: hidden;
+      border-right: 2px solid var(--primary-color);
+      white-space: nowrap;
+      margin: 0 auto;
+      animation: typewriter 2s steps(40, end), blink 0.75s step-end infinite;
+    }
+
+    /* تحسينات نظام التصويت */
+    .candidate-card {
+      background: var(--bg-card);
+      border: 2px solid var(--primary-color);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+      animation: slideInFromLeft 0.6s ease-out;
+      background: linear-gradient(135deg, var(--bg-card), #f8f9fa);
+    }
+
+    .candidate-card:nth-child(even) {
+      animation: slideInFromRight 0.6s ease-out;
+    }
+
+    .candidate-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--omani-red), var(--omani-green), var(--omani-gold));
+    }
+
+    .candidate-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.6s ease;
+      z-index: 0;
+    }
+
+    .candidate-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      border-color: var(--accent-color);
+    }
+
+    .candidate-card:hover::after {
+      width: 100%;
+      height: 100%;
+    }
+
+    .candidate-card.selected {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: var(--text-light);
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      animation: bounceIn 0.6s ease, glow 2s ease-in-out infinite alternate;
+    }
+
+    .candidate-card.selected::before {
+      background: linear-gradient(90deg, #fff, #ffd700, #fff);
+      animation: sparkle 1.5s ease infinite;
+    }
+
+    /* تحسينات بطاقات المصوتين */
+    .voter-card {
+      background: var(--bg-card);
+      border: 2px solid var(--secondary-color);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-size: var(--font-size-sm);
+      position: relative;
+      overflow: hidden;
+      animation: bounceIn 0.4s ease;
+    }
+
+    .voter-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(34, 139, 34, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .voter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+    }
+
+    .voter-card:hover::before {
+      left: 100%;
+    }
+
+    .voter-card.voted {
+      background: linear-gradient(135deg, var(--secondary-color), var(--success-color));
+      color: var(--text-light);
+      border-color: var(--secondary-dark);
+      animation: pulse 0.6s ease;
+    }
+
+    .voter-card.voting {
+      animation: countdownPulse 1s ease infinite;
+    }
+
+    /* تحسينات منطقة النتائج */
+    .results-section {
+      background: linear-gradient(135deg, var(--bg-card), #f8f9fa);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin: var(--space-xl) 0;
+      border: 2px solid var(--accent-color);
+      position: relative;
+      overflow: hidden;
+      animation: slideInFromLeft 0.8s ease-out;
+    }
+
+    .results-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+      animation: rotate 4s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    .results-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md);
+      margin: var(--space-sm) 0;
+      background: linear-gradient(135deg, var(--light-gray), #fff);
+      border-radius: var(--radius-lg);
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.4s ease;
+      animation: slideInFromRight 0.6s ease-out;
+    }
+
+    .result-item:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-item.winner {
+      background: linear-gradient(135deg, #ffd700, #fff8dc);
+      border-left-color: var(--accent-color);
+      animation: pulse 2s infinite, glow 3s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    .result-item.winner::after {
+      content: '👑';
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-30px); }
+      60% { transform: translateY(-15px); }
+    }
+
+    /* تحسينات شريط التقدم */
+    .progress-bar-custom {
+      width: 100%;
+      height: 12px;
+      background: var(--light-gray);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: var(--space-sm) 0;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-fill-custom {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--omani-gold));
+      background-size: 200% 100%;
+      border-radius: var(--radius-full);
+      transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      animation: progressShine 2s ease infinite;
+      position: relative;
+    }
+
+    @keyframes progressShine {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .progress-fill-custom::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: progressGlow 1.5s ease-in-out infinite;
+    }
+
+    @keyframes progressGlow {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    /* تحسينات حالة التصويت */
+    .voting-status {
+      text-align: center;
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      background: linear-gradient(135deg, var(--light-gray), var(--white));
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--medium-gray);
+      position: relative;
+      overflow: hidden;
+      animation: slideInFromLeft 0.6s ease-out;
+    }
+
+    .voting-status::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      animation: progressShine 2s ease infinite;
+    }
+
+    .voting-status.active {
+      border-color: var(--success-color);
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), var(--white));
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .voting-status.completed {
+      border-color: var(--accent-color);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), var(--white));
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* تأثيرات صوتية بصرية */
+    .sound-wave {
+      position: relative;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .sound-wave::before,
+    .sound-wave::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 15px;
+      background: var(--primary-color);
+      border-radius: 2px;
+      animation: soundWave 1s ease-in-out infinite;
+    }
+
+    .sound-wave::before {
+      left: -8px;
+      animation-delay: 0.2s;
+    }
+
+    .sound-wave::after {
+      right: -8px;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes soundWave {
+      0%, 100% { height: 5px; }
+      50% { height: 15px; }
+    }
+
+    /* تحسينات الإشعارات */
+    .notification-enhanced {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--success-color), #4caf50);
+      color: white;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+      animation: slideInFromRight 0.5s ease-out;
+    }
+
+    .notification-enhanced.show {
+      transform: translateX(0);
+    }
+
+    /* تأثيرات الجسيمات */
+    .particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      animation: particleFloat 3s ease-out forwards;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(0);
+      }
+    }
+
+    /* تحسينات الأزرار التفاعلية */
+    .enhanced-btn {
+      position: relative;
+      background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+      border: none;
+      border-radius: var(--radius-lg);
+      color: white;
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .enhanced-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s;
+    }
+
+    .enhanced-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .enhanced-btn:hover::before {
+      left: 100%;
+    }
+
+    .enhanced-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* تحسينات الاستجابة مع المؤثرات */
+    @media (max-width: 768px) {
+      .voting-setup {
+        grid-template-columns: 1fr;
+      }
+      
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+      
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+      
+      .result-item {
+        flex-direction: column;
+        gap: var(--space-sm);
+        text-align: center;
+      }
+    }
+
+    /* تحسينات الاستجابة المتقدمة لنشاط التصويت */
+    
+    /* شاشات كبيرة جداً (1200px+) */
+    @media (min-width: 1200px) {
+      .voting-setup {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+      }
+
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--space-lg);
+      }
+
+      .candidate-card {
+        padding: var(--space-lg);
+        font-size: var(--font-size-lg);
+      }
+
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--space-md);
+      }
+
+      .voter-card {
+        padding: var(--space-md);
+        font-size: var(--font-size-base);
+      }
+    }
+
+    /* شاشات كبيرة (1024px - 1199px) */
+    @media (max-width: 1199px) and (min-width: 1024px) {
+      .voting-setup {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-lg);
+      }
+
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: var(--space-md);
+      }
+
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: var(--space-md);
+      }
+    }
+
+    /* تابلت (768px - 1023px) */
+    @media (max-width: 1023px) and (min-width: 768px) {
+      .voting-setup {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: var(--space-md);
+      }
+
+      .candidate-card {
+        padding: var(--space-md);
+        font-size: var(--font-size-base);
+      }
+
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: var(--space-sm);
+      }
+
+      .voter-card {
+        padding: var(--space-sm);
+        font-size: var(--font-size-sm);
+      }
+
+      .result-item {
+        padding: var(--space-md);
+      }
+
+      .candidate-area {
+        padding: var(--space-lg);
+        min-height: 120px;
+      }
+    }
+
+    /* موبايل كبير (480px - 767px) */
+    @media (max-width: 767px) and (min-width: 480px) {
+      .voting-setup {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: var(--space-sm);
+      }
+
+      .candidate-card {
+        padding: var(--space-sm);
+        font-size: var(--font-size-sm);
+      }
+
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: var(--space-sm);
+      }
+
+      .voter-card {
+        padding: var(--space-xs);
+        font-size: var(--font-size-xs);
+      }
+
+      .result-item {
+        flex-direction: column;
+        gap: var(--space-sm);
+        text-align: center;
+        padding: var(--space-sm);
+      }
+
+      .candidate-area {
+        padding: var(--space-md);
+        min-height: 100px;
+      }
+
+      .results-section {
+        padding: var(--space-lg);
+      }
+
+      .voting-status {
+        padding: var(--space-md);
+        font-size: var(--font-size-sm);
+      }
+
+      .btn-large {
+        width: 100%;
+        padding: var(--space-md);
+        font-size: var(--font-size-base);
+      }
+    }
+
+    /* موبايل صغير (320px - 479px) */
+    @media (max-width: 479px) {
+      .voting-setup {
+        gap: var(--space-xs);
+      }
+
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: var(--space-xs);
+      }
+
+      .candidate-card {
+        padding: var(--space-xs);
+        font-size: var(--font-size-xs);
+      }
+
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: var(--space-xs);
+      }
+
+      .voter-card {
+        padding: var(--space-xs);
+        font-size: var(--font-size-xs);
+      }
+
+      .result-item {
+        padding: var(--space-xs);
+        font-size: var(--font-size-xs);
+      }
+
+      .candidate-area {
+        padding: var(--space-sm);
+        min-height: 80px;
+      }
+
+      .results-section {
+        padding: var(--space-md);
+      }
+
+      .voting-status {
+        padding: var(--space-sm);
+        font-size: var(--font-size-xs);
+      }
+
+      .btn-large {
+        width: 100%;
+        padding: var(--space-sm);
+        font-size: var(--font-size-sm);
+      }
+
+      .vote-count {
+        font-size: var(--font-size-xs);
+        padding: var(--space-xs);
+        min-width: 30px;
+      }
+
+      .progress-bar-custom {
+        height: 6px;
+      }
+    }
+
+    /* تحسينات خاصة للأجهزة اللمسية */
+    @media (hover: none) and (pointer: coarse) {
+      .candidate-card {
+        min-height: 60px;
+        border-width: 3px;
+      }
+
+      .candidate-card:hover {
+        transform: none;
+      }
+
+      .candidate-card:active {
+        transform: scale(0.98);
+      }
+
+      .voter-card {
+        min-height: 48px;
+        border-width: 2px;
+      }
+
+      .voter-card:hover {
+        transform: none;
+      }
+
+      .voter-card:active {
+        transform: scale(0.98);
+      }
+
+      .btn {
+        min-height: 48px;
+        border-width: 2px;
+      }
+
+      .form-select {
+        min-height: 48px;
+        border-width: 2px;
+      }
+    }
+
+    /* تحسينات للوضع الأفقي في الموبايل */
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+      .candidate-area {
+        min-height: 60px;
+        padding: var(--space-sm);
+      }
+
+      .voting-status {
+        padding: var(--space-sm);
+      }
+
+      .results-section {
+        padding: var(--space-md);
+      }
+
+      .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: var(--space-xs);
+      }
+
+      .voters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: var(--space-xs);
+      }
+
+      .candidate-card,
+      .voter-card {
+        padding: var(--space-xs);
+        font-size: var(--font-size-xs);
+      }
+
+      .btn-large {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--font-size-sm);
+      }
+    }
+
+    /* تحسينات الشاشات عالية الكثافة */
+    @media (-webkit-min-device-pixel-ratio: 2),
+           (min-resolution: 192dpi) {
+      .candidate-card {
+        border-width: 1.5px;
+      }
+
+      .voter-card {
+        border-width: 1.5px;
+      }
+
+      .candidate-card::before {
+        height: 3px;
+      }
+
+      .result-item {
+        border-left-width: 3px;
+      }
+    }
+
+    /* RTL layout optimizations for responsive design */
+    [dir="rtl"] .voting-setup {
+      direction: rtl;
+    }
+
+    [dir="rtl"] .candidates-grid {
+      direction: rtl;
+    }
+
+    [dir="rtl"] .voters-grid {
+      direction: rtl;
+    }
+
+    @media (max-width: 767px) {
+      [dir="rtl"] .result-item {
+        direction: ltr;
+      }
+    }
+  </style>
+</head>
+<body class="responsive-body touch-device">
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="sr-only">تخطي إلى المحتوى الرئيسي</a>
+  
+  <!-- Audio elements - محلية -->
+  <audio id="clickSound" src="../assets/media/sounds/Click.mp3"></audio>
+  <audio id="successSound" src="../assets/media/sounds/win.mp3"></audio>
+  <audio id="errorSound" src="../assets/media/sounds/wrong_answer.mp3"></audio>
+  <audio id="notificationSound" src="../assets/media/sounds/Notification.mp3"></audio>
+  <audio id="backgroundMusic" src="../assets/media/sounds/kingdom-sounds/adventure-theme.mp3" loop></audio>
+  <audio id="countdownSound" src="../assets/media/sounds/countdown-beep.mp3"></audio>
+  <audio id="voteConfirmSound" src="../assets/media/sounds/kingdom-sounds/crystal-ping.mp3"></audio>
+  <audio id="resultsRevealSound" src="../assets/media/sounds/kingdom-sounds/cosmic-explosion.mp3"></audio>
+
+  <!-- Main container -->
+  <div class="container responsive-container">
+    <!-- زر العودة للصفحة الرئيسية -->
+    <div class="back-to-main">
+      <a href="../main.html" class="back-btn" title="العودة إلى صفحة الأنشطة">
+        <span class="back-icon">🏠</span>
+        <span class="back-text">الأنشطة</span>
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header class="header mobile-header">
+      <h1 class="mobile-heading">✋🗳️ صوّت وقرر</h1>
+      <p class="mobile-subtitle">اختر الصف ونوع التصويت، ثم رشّح الطلاب وابدأ التصويت التفاعلي</p>
+    </header>
+
+    <!-- Main content -->
+    <main id="main-content">
+      <!-- Voting setup -->
+      <div class="card mobile-card">
+        <h3 class="mobile-heading">إعداد التصويت</h3>
+        <div class="voting-setup mobile-grid">
+          <div class="form-group mobile-input">
+            <label class="form-label mobile-label">اختر الصف:</label>
+            <select id="classSelect" class="form-select touch-target">
+              <option value="">-- اختر الصف --</option>
+            </select>
+          </div>
+          <div class="form-group mobile-input">
+            <label class="form-label mobile-label">نوع التصويت:</label>
+            <select id="voteMode" class="form-select touch-target">
+              <option value="">-- نوع التصويت --</option>
+              <option value="single">فردي عشوائي ⚡</option>
+              <option value="group">جماعي عشوائي 👥</option>
+              <option value="select-single">فردي انتقائي 🎯</option>
+              <option value="select-group">جماعي انتقائي 🎯👥</option>
+            </select>
+          </div>
+        </div>
+        <div class="text-center">
+          <button id="startNominateBtn" class="btn btn-primary btn-large touch-target mobile-btn" disabled>🚀 ابدأ الترشيح</button>
+        </div>
+      </div>
+
+      <!-- Candidates area -->
+      <div id="candidateArea" class="card mobile-card" style="display:none">
+        <h3 class="mobile-heading">🔷 المرشحون</h3>
+        <div class="candidate-area mobile-card">
+          <div id="candidatesDisplay" class="mobile-text">
+            <p>اختر المرشحين من القائمة أدناه</p>
+          </div>
+        </div>
+        <div class="candidates-grid mobile-grid" id="candidatesGrid"></div>
+        <div class="text-center">
+          <button id="confirmCandidatesBtn" class="btn btn-secondary btn-large touch-target mobile-btn" disabled>✅ تأكيد المرشحين</button>
+        </div>
+      </div>
+
+      <!-- Voters area -->
+      <div id="votersArea" class="card mobile-card" style="display:none">
+        <h3 class="mobile-heading">🧑‍🎓 المصوّتون</h3>
+        <div class="voting-status mobile-notification" id="votingStatus">
+          <p class="mobile-text">انقر على اسم الطالب ثم اختر من يريد التصويت له</p>
+        </div>
+        <div class="voters-grid mobile-grid" id="votersContainer"></div>
+        <div class="text-center">
+          <button id="showResultsBtn" class="btn btn-accent btn-large touch-target mobile-btn" disabled>📊 فرز النتائج</button>
+        </div>
+      </div>
+
+      <!-- Results area -->
+      <div id="resultsArea" class="results-section mobile-card" style="display:none">
+        <h2 class="mobile-heading typewriter-text">🏆 نتائج التصويت النهائية</h2>
+        <div class="chart-container" style="position: relative; height: 400px; margin: 20px 0;">
+          <canvas id="resultsChart" class="mobile-chart"></canvas>
+        </div>
+        <div class="celebration-message" style="text-align: center; margin: 20px 0; font-size: 1.2em; color: var(--primary-color);">
+          <div class="sound-wave">🎉 مبروك للفائزين! 🎊</div>
+        </div>
+        <div class="action-buttons" style="text-align: center; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+          <button onclick="location.reload()" class="btn btn-primary enhanced-btn touch-target mobile-btn">
+            🔄 بدء تصويت جديد
+          </button>
+          <button onclick="printResults()" class="btn btn-secondary enhanced-btn touch-target mobile-btn">
+            🖨️ طباعة النتائج
+          </button>
+          <button onclick="shareResults()" class="btn btn-accent enhanced-btn touch-target mobile-btn">
+            📤 مشاركة النتائج
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- مؤثرات إضافية -->
+  <div id="fireworks-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></div>
+  
+  <audio id="clapSound" src="../assets/media/sounds/clap.mp3"></audio>
+  
+  <script>
+    // وظائف إضافية محسنة
+    
+    // طباعة النتائج
+    function printResults() {
+      const printWindow = window.open('', '_blank');
+      const resultsHTML = generatePrintableResults();
+      
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html dir="rtl" lang="ar">
+        <head>
+          <meta charset="UTF-8">
+          <title>نتائج التصويت - ${currentClass}</title>
+          <style>
+            body { font-family: 'Cairo', Arial, sans-serif; direction: rtl; margin: 20px; }
+            .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 20px; }
+            .result-item { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+            .winner { background-color: #fff3cd; border-color: #ffeaa7; }
+            .stats { margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px; }
+            @media print { button { display: none; } }
+          </style>
+        </head>
+        <body>
+          ${resultsHTML}
+          <button onclick="window.print()" style="margin: 20px auto; display: block; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">طباعة</button>
+        </body>
+        </html>
+      `);
+      
+      printWindow.document.close();
+      smartAudio.play('Click.mp3');
+      notifications.show('تم فتح نافذة الطباعة 🖨️', 'info');
+    }
+
+    // توليد HTML للطباعة
+    function generatePrintableResults() {
+      const labels = Object.keys(voteCounts);
+      const data = Object.values(voteCounts);
+      const totalVotes = data.reduce((a, b) => a + b, 0);
+      const maxVotes = Math.max(...data);
+      const winners = labels.filter((name, i) => data[i] === maxVotes);
+      
+      const sortedResults = labels.map((name, index) => ({
+        name,
+        votes: data[index],
+        percentage: ((data[index] / totalVotes) * 100).toFixed(1)
+      })).sort((a, b) => b.votes - a.votes);
+
+      const currentDate = new Date().toLocaleDateString('ar-SA');
+      const currentTime = new Date().toLocaleTimeString('ar-SA');
+
+      return `
+        <div class="header">
+          <h1>🗳️ نتائج التصويت - الصف ${currentClass}</h1>
+          <p>التاريخ: ${currentDate} | الوقت: ${currentTime}</p>
+          <p>إجمالي المشاركين: ${voterList.length} | إجمالي الأصوات: ${totalVotes}</p>
+        </div>
+        
+        <h2>🏆 النتائج النهائية:</h2>
+        ${sortedResults.map((result, index) => {
+          const isWinner = winners.includes(result.name);
+          return `
+            <div class="result-item ${isWinner ? 'winner' : ''}">
+              <strong>${isWinner ? '🏆' : index + 1}. ${result.name}</strong><br>
+              الأصوات: ${result.votes} (${result.percentage}%)<br>
+              الحالة: ${isWinner ? '🎉 فائز' : 'مشارك'}
+            </div>
+          `;
+        }).join('')}
+        
+        <div class="stats">
+          <h3>📊 إحصائيات التصويت:</h3>
+          <p><strong>نسبة المشاركة:</strong> ${((totalVotes / voterList.length) * 100).toFixed(1)}%</p>
+          <p><strong>عدد المرشحين:</strong> ${candidateList.length}</p>
+          <p><strong>الفائز/الفائزون:</strong> ${winners.join(', ')}</p>
+          <p><strong>أعلى نتيجة:</strong> ${maxVotes} ${maxVotes === 1 ? 'صوت' : 'أصوات'}</p>
+        </div>
+      `;
+    }
+
+    // مشاركة النتائج
+    async function shareResults() {
+      const shareText = generateShareText();
+      
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: `نتائج التصويت - الصف ${currentClass}`,
+            text: shareText,
+            url: window.location.href
+          });
+          notifications.show('تم مشاركة النتائج بنجاح! 📤', 'success');
+        } catch (error) {
+          copyToClipboard(shareText);
+        }
+      } else {
+        copyToClipboard(shareText);
+      }
+      
+      smartAudio.play('Notification.mp3');
+    }
+
+    // توليد نص للمشاركة
+    function generateShareText() {
+      const labels = Object.keys(voteCounts);
+      const data = Object.values(voteCounts);
+      const maxVotes = Math.max(...data);
+      const winners = labels.filter((name, i) => data[i] === maxVotes);
+      
+      return `
+🗳️ نتائج التصويت - الصف ${currentClass}
+
+🏆 الفائز: ${winners.join(', ')} بـ ${maxVotes} ${maxVotes === 1 ? 'صوت' : 'أصوات'}
+
+📊 النتائج التفصيلية:
+${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 'أصوات'}`).join('\n')}
+
+📈 إجمالي المشاركين: ${voterList.length}
+📅 ${new Date().toLocaleDateString('ar-SA')}
+
+#التصويت_المدرسي #النشاطات_التفاعلية
+      `.trim();
+    }
+
+    // نسخ للحافظة
+    function copyToClipboard(text) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          notifications.show('تم نسخ النتائج للحافظة! 📋', 'success');
+        }).catch(() => {
+          fallbackCopyTextToClipboard(text);
+        });
+      } else {
+        fallbackCopyTextToClipboard(text);
+      }
+    }
+
+    // نسخ احتياطي
+    function fallbackCopyTextToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        notifications.show('تم نسخ النتائج للحافظة! 📋', 'success');
+      } catch (err) {
+        notifications.show('فشل في نسخ النتائج', 'error');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+
+    // نظام الألعاب النارية المتقدم
+    function createFireworks() {
+      const container = document.getElementById('fireworks-container');
+      
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const firework = document.createElement('div');
+          firework.style.cssText = `
+            position: absolute;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            width: 4px;
+            height: 4px;
+            background: ${visualEffects.getRandomColor()};
+            border-radius: 50%;
+            animation: fireworkExplosion 2s ease-out forwards;
+          `;
+          
+          container.appendChild(firework);
+          
+          // إنشاء شرارات
+          for (let j = 0; j < 20; j++) {
+            setTimeout(() => {
+              const spark = document.createElement('div');
+              const angle = (j * 18) * Math.PI / 180;
+              const distance = Math.random() * 100 + 50;
+              
+              spark.style.cssText = `
+                position: absolute;
+                left: ${firework.offsetLeft}px;
+                top: ${firework.offsetTop}px;
+                width: 2px;
+                height: 2px;
+                background: ${visualEffects.getRandomColor()};
+                border-radius: 50%;
+                animation: sparkFly 1.5s ease-out forwards;
+                transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px);
+              `;
+              
+              container.appendChild(spark);
+              
+              setTimeout(() => {
+                if (spark.parentNode) {
+                  spark.parentNode.removeChild(spark);
+                }
+              }, 1500);
+            }, j * 50);
+          }
+          
+          setTimeout(() => {
+            if (firework.parentNode) {
+              firework.parentNode.removeChild(firework);
+            }
+          }, 2000);
+        }, i * 500);
+      }
+    }
+
+    // إضافة CSS للألعاب النارية
+    const fireworksCSS = `
+      @keyframes fireworkExplosion {
+        0% { transform: scale(0); opacity: 1; }
+        50% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+      }
+      
+      @keyframes sparkFly {
+        0% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(0); }
+      }
+    `;
+    
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = fireworksCSS;
+    document.head.appendChild(styleSheet);
+
+    // تحسين نظام التنبيهات الصوتية
+    function playContextualSound(action) {
+      const soundMap = {
+        'vote_cast': 'kingdom-sounds/crystal-ping.mp3',
+        'candidate_selected': 'Click.mp3',
+        'voting_complete': 'kingdom-sounds/cosmic-explosion.mp3',
+        'winner_announced': 'kingdom-sounds/crown-ceremony.mp3',
+        'celebration': 'kingdom-sounds/battle-victory.mp3',
+        'error': 'wrong_answer.mp3',
+        'notification': 'Notification.mp3'
+      };
+      
+      const sound = soundMap[action];
+      if (sound) {
+        smartAudio.play(sound);
+      }
+    }
+
+    // نظام التحليلات البسيط
+    class VotingAnalytics {
+      constructor() {
+        this.startTime = Date.now();
+        this.events = [];
+      }
+
+      logEvent(eventType, data = {}) {
+        this.events.push({
+          type: eventType,
+          timestamp: Date.now(),
+          data: data
+        });
+      }
+
+      generateReport() {
+        const duration = Date.now() - this.startTime;
+        const minutes = Math.floor(duration / 60000);
+        const seconds = Math.floor((duration % 60000) / 1000);
+        
+        return {
+          duration: `${minutes}:${seconds.toString().padStart(2, '0')}`,
+          totalEvents: this.events.length,
+          events: this.events
+        };
+      }
+    }
+
+    // تهيئة نظام التحليلات
+    const analytics = new VotingAnalytics();
+
+    // تحديث الوظائف لتسجيل الأحداث
+    const originalStartVotingSetup = startVotingSetup;
+    startVotingSetup = function() {
+      analytics.logEvent('voting_setup_started', { 
+        class: currentClass, 
+        mode: document.getElementById("voteMode").value 
+      });
+      return originalStartVotingSetup.apply(this, arguments);
+    };
+
+    // إضافة مؤقت للنشاط
+    let activityTimer = {
+      startTime: null,
+      element: null,
+      interval: null,
+      
+      start() {
+        this.startTime = Date.now();
+        this.element = document.createElement('div');
+        this.element.style.cssText = `
+          position: fixed;
+          top: 70px;
+          left: 20px;
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-family: monospace;
+          font-size: 14px;
+          z-index: 1000;
+        `;
+        document.body.appendChild(this.element);
+        
+        this.interval = setInterval(() => this.update(), 1000);
+      },
+      
+      update() {
+        if (!this.startTime) return;
+        
+        const elapsed = Date.now() - this.startTime;
+        const minutes = Math.floor(elapsed / 60000);
+        const seconds = Math.floor((elapsed % 60000) / 1000);
+        
+        this.element.textContent = `⏱️ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+      },
+      
+      stop() {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+        if (this.element && this.element.parentNode) {
+          this.element.parentNode.removeChild(this.element);
+        }
+        this.startTime = null;
+      }
+    };
+
+    // تحديث تهيئة النشاط لتشمل المؤقت
+    const originalLoadStudents = loadStudents;
+    loadStudents = async function() {
+      await originalLoadStudents.apply(this, arguments);
+      activityTimer.start();
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti"></script>
+  
+  <!-- النظام الموحد مدمج -->
+  <script>
+    // ActivityUtils مدمج
+    class ActivityUtils {
+      constructor(activityName, soundPath) {
+        this.activityName = activityName;
+        this.soundPath = soundPath || '../assets/media/sounds/';
+        this.sounds = new Map();
+        this.notifications = [];
+      }
+
+      init() {
+        console.log(`تم تهيئة نشاط: ${this.activityName}`);
+        this.preloadCommonSounds();
+      }
+
+      preloadCommonSounds() {
+        const commonSounds = [
+          'Click.mp3', 'win.mp3', 'wrong_answer.mp3', 'Notification.mp3',
+          'clap.mp3', 'select.mp3', 'start-timer.mp3', 'end-timer.mp3'
+        ];
+        
+        commonSounds.forEach(sound => {
+          const audio = new Audio(this.soundPath + sound);
+          audio.preload = 'auto';
+          this.sounds.set(sound, audio);
+        });
+      }
+
+      playSound(soundName, options = {}) {
+        const sound = this.sounds.get(soundName);
+        if (sound) {
+          sound.currentTime = 0;
+          sound.volume = options.volume || 0.7;
+          sound.play().catch(e => console.log('Audio play failed:', e));
+        }
+      }
+
+      showNotification(message, type = 'info', duration = 4000) {
+        // سيتم استخدام النظام المحسن
+        if (window.notifications) {
+          window.notifications.show(message, type, duration);
+        } else {
+          console.log(`${type}: ${message}`);
+        }
+      }
+
+      showModal(title, message, isConfirm = false) {
+        if (isConfirm) {
+          return confirm(`${title}\n\n${message}`);
+        } else {
+          alert(`${title}\n\n${message}`);
+          return false;
+        }
+      }
+    }
+  </script>
+  
+  <!-- نظام الجسيمات -->
+  <div class="particles-container" id="particlesContainer"></div>
+  
+  <script>
+    // إعداد النشاط المحسن باستخدام ActivityUtils
+    const activity = new ActivityUtils('نشاط التصويت المحسن', '../assets/media/sounds/');
+    
+    // نظام صوتي ذكي محسن
+    class SmartAudioSystem {
+      constructor() {
+        this.audioContext = null;
+        this.gainNode = null;
+        this.sounds = new Map();
+        this.backgroundMusic = null;
+        this.isMuted = false;
+        this.volume = 0.7;
+        this.init();
+      }
+
+      async init() {
+        try {
+          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          this.gainNode = this.audioContext.createGain();
+          this.gainNode.connect(this.audioContext.destination);
+          this.gainNode.gain.value = this.volume;
+          
+          // تحميل الأصوات المسبق
+          await this.preloadSounds();
+        } catch (error) {
+          console.warn('Audio context not supported:', error);
+        }
+      }
+
+      async preloadSounds() {
+        const soundFiles = [
+          'Click.mp3', 'win.mp3', 'wrong_answer.mp3', 'Notification.mp3',
+          'countdown-beep.mp3', 'clap.mp3', 'select.mp3', 'start-timer.mp3', 'end-timer.mp3'
+        ];
+
+        for (const sound of soundFiles) {
+          try {
+            const audio = new Audio(`../assets/media/sounds/${sound}`);
+            audio.preload = 'auto';
+            this.sounds.set(sound, audio);
+          } catch (error) {
+            console.warn(`Failed to load sound: ${sound}`, error);
+          }
+        }
+      }
+
+      play(soundName, options = {}) {
+        if (this.isMuted) return;
+
+        const sound = this.sounds.get(soundName);
+        if (sound) {
+          sound.currentTime = 0;
+          sound.volume = (options.volume || 1) * this.volume;
+          
+          if (options.fade) {
+            this.fadeIn(sound, options.fade);
+          }
+          
+          sound.play().catch(error => console.warn('Audio play failed:', error));
+          
+          if (options.delay) {
+            setTimeout(() => sound.pause(), options.delay);
+          }
+        }
+      }
+
+      fadeIn(audio, duration) {
+        audio.volume = 0;
+        const targetVolume = this.volume;
+        const steps = 20;
+        const stepTime = duration / steps;
+        const volumeStep = targetVolume / steps;
+
+        let currentStep = 0;
+        const fadeInterval = setInterval(() => {
+          if (currentStep >= steps) {
+            clearInterval(fadeInterval);
+            audio.volume = targetVolume;
+          } else {
+            audio.volume = volumeStep * currentStep;
+            currentStep++;
+          }
+        }, stepTime);
+      }
+
+      playSequence(sounds, delay = 500) {
+        sounds.forEach((sound, index) => {
+          setTimeout(() => this.play(sound), index * delay);
+        });
+      }
+
+      setVolume(volume) {
+        this.volume = Math.max(0, Math.min(1, volume));
+        if (this.gainNode) {
+          this.gainNode.gain.value = this.volume;
+        }
+      }
+
+      mute() {
+        this.isMuted = true;
+        if (this.backgroundMusic) {
+          this.backgroundMusic.pause();
+        }
+      }
+
+      unmute() {
+        this.isMuted = false;
+        if (this.backgroundMusic) {
+          this.backgroundMusic.play();
+        }
+      }
+
+      playBackgroundMusic() {
+        // موسيقى خلفية بسيطة
+        if (this.isMuted) return;
+        console.log('Background music would play here');
+      }
+
+      stopBackgroundMusic() {
+        if (this.backgroundMusic) {
+          this.backgroundMusic.pause();
+          this.backgroundMusic.currentTime = 0;
+        }
+      }
+    }
+
+    // نظام المؤثرات البصرية المتقدم
+    class AdvancedVisualEffects {
+      constructor() {
+        this.particlesContainer = document.getElementById('particlesContainer');
+        this.activeAnimations = new Set();
+      }
+
+      createParticleExplosion(element, count = 20) {
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        for (let i = 0; i < count; i++) {
+          this.createParticle(centerX, centerY);
+        }
+      }
+
+      createParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.background = this.getRandomColor();
+        
+        const angle = Math.random() * 360;
+        const velocity = Math.random() * 100 + 50;
+        const life = Math.random() * 2000 + 1000;
+
+        particle.style.transform = `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px)`;
+        
+        this.particlesContainer.appendChild(particle);
+
+        setTimeout(() => {
+          if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+          }
+        }, life);
+      }
+
+      getRandomColor() {
+        const colors = ['#FFD700', '#DC143C', '#228B22', '#FF6B6B', '#4ECDC4'];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      animateCounter(element, start, end, duration = 1000) {
+        let startTime = null;
+        
+        const animate = (currentTime) => {
+          if (!startTime) startTime = currentTime;
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          
+          const value = Math.floor(start + (end - start) * this.easeOutQuart(progress));
+          element.textContent = value;
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+        
+        requestAnimationFrame(animate);
+      }
+
+      easeOutQuart(t) {
+        return 1 - (--t) * t * t * t;
+      }
+
+      typewriterEffect(element, text, speed = 50) {
+        element.textContent = '';
+        element.style.borderRight = '2px solid var(--primary-color)';
+        
+        let i = 0;
+        const timer = setInterval(() => {
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(timer);
+            setTimeout(() => {
+              element.style.borderRight = 'none';
+            }, 500);
+          }
+        }, speed);
+      }
+
+      slideInElements(elements, delay = 100) {
+        elements.forEach((element, index) => {
+          element.style.opacity = '0';
+          element.style.transform = 'translateY(30px)';
+          
+          setTimeout(() => {
+            element.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+          }, index * delay);
+        });
+      }
+
+      glowEffect(element, duration = 2000) {
+        element.classList.add('glowing-border');
+        setTimeout(() => {
+          element.classList.remove('glowing-border');
+        }, duration);
+      }
+
+      confettiBlast(options = {}) {
+        const defaults = {
+          particleCount: 150,
+          spread: 120,
+          origin: { y: 0.6 },
+          colors: ['#FFD700', '#DC143C', '#228B22', '#FF6B6B', '#4ECDC4'],
+          shapes: ['square', 'circle'],
+          gravity: 0.8,
+          drift: 0.1
+        };
+
+        confetti({ ...defaults, ...options });
+
+        // إضافة تأثير إضافي بعد ثانية
+        setTimeout(() => {
+          confetti({
+            ...defaults,
+            ...options,
+            particleCount: 50,
+            spread: 60
+          });
+        }, 1000);
+      }
+
+      chartRevealAnimation(chart) {
+        const originalDraw = chart.draw;
+        chart.draw = function() {
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.globalCompositeOperation = 'source-over';
+          originalDraw.apply(this, arguments);
+          ctx.restore();
+        };
+      }
+    }
+
+    // نظام الإشعارات المحسن
+    class EnhancedNotificationSystem {
+      constructor() {
+        this.notifications = [];
+        this.container = this.createContainer();
+      }
+
+      createContainer() {
+        const container = document.createElement('div');
+        container.id = 'notifications-container';
+        container.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 10000;
+          max-width: 400px;
+        `;
+        document.body.appendChild(container);
+        return container;
+      }
+
+      show(message, type = 'info', duration = 4000, options = {}) {
+        const notification = this.createNotification(message, type, options);
+        this.container.appendChild(notification);
+        
+        // تأثير الدخول
+        requestAnimationFrame(() => {
+          notification.style.transform = 'translateX(0)';
+          notification.style.opacity = '1';
+        });
+
+        // إزالة تلقائية
+        setTimeout(() => {
+          this.remove(notification);
+        }, duration);
+
+        return notification;
+      }
+
+      createNotification(message, type, options) {
+        const notification = document.createElement('div');
+        notification.className = `notification-enhanced notification-${type}`;
+        
+        const colors = {
+          success: '#4CAF50',
+          error: '#f44336',
+          warning: '#ff9800',
+          info: '#2196F3'
+        };
+
+        const icons = {
+          success: '✅',
+          error: '❌',
+          warning: '⚠️',
+          info: 'ℹ️'
+        };
+
+        notification.style.cssText = `
+          background: linear-gradient(135deg, ${colors[type]}, ${colors[type]}dd);
+          color: white;
+          padding: 16px 20px;
+          margin-bottom: 10px;
+          border-radius: 12px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+          transform: translateX(100%);
+          opacity: 0;
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-weight: 500;
+          position: relative;
+          overflow: hidden;
+        `;
+
+        notification.innerHTML = `
+          <span style="font-size: 1.2em;">${icons[type]}</span>
+          <span>${message}</span>
+          <button onclick="this.parentElement.remove()" style="
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-left: auto;
+          ">×</button>
+        `;
+
+        // تأثير الموجة
+        const wave = document.createElement('div');
+        wave.style.cssText = `
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+          transition: left 0.6s;
+        `;
+        notification.appendChild(wave);
+
+        setTimeout(() => {
+          wave.style.left = '100%';
+        }, 500);
+
+        return notification;
+      }
+
+      remove(notification) {
+        notification.style.transform = 'translateX(100%)';
+        notification.style.opacity = '0';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 500);
+      }
+    }
+
+    // تهيئة الأنظمة المحسنة
+    const smartAudio = new SmartAudioSystem();
+    const visualEffects = new AdvancedVisualEffects();
+    const notifications = new EnhancedNotificationSystem();
+    
+    // متغيرات التصويت المحسنة
+    let studentData = {}, currentClass = '', candidateList = [], voterList = [], selectedManual = [], voteCounts = {}, voted = new Set();
+    let votingTimer = null, votingTimeLeft = 0;
+
+    // تحميل بيانات الطلاب مع تحسينات - من الملف المحلي
+    async function loadStudents() {
+      try {
+        // تأثير التحميل
+        const loadingMsg = notifications.show('جاري تحميل بيانات الطلاب...', 'info', 10000);
+        
+        // جلب البيانات من الملف المحلي
+        const res = await fetch('../data/studentData.json');
+        if (!res.ok) {
+          throw new Error('فشل في تحميل ملف البيانات');
+        }
+        studentData = await res.json();
+        
+        const classSelect = document.getElementById("classSelect");
+        classSelect.innerHTML = '<option value="">-- اختر الصف --</option>';
+        
+        Object.keys(studentData).forEach((cls, index) => {
+          const option = document.createElement("option");
+          option.value = cls;
+          option.textContent = `الصف ${cls}`;
+          classSelect.appendChild(option);
+          
+          // تأثير التحميل التدريجي
+          setTimeout(() => {
+            option.style.animation = 'slideInFromLeft 0.3s ease-out';
+          }, index * 100);
+        });
+
+        notifications.remove(loadingMsg);
+        smartAudio.play('Notification.mp3');
+        notifications.show('تم تحميل بيانات الطلاب بنجاح! 🎓', 'success');
+        
+        // تشغيل الموسيقى الخلفية
+        setTimeout(() => {
+          smartAudio.playBackgroundMusic();
+        }, 1000);
+        
+      } catch (error) {
+        notifications.show('خطأ في تحميل بيانات الطلاب: ' + error.message, 'error');
+        smartAudio.play('wrong_answer.mp3');
+        
+        // إضافة بيانات تجريبية في حالة فشل التحميل
+        studentData = {
+          "7A": ["أحمد محمد", "فاطمة علي", "سالم خالد", "مريم سعيد", "يوسف حمد"],
+          "7B": ["نورا أحمد", "محمد سالم", "آمنة يوسف", "خالد محمد", "هناء علي"],
+          "8A": ["عبدالله سعيد", "زينب محمد", "طارق أحمد", "رقية سالم", "حمد علي"],
+          "8B": ["سعاد خالد", "عمر محمد", "ليلى أحمد", "ناصر سعيد", "عائشة حمد"]
+        };
+        
+        const classSelect = document.getElementById("classSelect");
+        classSelect.innerHTML = '<option value="">-- اختر الصف --</option>';
+        
+        Object.keys(studentData).forEach((cls) => {
+          const option = document.createElement("option");
+          option.value = cls;
+          option.textContent = `الصف ${cls}`;
+          classSelect.appendChild(option);
+        });
+        
+        notifications.show('تم تحميل بيانات تجريبية بدلاً من الملف الأصلي', 'warning');
+      }
+    }
+
+    // إعداد نظام التصويت المحسن
+    function startVotingSetup() {
+      currentClass = document.getElementById("classSelect").value;
+      const mode = document.getElementById("voteMode").value;
+      
+      if (!currentClass || !mode) {
+        smartAudio.play('wrong_answer.mp3');
+        notifications.show('يرجى اختيار الصف ونوع التصويت أولاً', 'warning');
+        return;
+      }
+
+      const fullList = [...studentData[currentClass]];
+      selectedManual = [];
+
+      smartAudio.play('kingdom-sounds/crystal-ping.mp3');
+      
+      // تأثير بصري لبداية الإعداد
+      const setupCard = document.querySelector('.voting-setup');
+      visualEffects.glowEffect(setupCard);
+
+      if (mode === 'single') {
+        const index = Math.floor(Math.random() * fullList.length);
+        candidateList = [fullList.splice(index, 1)[0]];
+        voterList = fullList;
+        
+        // تأثير الكشف التدريجي
+        setTimeout(() => {
+          renderVotingUI();
+          notifications.show(`تم اختيار ${candidateList[0]} كمرشح واحد 🎯`, 'success');
+        }, 500);
+        
+      } else if (mode === 'group') {
+        const shuffled = fullList.sort(() => 0.5 - Math.random());
+        candidateList = shuffled.slice(0, 3);
+        voterList = shuffled.slice(3);
+        
+        setTimeout(() => {
+          renderVotingUI();
+          notifications.show(`تم اختيار ${candidateList.length} مرشحين عشوائياً 👥`, 'success');
+        }, 500);
+        
+      } else {
+        renderManualSelection(fullList, mode);
+        notifications.show('اختر المرشحين يدوياً من القائمة 🎯', 'info');
+      }
+    }
+
+    // عرض واجهة الاختيار اليدوي المحسنة
+    function renderManualSelection(fullList, mode) {
+      const candidateArea = document.getElementById("candidateArea");
+      const candidatesGrid = document.getElementById("candidatesGrid");
+      
+      candidateArea.style.display = 'block';
+      candidatesGrid.innerHTML = '';
+      
+      // تأثير الظهور
+      candidateArea.style.opacity = '0';
+      candidateArea.style.transform = 'translateY(30px)';
+      
+      setTimeout(() => {
+        candidateArea.style.transition = 'all 0.6s ease';
+        candidateArea.style.opacity = '1';
+        candidateArea.style.transform = 'translateY(0)';
+      }, 100);
+
+      fullList.forEach((name, index) => {
+        const card = document.createElement("div");
+        card.className = 'candidate-card enhanced-card touch-target mobile-card';
+        card.textContent = name;
+        
+        // تأثير الظهور التدريجي
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'all 0.4s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+        
+        card.onclick = () => {
+          smartAudio.play('Click.mp3');
+          visualEffects.createParticleExplosion(card, 10);
+          
+          if (mode === 'select-single') {
+            selectedManual = [name];
+            document.querySelectorAll('.candidate-card').forEach(el => el.classList.remove('selected'));
+            card.classList.add('selected');
+            
+            notifications.show(`تم اختيار ${name} 🎯`, 'info', 2000);
+            
+          } else {
+            if (selectedManual.includes(name)) {
+              selectedManual = selectedManual.filter(n => n !== name);
+              card.classList.remove('selected');
+              notifications.show(`تم إلغاء اختيار ${name}`, 'warning', 2000);
+            } else {
+              selectedManual.push(name);
+              card.classList.add('selected');
+              notifications.show(`تم إضافة ${name} للمرشحين ✅`, 'success', 2000);
+            }
+          }
+          
+          // تحديث زر التأكيد
+          const confirmBtn = document.getElementById("confirmCandidatesBtn");
+          confirmBtn.disabled = selectedManual.length === 0;
+          if (selectedManual.length > 0) {
+            confirmBtn.classList.add('enhanced-btn');
+            visualEffects.glowEffect(confirmBtn, 1000);
+          }
+        };
+        
+        candidatesGrid.appendChild(card);
+      });
+
+      // تحديث النص التوضيحي
+      const display = document.getElementById("candidatesDisplay");
+      const maxCandidates = mode === 'select-single' ? 1 : Math.floor(fullList.length / 2);
+      visualEffects.typewriterEffect(display.querySelector('p'), 
+        `اختر ${mode === 'select-single' ? 'مرشحاً واحداً' : `من 1 إلى ${maxCandidates} مرشحين`} من القائمة أدناه`);
+    }
+
+    // عرض واجهة التصويت المحسنة
+    function renderVotingUI() {
+      const votersArea = document.getElementById("votersArea");
+      const votersContainer = document.getElementById("votersContainer");
+      const candidateArea = document.getElementById("candidateArea");
+      
+      votersArea.style.display = 'block';
+      votersContainer.innerHTML = '';
+      voteCounts = {};
+      voted.clear();
+
+      // إخفاء منطقة المرشحين وإظهار منطقة النتائج
+      candidateArea.style.display = 'none';
+      
+      // تهيئة عدادات الأصوات
+      candidateList.forEach(name => {
+        voteCounts[name] = 0;
+      });
+
+      // إنشاء منطقة عرض المرشحين في الأعلى
+      createCandidatesDisplay();
+
+      // إنشاء بطاقات الناخبين مع تحسينات
+      voterList.forEach((name, index) => {
+        const voterCard = createEnhancedVoterCard(name, index);
+        votersContainer.appendChild(voterCard);
+      });
+
+      // تحديث حالة التصويت
+      updateVotingStatus();
+      
+      // تأثيرات بصرية
+      const elements = votersContainer.querySelectorAll('.voter-card');
+      visualEffects.slideInElements(Array.from(elements), 100);
+    }
+
+    // إنشاء منطقة عرض المرشحين المحسنة
+    function createCandidatesDisplay() {
+      const existingDisplay = document.getElementById('candidatesDisplay');
+      if (existingDisplay) {
+        existingDisplay.remove();
+      }
+
+      const display = document.createElement('div');
+      display.id = 'candidatesDisplay';
+      display.className = 'candidates-display-enhanced';
+      display.style.cssText = `
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px 0;
+        border: 2px solid var(--primary-color);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        animation: slideInFromLeft 0.6s ease-out;
+      `;
+
+      candidateList.forEach((name, index) => {
+        const candidateBox = document.createElement('div');
+        candidateBox.className = 'candidate-result-box';
+        candidateBox.style.cssText = `
+          background: linear-gradient(135deg, white, #f8f9fa);
+          border: 2px solid var(--secondary-color);
+          border-radius: 12px;
+          padding: 15px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        `;
+
+        candidateBox.innerHTML = `
+          <h4 style="margin: 0 0 10px 0; color: var(--primary-color); font-size: 1.1em;">${name}</h4>
+          <div class="vote-counter" style="font-size: 1.5em; font-weight: bold; color: var(--accent-color);">0</div>
+          <div class="vote-text" style="font-size: 0.9em; color: var(--secondary-color);">أصوات</div>
+          <div class="progress-bar-custom">
+            <div class="progress-fill-custom" style="width: 0%"></div>
+          </div>
+          <div class="voters-list" style="margin-top: 10px; font-size: 0.8em; color: var(--text-muted);"></div>
+        `;
+
+        display.appendChild(candidateBox);
+      });
+
+      const votersArea = document.getElementById("votersArea");
+      votersArea.insertBefore(display, votersArea.firstChild);
+    }
+
+    // إنشاء بطاقة ناخب محسنة
+    function createEnhancedVoterCard(voterName, index) {
+      const card = document.createElement("div");
+      card.className = 'voter-card enhanced-card touch-target mobile-card';
+      card.style.cssText = `
+        background: linear-gradient(135deg, white, #f8f9fa);
+        border: 2px solid var(--secondary-color);
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(20px);
+      `;
+
+      // تأثير الظهور المتأخر
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, index * 100);
+
+      card.innerHTML = `
+        <div class="voter-name" style="font-weight: 600; margin-bottom: 10px; color: var(--primary-color);">
+          ${voterName}
+        </div>
+        <select class="vote-select enhanced-select" style="
+          width: 100%;
+          padding: 8px;
+          border: 2px solid var(--light-gray);
+          border-radius: 8px;
+          background: white;
+          font-size: 0.9em;
+          transition: all 0.3s ease;
+        ">
+          <option value="">🗳️ اختر مرشح</option>
+          ${candidateList.map(candidate => 
+            `<option value="${candidate}">👤 ${candidate}</option>`
+          ).join('')}
+          <option value="no-vote">❌ لا أصوّت</option>
+        </select>
+      `;
+
+      const select = card.querySelector('.vote-select');
+      
+      select.onchange = (e) => {
+        handleVote(voterName, e.target.value, card);
+      };
+
+      select.onfocus = () => {
+        card.style.borderColor = 'var(--primary-color)';
+        card.style.transform = 'translateY(-5px)';
+        smartAudio.play('Click.mp3', { volume: 0.3 });
+      };
+
+      select.onblur = () => {
+        if (!select.value) {
+          card.style.borderColor = 'var(--secondary-color)';
+          card.style.transform = 'translateY(0)';
+        }
+      };
+
+      return card;
+    }
+
+    // معالجة التصويت مع تحسينات
+    function handleVote(voterName, selectedCandidate, voterCard) {
+      if (!selectedCandidate) return;
+
+      // تأثيرات صوتية وبصرية
+      smartAudio.play('kingdom-sounds/crystal-ping.mp3');
+      visualEffects.createParticleExplosion(voterCard, 15);
+
+      if (selectedCandidate !== 'no-vote') {
+        // تحديث عداد الأصوات
+        voteCounts[selectedCandidate]++;
+        
+        // تحديث العرض
+        updateCandidateDisplay(selectedCandidate);
+        
+        notifications.show(`صوّت ${voterName} لـ ${selectedCandidate} ✅`, 'success', 3000);
+      } else {
+        notifications.show(`${voterName} امتنع عن التصويت`, 'info', 2000);
+      }
+
+      // تأثير بصري لبطاقة المصوت
+      voterCard.style.background = selectedCandidate !== 'no-vote' 
+        ? 'linear-gradient(135deg, #d4edda, #c3e6cb)' 
+        : 'linear-gradient(135deg, #f8d7da, #f1b2b7)';
+      
+      voterCard.style.borderColor = selectedCandidate !== 'no-vote' 
+        ? 'var(--success-color)' 
+        : 'var(--warning-color)';
+
+      // إضافة أيقونة
+      const icon = document.createElement('div');
+      icon.innerHTML = selectedCandidate !== 'no-vote' ? '✅' : '❌';
+      icon.style.cssText = `
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 1.5em;
+        animation: bounceIn 0.6s ease;
+      `;
+      voterCard.appendChild(icon);
+
+      // إزالة البطاقة بعد التصويت
+      setTimeout(() => {
+        voterCard.style.transition = 'all 0.5s ease';
+        voterCard.style.opacity = '0';
+        voterCard.style.transform = 'translateX(-100%)';
+        
+        setTimeout(() => {
+          if (voterCard.parentNode) {
+            voterCard.parentNode.removeChild(voterCard);
+          }
+        }, 500);
+      }, 2000);
+
+      voted.add(voterName);
+      
+      // تحديث حالة التصويت
+      updateVotingStatus();
+      
+      // التحقق من انتهاء التصويت
+      if (voted.size === voterList.length) {
+        setTimeout(() => {
+          completeVoting();
+        }, 3000);
+      }
+    }
+
+    // تحديث عرض المرشح
+    function updateCandidateDisplay(candidateName) {
+      const display = document.getElementById('candidatesDisplay');
+      const candidateBoxes = display.querySelectorAll('.candidate-result-box');
+      
+      candidateBoxes.forEach(box => {
+        const nameElement = box.querySelector('h4');
+        if (nameElement.textContent === candidateName) {
+          const counter = box.querySelector('.vote-counter');
+          const progressFill = box.querySelector('.progress-fill-custom');
+          const votersList = box.querySelector('.voters-list');
+          
+          // تحديث العداد مع تأثير
+          const currentCount = parseInt(counter.textContent);
+          visualEffects.animateCounter(counter, currentCount, voteCounts[candidateName]);
+          
+          // تحديث شريط التقدم
+          const percentage = (voteCounts[candidateName] / voterList.length) * 100;
+          progressFill.style.width = percentage + '%';
+          
+          // تأثير الوهج
+          visualEffects.glowEffect(box, 1500);
+        }
+      });
+    }
+
+    // تحديث حالة التصويت
+    function updateVotingStatus() {
+      const statusElement = document.getElementById('votingStatus');
+      const remaining = voterList.length - voted.size;
+      const percentage = Math.round((voted.size / voterList.length) * 100);
+      
+      if (remaining > 0) {
+        statusElement.className = 'voting-status active';
+        visualEffects.typewriterEffect(statusElement.querySelector('p'), 
+          `📊 التقدم: ${percentage}% • المتبقي: ${remaining} مصوت`);
+      } else {
+        statusElement.className = 'voting-status completed';
+        visualEffects.typewriterEffect(statusElement.querySelector('p'), 
+          '🎉 انتهى التصويت! جاري تحضير النتائج...');
+      }
+    }
+
+    // إكمال التصويت
+    function completeVoting() {
+      smartAudio.play('kingdom-sounds/cosmic-explosion.mp3');
+      notifications.show('انتهى التصويت! 🎉 جاري عرض النتائج...', 'success');
+      
+      setTimeout(() => {
+        showEnhancedResults();
+      }, 2000);
+    }
+
+    // عرض النتائج المحسن
+    function showEnhancedResults() {
+      smartAudio.play('kingdom-sounds/crown-ceremony.mp3');
+      smartAudio.stopBackgroundMusic();
+      
+      const resultsArea = document.getElementById("resultsArea");
+      resultsArea.style.display = 'block';
+      
+      // تأثير الظهور
+      resultsArea.style.opacity = '0';
+      resultsArea.style.transform = 'translateY(50px)';
+      
+      setTimeout(() => {
+        resultsArea.style.transition = 'all 0.8s ease';
+        resultsArea.style.opacity = '1';
+        resultsArea.style.transform = 'translateY(0)';
+      }, 100);
+
+      const ctx = document.getElementById("resultsChart").getContext("2d");
+      const labels = Object.keys(voteCounts);
+      const data = Object.values(voteCounts);
+
+      const maxVotes = Math.max(...data);
+      const winners = labels.filter((name, i) => data[i] === maxVotes);
+
+      // ألوان ديناميكية للرسم البياني
+      const colors = labels.map(name => 
+        winners.includes(name) ? '#FFD700' : `hsl(${Math.random() * 360}, 70%, 60%)`
+      );
+
+      // إنشاء الرسم البياني مع تحسينات
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.map(name => winners.includes(name) ? `👑 ${name}` : name),
+          datasets: [{
+            label: 'عدد الأصوات',
+            data,
+            backgroundColor: colors,
+            borderColor: colors.map(color => color.replace('0.8)', '1)')),
+            borderWidth: 3,
+            borderRadius: 8,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 2000,
+            easing: 'easeOutBounce'
+          },
+          plugins: {
+            legend: { 
+              display: false 
+            },
+            tooltip: {
+              callbacks: {
+                title: (context) => {
+                  const name = context[0].label.replace('👑 ', '');
+                  return winners.includes(name) ? `🏆 ${name} (الفائز)` : name;
+                },
+                label: (context) => {
+                  const votes = context.raw;
+                  const percentage = ((votes / data.reduce((a, b) => a + b, 0)) * 100).toFixed(1);
+                  return `${votes} ${votes === 1 ? 'صوت' : 'أصوات'} (${percentage}%)`;
+                }
+              },
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              titleColor: '#FFD700',
+              bodyColor: '#FFFFFF',
+              borderColor: '#FFD700',
+              borderWidth: 2,
+              cornerRadius: 10,
+              displayColors: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+                color: '#333',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.1)'
+              }
+            },
+            x: {
+              ticks: {
+                color: '#333',
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+
+      // تأثيرات بصرية للنتائج
+      setTimeout(() => {
+        // الاحتفال بالفائز
+        if (winners.length === 1) {
+          notifications.show(`🎉 الفائز: ${winners[0]} بـ ${maxVotes} ${maxVotes === 1 ? 'صوت' : 'أصوات'}!`, 'success', 8000);
+        } else {
+          notifications.show(`🎉 تعادل بين: ${winners.join(', ')} بـ ${maxVotes} ${maxVotes === 1 ? 'صوت' : 'أصوات'}!`, 'success', 8000);
+        }
+
+        // تأثيرات الاحتفال
+        visualEffects.confettiBlast({
+          particleCount: 300,
+          spread: 180,
+          origin: { y: 0.4 }
+        });
+
+        // أصوات الاحتفال
+        smartAudio.playSequence([
+          'kingdom-sounds/battle-victory.mp3',
+          'clap.mp3'
+        ], 1000);
+
+        // تأثيرات إضافية كل 3 ثوان
+        const celebrationInterval = setInterval(() => {
+          visualEffects.confettiBlast({
+            particleCount: 100,
+            spread: 90,
+            origin: { x: Math.random(), y: 0.7 }
+          });
+        }, 3000);
+
+        // إيقاف التأثيرات بعد 15 ثانية
+        setTimeout(() => {
+          clearInterval(celebrationInterval);
+        }, 15000);
+
+      }, 2500);
+
+      // إنشاء جدول النتائج التفصيلي
+      createDetailedResultsTable(labels, data, winners, maxVotes);
+      
+      // تحديث عرض المرشحين النهائي
+      updateFinalCandidatesDisplay(winners);
+    }
+
+    // إنشاء جدول النتائج التفصيلي
+    function createDetailedResultsTable(labels, data, winners, maxVotes) {
+      const resultsArea = document.getElementById("resultsArea");
+      
+      const tableContainer = document.createElement('div');
+      tableContainer.className = 'results-table-container';
+      tableContainer.style.cssText = `
+        margin: 30px 0;
+        background: linear-gradient(135deg, #f8f9fa, white);
+        border-radius: 15px;
+        padding: 20px;
+        border: 2px solid var(--accent-color);
+        overflow: hidden;
+        position: relative;
+      `;
+
+      const table = document.createElement('table');
+      table.style.cssText = `
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Cairo', sans-serif;
+      `;
+
+      // رأس الجدول
+      table.innerHTML = `
+        <thead>
+          <tr style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: white;">
+            <th style="padding: 15px; text-align: center; border-radius: 10px 0 0 0;">المرتبة</th>
+            <th style="padding: 15px; text-align: center;">المرشح</th>
+            <th style="padding: 15px; text-align: center;">الأصوات</th>
+            <th style="padding: 15px; text-align: center;">النسبة</th>
+            <th style="padding: 15px; text-align: center; border-radius: 0 10px 0 0;">الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="resultsTableBody">
+        </tbody>
+      `;
+
+      const tbody = table.querySelector('#resultsTableBody');
+      const totalVotes = data.reduce((a, b) => a + b, 0);
+      
+      // ترتيب النتائج
+      const sortedResults = labels.map((name, index) => ({
+        name,
+        votes: data[index],
+        percentage: ((data[index] / totalVotes) * 100).toFixed(1)
+      })).sort((a, b) => b.votes - a.votes);
+
+      // إضافة صفوف الجدول
+      sortedResults.forEach((result, index) => {
+        const isWinner = winners.includes(result.name);
+        const row = document.createElement('tr');
+        
+        row.style.cssText = `
+          background: ${isWinner ? 'linear-gradient(135deg, #fff3cd, #ffeaa7)' : (index % 2 === 0 ? '#f8f9fa' : 'white')};
+          transition: all 0.3s ease;
+          animation: slideInFromRight ${0.6 + index * 0.1}s ease-out;
+        `;
+
+        row.innerHTML = `
+          <td style="padding: 12px; text-align: center; font-weight: bold; color: ${isWinner ? '#d4a247' : '#6c757d'};">
+            ${isWinner ? '🏆' : index + 1}
+          </td>
+          <td style="padding: 12px; text-align: center; font-weight: ${isWinner ? 'bold' : 'normal'}; color: ${isWinner ? '#d4a247' : '#333'};">
+            ${isWinner ? '👑 ' : ''}${result.name}
+          </td>
+          <td style="padding: 12px; text-align: center; font-weight: bold; color: var(--primary-color);">
+            ${result.votes}
+          </td>
+          <td style="padding: 12px; text-align: center; color: var(--secondary-color);">
+            ${result.percentage}%
+          </td>
+          <td style="padding: 12px; text-align: center;">
+            ${isWinner ? '<span style="color: #d4a247; font-weight: bold;">🎉 فائز</span>' : 
+              (result.votes === 0 ? '<span style="color: #6c757d;">لم يحصل على أصوات</span>' : 
+               '<span style="color: #28a745;">مشارك</span>')}
+          </td>
+        `;
+
+        // تأثير hover
+        row.onmouseenter = () => {
+          row.style.transform = 'translateX(-5px)';
+          row.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+        };
+
+        row.onmouseleave = () => {
+          row.style.transform = 'translateX(0)';
+          row.style.boxShadow = 'none';
+        };
+
+        tbody.appendChild(row);
+
+        // تأثير العداد المتحرك
+        setTimeout(() => {
+          const voteCell = row.children[2];
+          visualEffects.animateCounter(voteCell, 0, result.votes, 1500);
+        }, 1000 + index * 200);
+      });
+
+      tableContainer.appendChild(table);
+      
+      // إدراج الجدول قبل زر العودة
+      const returnButton = resultsArea.querySelector('button');
+      resultsArea.insertBefore(tableContainer, returnButton);
+    }
+
+    // تحديث عرض المرشحين النهائي
+    function updateFinalCandidatesDisplay(winners) {
+      const candidatesDisplay = document.getElementById('candidatesDisplay');
+      if (candidatesDisplay) {
+        const candidateBoxes = candidatesDisplay.querySelectorAll('.candidate-result-box');
+        
+        candidateBoxes.forEach(box => {
+          const nameElement = box.querySelector('h4');
+          const candidateName = nameElement.textContent;
+          
+          if (winners.includes(candidateName)) {
+            // تأثير الفائز
+            box.style.background = 'linear-gradient(135deg, #ffd700, #fff8dc)';
+            box.style.border = '3px solid #d4a247';
+            box.style.transform = 'scale(1.05)';
+            box.style.boxShadow = '0 10px 30px rgba(212, 162, 71, 0.3)';
+            
+            nameElement.innerHTML = `👑 ${candidateName} 🏆`;
+            nameElement.style.color = '#d4a247';
+            
+            // تأثير الوهج المستمر
+            box.style.animation = 'glow 2s ease-in-out infinite alternate';
+          }
+        });
+      }
+    }
+
+    // إعادة تعيين النشاط المحسن
+    function resetVoting() {
+      smartAudio.play('Click.mp3');
+      smartAudio.stopBackgroundMusic();
+      
+      // تأثير الإخفاء
+      const elements = ['candidateArea', 'votersArea', 'resultsArea'];
+      elements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element.style.display !== 'none') {
+          element.style.transition = 'all 0.5s ease';
+          element.style.opacity = '0';
+          element.style.transform = 'translateY(30px)';
+          
+          setTimeout(() => {
+            element.style.display = 'none';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+          }, 500);
+        }
+      });
+
+      // إعادة تعيين المتغيرات
+      candidateList = [];
+      voterList = [];
+      selectedManual = [];
+      voteCounts = {};
+      voted.clear();
+      
+      // إعادة تعيين النماذج
+      document.getElementById("classSelect").value = '';
+      document.getElementById("voteMode").value = '';
+      document.getElementById("startNominateBtn").disabled = true;
+      document.getElementById("confirmCandidatesBtn").disabled = true;
+      document.getElementById("showResultsBtn").disabled = true;
+      
+      // إزالة العناصر المؤقتة
+      const tempElements = document.querySelectorAll('#candidatesDisplay, .results-table-container');
+      tempElements.forEach(el => el.remove());
+      
+      notifications.show('تم إعادة تعيين النشاط بنجاح 🔄', 'info');
+      
+      // إعادة تشغيل الموسيقى الخلفية
+      setTimeout(() => {
+        smartAudio.playBackgroundMusic();
+      }, 1000);
+    }
+
+    // نظام التحكم في الأصوات
+    function createAudioControls() {
+      const controlsContainer = document.createElement('div');
+      controlsContainer.className = 'audio-controls';
+      controlsContainer.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 200px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 10px;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+      `;
+
+      // زر كتم/إلغاء كتم الصوت
+      const muteButton = document.createElement('button');
+      muteButton.innerHTML = '🔊';
+      muteButton.className = 'btn-control';
+      muteButton.style.cssText = `
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.2em;
+      `;
+
+      muteButton.onclick = () => {
+        if (smartAudio.isMuted) {
+          smartAudio.unmute();
+          muteButton.innerHTML = '🔊';
+          notifications.show('تم تشغيل الصوت', 'info', 2000);
+        } else {
+          smartAudio.mute();
+          muteButton.innerHTML = '🔇';
+          notifications.show('تم كتم الصوت', 'warning', 2000);
+        }
+      };
+
+      // شريط التحكم في مستوى الصوت
+      const volumeSlider = document.createElement('input');
+      volumeSlider.type = 'range';
+      volumeSlider.min = '0';
+      volumeSlider.max = '1';
+      volumeSlider.step = '0.1';
+      volumeSlider.value = smartAudio.volume;
+      volumeSlider.style.cssText = `
+        width: 80px;
+        height: 40px;
+        cursor: pointer;
+      `;
+
+      volumeSlider.oninput = (e) => {
+        smartAudio.setVolume(parseFloat(e.target.value));
+      };
+
+      controlsContainer.appendChild(muteButton);
+      controlsContainer.appendChild(volumeSlider);
+      document.body.appendChild(controlsContainer);
+      
+      // تحديث موقع أدوات التحكم للشاشات الصغيرة
+      const updateControlsPosition = () => {
+        if (window.innerWidth <= 768) {
+          controlsContainer.style.left = '15px';
+          controlsContainer.style.top = '80px';
+          controlsContainer.style.flexDirection = 'column';
+          controlsContainer.style.gap = '5px';
+          controlsContainer.style.padding = '8px';
+          volumeSlider.style.width = '60px';
+          volumeSlider.style.height = '35px';
+          muteButton.style.width = '35px';
+          muteButton.style.height = '35px';
+          muteButton.style.fontSize = '1em';
+        } else if (window.innerWidth <= 480) {
+          controlsContainer.style.left = '15px';
+          controlsContainer.style.top = '75px';
+          controlsContainer.style.flexDirection = 'row';
+          controlsContainer.style.gap = '5px';
+          controlsContainer.style.padding = '6px';
+          volumeSlider.style.width = '50px';
+          volumeSlider.style.height = '30px';
+          muteButton.style.width = '30px';
+          muteButton.style.height = '30px';
+          muteButton.style.fontSize = '0.9em';
+        } else {
+          controlsContainer.style.left = '200px';
+          controlsContainer.style.top = '20px';
+          controlsContainer.style.flexDirection = 'row';
+          controlsContainer.style.gap = '10px';
+          controlsContainer.style.padding = '10px';
+          volumeSlider.style.width = '80px';
+          volumeSlider.style.height = '40px';
+          muteButton.style.width = '40px';
+          muteButton.style.height = '40px';
+          muteButton.style.fontSize = '1.2em';
+        }
+      };
+
+      // تطبيق الموقع المناسب عند التحميل
+      updateControlsPosition();
+      
+      // تحديث الموقع عند تغيير حجم الشاشة
+      window.addEventListener('resize', updateControlsPosition);
+      
+      return controlsContainer;
+    }
+
+    // تحديث وظائف الأزرار
+    function updateButtonStates() {
+      const classSelect = document.getElementById("classSelect");
+      const voteMode = document.getElementById("voteMode");
+      const startBtn = document.getElementById("startNominateBtn");
+      
+      startBtn.disabled = !classSelect.value || !voteMode.value;
+      
+      if (!startBtn.disabled) {
+        startBtn.classList.add('enhanced-btn');
+        visualEffects.glowEffect(startBtn, 1000);
+      } else {
+        startBtn.classList.remove('enhanced-btn');
+      }
+    }
+
+    // تهيئة النشاط المحسن عند تحميل الصفحة
+    window.onload = function() {
+      // تهيئة الأنظمة
+      smartAudio.init();
+      loadStudents();
+      createAudioControls();
+      
+      // تحسين زر العودة
+      const backBtn = document.querySelector('.back-btn');
+      if (backBtn) {
+        backBtn.addEventListener('mouseenter', () => {
+          smartAudio.play('Click.mp3', { volume: 0.3 });
+        });
+        
+        backBtn.addEventListener('click', (e) => {
+          smartAudio.play('Notification.mp3');
+          
+          // تأثير بصري قبل الانتقال
+          backBtn.style.transform = 'scale(0.9)';
+          setTimeout(() => {
+            // الانتقال سيحدث تلقائياً
+          }, 150);
+        });
+
+        // تأثير الوهج عند التحميل
+        setTimeout(() => {
+          visualEffects.glowEffect(backBtn, 2000);
+        }, 1000);
+      }
+      
+      // ربط الأحداث المحسنة
+      document.getElementById('startNominateBtn').onclick = startVotingSetup;
+      document.getElementById('showResultsBtn').onclick = showEnhancedResults;
+      
+      // تحديث حالة الأزرار عند التغيير
+      document.getElementById("classSelect").onchange = updateButtonStates;
+      document.getElementById("voteMode").onchange = updateButtonStates;
+      
+      // تحسين زر التأكيد
+      const confirmBtn = document.getElementById("confirmCandidatesBtn");
+      confirmBtn.onclick = () => {
+        if (selectedManual.length === 0) {
+          notifications.show('يرجى اختيار مرشح أو أكثر أولاً', 'warning');
+          return;
+        }
+        
+        candidateList = [...selectedManual];
+        voterList = studentData[currentClass].filter(n => !candidateList.includes(n));
+        renderVotingUI();
+        smartAudio.play('kingdom-sounds/crystal-ping.mp3');
+        notifications.show(`تم تأكيد ${candidateList.length} مرشح وبدء التصويت! 🚀`, 'success');
+      };
+
+      // إضافة زر إعادة التعيين المحسن
+      const resetBtn = document.createElement('button');
+      resetBtn.id = 'resetBtn';
+      resetBtn.className = 'btn btn-secondary enhanced-btn touch-target mobile-btn';
+      resetBtn.innerHTML = '<i class="fas fa-redo"></i> 🔄 إعادة تعيين';
+      resetBtn.onclick = resetVoting;
+      resetBtn.style.cssText = `
+        margin: 10px;
+        background: linear-gradient(45deg, #6c757d, #495057);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      `;
+      
+      // إضافة الزر في مكان مناسب
+      const headerElement = document.querySelector('.header');
+      headerElement.appendChild(resetBtn);
+
+      // رسالة ترحيب
+      setTimeout(() => {
+        notifications.show('مرحباً بك في نظام التصويت المطور! 🗳️✨', 'info', 5000);
+      }, 2000);
+
+      // تأثيرات بصرية أولية
+      const cards = document.querySelectorAll('.card');
+      visualEffects.slideInElements(Array.from(cards), 200);
+    };
+
+    // إضافة مستمعات الأحداث للوحة المفاتيح
+    document.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'r':
+        case 'R':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            resetVoting();
+          }
+          break;
+        case 'm':
+        case 'M':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            if (smartAudio.isMuted) {
+              smartAudio.unmute();
+            } else {
+              smartAudio.mute();
+            }
+          }
+          break;
+      }
+    });
+
+    // إضافة دعم اللمس المحسن
+    if ('ontouchstart' in window) {
+      document.body.classList.add('touch-device');
+      
+      // تحسين الاستجابة للمس
+      document.addEventListener('touchstart', (e) => {
+        if (e.target.classList.contains('touch-target')) {
+          e.target.style.transform = 'scale(0.95)';
+        }
+      });
+      
+      document.addEventListener('touchend', (e) => {
+        if (e.target.classList.contains('touch-target')) {
+          setTimeout(() => {
+            e.target.style.transform = '';
+          }, 150);
+        }
+      });
+    }
+  </script>
+  </script>
+  
+  <!-- Responsive Helper Script -->
+  <script src="../assets/js/responsive-helper.js"></script>
+</body>
+</html>

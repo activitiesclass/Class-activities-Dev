@@ -1,0 +1,5276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>مسابقة الحروف - Blockbusters | أنشطة الفصل</title>
+  
+  <!-- الخطوط والأيقونات -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- ===== ملفات التصميم المتجاوب ===== -->
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <!-- ملف CSS متجاوب مخصص لتحسين Blockbusters على الهاتف المحمول -->
+  <link rel="stylesheet" href="../assets/css/blockbusters-responsive.css">
+  
+  <style>
+    /* ==== متغيرات الألوان العُمانية ==== */
+    :root {
+      /* الألوان الأساسية */
+      --oman-red: #DC143C;
+      --oman-green: #228B22;
+      --oman-gold: #FFD700;
+      --oman-white: #FFFFFF;
+      --oman-navy: #1B365D;
+      
+      /* التدرجات */
+      --red-gradient: linear-gradient(135deg, #DC143C 0%, #B91C3C 50%, #991B1B 100%);
+      --green-gradient: linear-gradient(135deg, #228B22 0%, #16A34A 50%, #15803D 100%);
+      --gold-gradient: linear-gradient(135deg, #FFD700 0%, #F59E0B 50%, #D97706 100%);
+      --navy-gradient: linear-gradient(135deg, #1B365D 0%, #1E40AF 50%, #1D4ED8 100%);
+      
+      /* ألوان النظام */
+      --bg-primary: #F8FAFC;
+      --bg-secondary: #F1F5F9;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --border-color: #E2E8F0;
+      --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+      
+      /* متغيرات التحريك */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+      
+      /* الخط */
+      --font-family: 'Cairo', sans-serif;
+    }
+
+    /* ==== إعادة تعيين الأساسيات ==== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      direction: rtl;
+    }
+
+    /* ==== أزرار التحكم العلوية ==== */
+    .control-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: var(--shadow-light);
+    }
+
+    .control-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--oman-red);
+    }
+
+    .control-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .control-btn {
+      background: white;
+      border: 2px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.75rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      font-size: 1.1rem;
+      min-width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .control-btn:hover {
+      background: var(--bg-secondary);
+      border-color: var(--oman-red);
+      color: var(--oman-red);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .control-btn:active {
+      transform: translateY(0);
+    }
+
+    .control-btn.active {
+      background: var(--red-gradient);
+      color: white;
+      border-color: var(--oman-red);
+    }
+
+    /* أنيميشن تحذير */
+    @keyframes warningPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    /* أنيميشن ظهور وإخفاء المودال */
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes modalFadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.9); }
+    }
+
+    /* ==== المحتوى الرئيسي ==== */
+    .main-container {
+      margin-top: 5rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ==== عنوان اللعبة ==== */
+    .game-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--red-gradient);
+    }
+
+    .game-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--red-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .game-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ==== لوحة الإعدادات ==== */
+    .settings-panel {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--border-color);
+    }
+
+    .settings-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .setting-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .setting-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .setting-input, .setting-select {
+      padding: 1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: var(--font-family);
+      background: white;
+      color: var(--text-primary);
+      transition: var(--transition-normal);
+    }
+
+    .setting-input:focus, .setting-select:focus {
+      outline: none;
+      border-color: var(--oman-red);
+      box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+    }
+
+    .players-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 20px;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .player-input {
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 60px;
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .player-input input {
+      width: 100%;
+      padding: 1rem;
+      padding-right: 3rem;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: var(--font-family);
+      transition: var(--transition-normal);
+    }
+
+    .player-input input:focus {
+      outline: none;
+      border-color: var(--oman-red);
+      box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+    }
+
+    .player-input .team-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+    }
+
+    .player-input.green .team-icon {
+      color: var(--oman-green);
+    }
+
+    .player-input.red .team-icon {
+      color: var(--oman-red);
+    }
+
+    /* ==== أزرار الأكشن ==== */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: var(--red-gradient);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: var(--font-family);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 150px;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-large);
+    }
+
+    .action-btn:active {
+      transform: translateY(0);
+    }
+
+    .action-btn.secondary {
+      background: var(--navy-gradient);
+    }
+
+    .action-btn.success {
+      background: var(--green-gradient);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ==== منطقة اللعبة ==== */
+    .game-area {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    /* ==== لوحات الفرق ==== */
+    .team-panel {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-medium);
+      border: 3px solid;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-normal);
+    }
+
+    .team-panel.green {
+      border-color: var(--oman-green);
+    }
+
+    .team-panel.red {
+      border-color: var(--oman-red);
+    }
+
+    .team-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .team-panel.green::before {
+      background: var(--green-gradient);
+    }
+
+    .team-panel.red::before {
+      background: var(--red-gradient);
+    }
+
+    .team-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-icon {
+      font-size: 1.5rem;
+    }
+
+    .team-panel.green .team-icon {
+      color: var(--oman-green);
+    }
+
+    .team-panel.red .team-icon {
+      color: var(--oman-red);
+    }
+
+    .team-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .team-panel.green .team-name {
+      color: var(--oman-green);
+    }
+
+    .team-panel.red .team-name {
+      color: var(--oman-red);
+    }
+
+    .team-score {
+      font-size: 3rem;
+      font-weight: 800;
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .team-panel.green .team-score {
+      color: var(--oman-green);
+    }
+
+    .team-panel.red .team-score {
+      color: var(--oman-red);
+    }
+
+    .team-strategy {
+      font-size: 0.9rem;
+      text-align: center;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .team-members {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 1rem;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+
+    /* ==== لوحة الحروف ==== */
+    .board-container {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--border-color);
+    }
+
+    .board-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .hexagon-board {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .hex-cell {
+      aspect-ratio: 1;
+      background: var(--bg-secondary);
+      border: 3px solid var(--border-color);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hex-cell:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--oman-gold);
+    }
+
+    .hex-cell.selected {
+      cursor: default;
+      transform: none;
+    }
+
+    .hex-cell.green {
+      background: var(--green-gradient);
+      border-color: var(--oman-green);
+      color: white;
+    }
+
+    .hex-cell.red {
+      background: var(--red-gradient);
+      border-color: var(--oman-red);
+      color: white;
+    }
+
+    .hex-cell::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transition: var(--transition-fast);
+    }
+
+    .hex-cell:active::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ==== النوافذ المنبثقة ==== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 2rem;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: var(--shadow-large);
+      transform: scale(0.8);
+      opacity: 0;
+      transition: var(--transition-normal);
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: var(--transition-fast);
+    }
+
+    .close-btn:hover {
+      background: var(--bg-secondary);
+      color: var(--oman-red);
+    }
+
+    /* ==== نافذة اختيار الفريق ==== */
+    .team-selection-modal .modal-content {
+      text-align: center;
+    }
+
+    .team-selection-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+    }
+
+    .team-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .team-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: var(--font-family);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 150px;
+      justify-content: center;
+    }
+
+    .team-btn.green {
+      background: var(--green-gradient);
+      color: white;
+    }
+
+    .team-btn.red {
+      background: var(--red-gradient);
+      color: white;
+    }
+
+    .team-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* ==== نافذة الفوز ==== */
+    .victory-modal .modal-content {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .victory-animation {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .victory-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .victory-players {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .honor-board {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .honor-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .honor-list {
+      list-style: none;
+    }
+
+    .honor-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem;
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      box-shadow: var(--shadow-light);
+    }
+
+    .honor-rank {
+      font-weight: 700;
+      color: var(--oman-gold);
+      min-width: 2rem;
+    }
+
+    .honor-team {
+      font-weight: 600;
+      flex: 1;
+      text-align: right;
+    }
+
+    .honor-date {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==== نافذة التعليمات ==== */
+    .instructions-list {
+      list-style: none;
+    }
+
+    .instructions-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .instructions-list li::before {
+      content: '✓';
+      background: var(--green-gradient);
+      color: white;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* ==== التبويبات المطورة ==== */
+    .tab-btn {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.75rem 1rem;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-family);
+      flex: 1;
+      text-align: center;
+    }
+
+    .tab-btn:hover {
+      background: var(--bg-primary);
+      border-color: var(--oman-red);
+      color: var(--oman-red);
+    }
+
+    .tab-btn.active {
+      background: var(--red-gradient);
+      color: white;
+      border-color: var(--oman-red);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ==== بطاقات النصائح ==== */
+    .tip-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: var(--shadow-light);
+    }
+
+    .tip-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--oman-navy);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ==== فئات الأسئلة ==== */
+    .question-category {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-light);
+    }
+
+    .category-header {
+      background: var(--navy-gradient);
+      color: white;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .category-content {
+      padding: 1rem;
+    }
+
+    .question-examples {
+      background: linear-gradient(135deg, var(--oman-green)15 0%, var(--oman-gold)15 100%);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-right: 4px solid var(--oman-green);
+    }
+
+    .question-examples div {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .question-tips {
+      font-size: 0.9rem;
+    }
+
+    .question-tips ul {
+      margin: 0.5rem 0 0 0;
+      padding-right: 1rem;
+    }
+
+    .question-tips li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* ==== النصائح السريعة ==== */
+    .quick-tip {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 12px;
+      border-right: 4px solid var(--oman-gold);
+    }
+
+    .tip-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .tip-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* ==== الحالات المخفية ==== */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==== التأثيرات البصرية ==== */
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .shake {
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* ==== الاستجابة للشاشات الصغيرة ==== */
+    @media (max-width: 1200px) {
+      .game-area {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .team-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .team-score {
+        font-size: 2rem;
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 1rem;
+        margin-top: 4rem;
+      }
+
+      .control-header {
+        padding: 0.75rem 1rem;
+      }
+
+      .app-title {
+        font-size: 1.2rem;
+      }
+
+      .control-btn {
+        padding: 0.5rem;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+      }
+
+      .game-title {
+        font-size: 2rem;
+      }
+
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .hexagon-board {
+        gap: 0.25rem;
+        padding: 0.5rem;
+      }
+
+      .hex-cell {
+        font-size: 1.2rem;
+      }
+
+      .team-panel {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .modal-overlay {
+        padding: 1rem;
+      }
+
+      .team-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* الحفاظ على الشبكة 5×5 مع تقليل الحجم للهواتف */
+      .hexagon-board {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 280px;
+        gap: 0.25rem;
+      }
+
+      .hex-cell {
+        font-size: 0.9rem;
+        min-height: 45px;
+      }
+
+      .game-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* ===== تحسينات التصميم المتجاوب الشاملة ===== */
+    
+    /* للأجهزة اللوحية الكبيرة */
+    @media (max-width: 1024px) {
+      .main-container {
+        padding: 1.5rem;
+      }
+
+      .game-area {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .settings-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .players-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+
+    /* للأجهزة اللوحية المتوسطة */
+    @media (max-width: 768px) {
+      .control-header {
+        padding: 0.75rem 1rem;
+      }
+
+      .control-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+
+      .app-title {
+        font-size: 1.3rem;
+        justify-content: center;
+      }
+
+      .control-group {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .control-btn {
+        min-width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+      }
+
+      .main-container {
+        margin-top: 7rem;
+        padding: 1rem;
+      }
+
+      .game-header {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .game-title {
+        font-size: 2rem;
+      }
+
+      .game-subtitle {
+        font-size: 1rem;
+      }
+
+      .settings-panel {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .settings-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .players-container {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action-btn {
+        min-width: auto;
+        width: 100%;
+      }
+
+      .board-container {
+        padding: 1.5rem;
+      }
+
+      .hexagon-board {
+        max-width: 400px;
+        gap: 0.4rem;
+      }
+
+      .hex-cell {
+        font-size: 1.2rem;
+        border-radius: 15px;
+      }
+
+      .team-panel {
+        padding: 1rem;
+      }
+
+      .team-score {
+        font-size: 2.5rem;
+      }
+
+      .modal-content {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+
+    /* للهواتف المحمولة */
+    @media (max-width: 480px) {
+      .control-header {
+        padding: 0.5rem 0.75rem;
+      }
+
+      .app-title {
+        font-size: 1.1rem;
+      }
+
+      .control-btn {
+        min-width: 2.2rem;
+        height: 2.2rem;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+      }
+
+      .main-container {
+        margin-top: 6rem;
+        padding: 0.75rem;
+      }
+
+      .game-header {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 15px;
+      }
+
+      .game-title {
+        font-size: 1.5rem;
+      }
+
+      .game-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .settings-panel {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 15px;
+      }
+
+      .settings-title {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .setting-input, 
+      .setting-select {
+        padding: 0.75rem;
+        font-size: 16px; /* منع التكبير في iOS */
+        border-radius: 10px;
+      }
+
+      .player-input input {
+        padding: 0.75rem;
+        padding-right: 2.5rem;
+        font-size: 16px; /* منع التكبير في iOS */
+        border-radius: 10px;
+      }
+
+      /* تحسين حاوية الطلاب للهواتف */
+      .players-container {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        max-width: 100%;
+        overflow: visible;
+      }
+
+      .player-input {
+        width: 100%;
+        min-height: 60px;
+        margin-bottom: 0.5rem;
+      }
+
+      .player-input input {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 50px;
+      }
+
+      .action-btn {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        border-radius: 10px;
+      }
+
+      .board-container {
+        padding: 1rem;
+      }
+
+      .board-title {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .hexagon-board {
+        max-width: 300px;
+        gap: 0.3rem;
+        padding: 0.5rem;
+      }
+
+      .hex-cell {
+        font-size: 1rem;
+        border-radius: 12px;
+        border-width: 2px;
+      }
+
+      .team-panel {
+        padding: 0.75rem;
+        border-width: 2px;
+        border-radius: 15px;
+      }
+
+      .team-header {
+        margin-bottom: 0.75rem;
+      }
+
+      .team-name {
+        font-size: 1.1rem;
+      }
+
+      .team-score {
+        font-size: 2rem;
+        margin: 0.75rem 0;
+      }
+
+      .team-strategy {
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .team-members {
+        padding: 0.75rem;
+        border-radius: 10px;
+        min-height: 50px;
+        font-size: 0.9rem;
+      }
+
+      .modal-content {
+        margin: 0.5rem;
+        padding: 1rem;
+        border-radius: 15px;
+      }
+
+      .modal-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* للهواتف الصغيرة جداً */
+    @media (max-width: 360px) {
+      .control-header {
+        padding: 0.5rem;
+      }
+
+      .app-title {
+        font-size: 1rem;
+      }
+
+      .control-btn {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+        padding: 0.4rem;
+      }
+
+      .main-container {
+        margin-top: 5.5rem;
+        padding: 0.5rem;
+      }
+
+      .game-header {
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .game-title {
+        font-size: 1.3rem;
+      }
+
+      .game-subtitle {
+        font-size: 0.8rem;
+      }
+
+      /* الحفاظ على الشبكة 5×5 مع تحسين العرض للأجهزة الصغيرة جداً */
+      .hexagon-board {
+        max-width: 240px;
+        gap: 0.15rem;
+      }
+
+      .hex-cell {
+        font-size: 0.8rem;
+        min-height: 40px;
+      }
+
+      .settings-panel {
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .settings-title {
+        font-size: 1.1rem;
+      }
+
+      /* تحسين حاوية الطلاب للأجهزة الصغيرة جداً */
+      .players-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .player-input {
+        min-height: 55px;
+        padding: 0.4rem;
+      }
+
+      .player-input input {
+        padding: 0.6rem;
+        padding-right: 2.2rem;
+        font-size: 15px;
+        min-height: 45px;
+      }
+
+      .team-icon {
+        font-size: 1.3rem !important;
+      }
+
+      .hexagon-board {
+        max-width: 250px;
+        gap: 0.2rem;
+        padding: 0.3rem;
+      }
+
+      .hex-cell {
+        font-size: 0.9rem;
+        border-radius: 10px;
+      }
+
+      .team-score {
+        font-size: 1.8rem;
+      }
+
+      .modal-content {
+        margin: 0.25rem;
+        padding: 0.75rem;
+      }
+    }
+
+    /* للوضع الأفقي على الهواتف */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .control-header {
+        padding: 0.5rem 1rem;
+      }
+
+      .main-container {
+        margin-top: 4rem;
+        padding: 0.75rem;
+      }
+
+      .game-header {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .game-title {
+        font-size: 1.3rem;
+      }
+
+      .settings-panel {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .game-area {
+        grid-template-columns: 1fr 1.5fr 1fr;
+        gap: 0.75rem;
+      }
+
+      .hexagon-board {
+        max-width: 350px;
+        padding: 0.5rem;
+      }
+
+      .team-panel {
+        padding: 0.75rem;
+      }
+
+      .team-score {
+        font-size: 1.8rem;
+        margin: 0.5rem 0;
+      }
+    }
+
+    /* تحسينات إضافية للمس */
+    @media (hover: none) and (pointer: coarse) {
+      .control-btn,
+      .action-btn,
+      .hex-cell {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      .control-btn:hover,
+      .action-btn:hover,
+      .hex-cell:hover {
+        transform: none;
+      }
+
+      .control-btn:active,
+      .action-btn:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+      }
+
+      .hex-cell:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+      }
+
+      /* تحسين النصوص للمس */
+      .setting-input,
+      .setting-select,
+      .player-input input {
+        font-size: 16px !important; /* منع التكبير في iOS */
+      }
+    }
+
+    /* تحسينات للشاشات الكبيرة */
+    @media (min-width: 1200px) {
+      .main-container {
+        max-width: 1400px;
+        padding: 2.5rem;
+      }
+
+      .game-area {
+        grid-template-columns: 1fr 2.5fr 1fr;
+        gap: 2.5rem;
+      }
+
+      .hexagon-board {
+        max-width: 600px;
+        gap: 0.75rem;
+      }
+
+      .hex-cell {
+        font-size: 1.8rem;
+        border-radius: 25px;
+      }
+
+      .settings-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      }
+
+      .players-container {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- أزرار التحكم العلوية -->
+  <div class="control-header">
+    <div class="control-buttons container-responsive">
+      <div class="app-title title-responsive">
+        🧩 مسابقة الحروف - Blockbusters
+      </div>
+      <div class="control-group">
+        <button class="control-btn btn-responsive" id="backBtn" title="العودة لصفحة الأنشطة">🔙</button>
+        <button class="control-btn btn-responsive" id="soundBtn" title="كتم/تشغيل الصوت">🔊</button>
+        <button class="control-btn btn-responsive" id="interactiveMessagesBtn" title="تفعيل/إيقاف الرسائل التفاعلية">🔔</button>
+        <button class="control-btn btn-responsive" id="instructionsBtn" title="تعليمات اللعبة">❓</button>
+        <button class="control-btn btn-responsive" id="fullscreenBtn" title="ملء الشاشة">⛶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="main-container container-responsive">
+    <!-- عنوان اللعبة -->
+    <div class="game-header card-responsive">
+      <div class="game-title heading-responsive">🧩 مسابقة الحروف</div>
+      <div class="game-subtitle text-responsive">لعبة Blockbusters الكلاسيكية - الفريق الأخضر يكمل الصفوف والأحمر يكمل الأعمدة</div>
+    </div>
+
+    <!-- لوحة الإعدادات -->
+    <div class="settings-panel card-responsive" id="settingsPanel">
+      <div class="settings-title heading-responsive">
+        ⚙️ إعدادات اللعبة
+      </div>
+      
+      <form id="gameSettingsForm">
+        <div class="settings-grid grid-responsive">
+          <div class="setting-group">
+            <label class="setting-label text-responsive">
+              📚 اختر الصف الدراسي
+            </label>
+            <select id="classSelect" class="setting-select input-responsive" required>
+              <option value="">-- اختر الصف --</option>
+            </select>
+          </div>
+          
+          <div class="setting-group">
+            <label class="setting-label text-responsive">
+              🎮 نوع المسابقة
+            </label>
+            <select id="modeSelect" class="setting-select input-responsive" required>
+              <option value="">-- نوع المسابقة --</option>
+              <option value="team2-manual">طالب واحد لكل فريق (اختيار يدوي)</option>
+              <option value="team4-manual">طالبان لكل فريق (اختيار يدوي)</option>
+              <option value="team2-random">طالبان لكل فريق (اختيار عشوائي)</option>
+              <option value="team-free">فريق ضد فريق (بدون أسماء)</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- مدخلات الطلاب -->
+        <div class="players-container grid-responsive" id="playersContainer"></div>
+        
+        <!-- أزرار الأكشن -->
+        <div class="action-buttons">
+          <button type="submit" class="action-btn btn-responsive" id="startGameBtn">
+            ▶️ ابدأ اللعبة
+          </button>
+          <button type="button" class="action-btn btn-responsive secondary" id="resetGameBtn">
+            🔄 إعادة تعيين
+          </button>
+          <button type="button" class="action-btn btn-responsive success" id="statisticsBtn">
+            📊 الإحصائيات
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- منطقة اللعبة -->
+    <div class="game-area hidden grid-responsive" id="gameArea">
+      <!-- لوحة الفريق الأخضر -->
+      <div class="team-panel card-responsive green" id="greenTeamPanel">
+        <div class="team-header">
+          <div class="team-icon">🟢</div>
+          <div class="team-name heading-responsive">الفريق الأخضر</div>
+        </div>
+        <div class="team-score heading-responsive" id="greenTeamScore">0</div>
+        <div class="team-strategy text-responsive">🎯 أكمل صفاً أفقياً للفوز</div>
+        <div class="team-members text-responsive" id="greenTeamMembers">في انتظار بدء اللعبة</div>
+      </div>
+
+      <!-- لوحة الحروف -->
+      <div class="board-container card-responsive">
+        <div class="board-title heading-responsive">
+          🎲 لوحة الحروف
+        </div>
+        <div class="hexagon-board grid-responsive" id="hexagonBoard"></div>
+      </div>
+
+      <!-- لوحة الفريق الأحمر -->
+      <div class="team-panel card-responsive red" id="redTeamPanel">
+        <div class="team-header">
+          <div class="team-icon">🔴</div>
+          <div class="team-name heading-responsive">الفريق الأحمر</div>
+        </div>
+        <div class="team-score heading-responsive" id="redTeamScore">0</div>
+        <div class="team-strategy text-responsive">🎯 أكمل عموداً رأسياً للفوز</div>
+        <div class="team-members text-responsive" id="redTeamMembers">في انتظار بدء اللعبة</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة اختيار الفريق -->
+  <div class="modal-overlay" id="teamSelectionModal">
+    <div class="modal-content card-responsive">
+      <div class="modal-header">
+        <div class="modal-title heading-responsive">اختيار الفريق</div>
+        <button class="close-btn btn-responsive" id="closeTeamSelectionBtn">✕</button>
+      </div>
+      <div class="team-selection-title text-responsive" id="teamSelectionTitle">
+        أي فريق يريد الإجابة على هذا الحرف؟
+      </div>
+      <div class="team-buttons">
+        <button class="team-btn green" id="selectGreenTeamBtn">
+          🟢 الفريق الأخضر
+        </button>
+        <button class="team-btn red" id="selectRedTeamBtn">
+          🔴 الفريق الأحمر
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة الفوز -->
+  <div class="modal-overlay" id="victoryModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">🎉 انتهت اللعبة!</div>
+        <button class="close-btn" id="closeVictoryModalBtn">✕</button>
+      </div>
+      <div class="victory-animation">🏆</div>
+      <div class="victory-title" id="victoryTitle">مبروك للفائز!</div>
+      <div class="victory-players" id="victoryPlayers"></div>
+      
+      <div class="honor-board">
+        <div class="honor-title">
+          🏅 لوحة الشرف
+        </div>
+        <div class="honor-list" id="honorList"></div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="action-btn" id="newGameBtn">
+          🎮 لعبة جديدة
+        </button>
+        <button class="action-btn secondary" id="closeVictoryBtn">
+          ✅ إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة التعليمات -->
+  <div class="modal-overlay" id="instructionsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">📖 دليل المعلم الشامل</div>
+        <button class="close-btn" id="closeInstructionsBtn">✕</button>
+      </div>
+      
+      <!-- تبويبات التعليمات -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid #E2E8F0;">
+        <button class="tab-btn active" data-tab="rules">📋 قواعد اللعبة</button>
+        <button class="tab-btn" data-tab="teacher-tips">👨‍🏫 نصائح للمعلم</button>
+        <button class="tab-btn" data-tab="questions">❓ دليل الأسئلة</button>
+      </div>
+      
+      <!-- محتوى قواعد اللعبة -->
+      <div class="tab-content active" id="rules-content">
+        <ul class="instructions-list">
+          <li>اختر الصف الدراسي ونوع المسابقة من القائمة المنسدلة</li>
+          <li>حدد أسماء الطلاب المشاركين أو اختر الوضع العشوائي</li>
+          <li>اضغط على زر "ابدأ اللعبة" لبدء المسابقة</li>
+          <li>انقر على أي حرف في لوحة الحروف واختر الفريق المناسب</li>
+          <li>الفريق الأخضر يفوز عند إكمال صف أفقي كامل</li>
+          <li>الفريق الأحمر يفوز عند إكمال عمود رأسي كامل</li>
+          <li>إذا امتلأت جميع الخلايا بدون فائز، يفوز الفريق الأكثر نقاطاً</li>
+          <li>عند فوز أحد الفرق ستظهر نافذة احتفالية مع لوحة الشرف</li>
+        </ul>
+      </div>
+      
+      <!-- محتوى نصائح للمعلم -->
+      <div class="tab-content" id="teacher-tips-content">
+        <div style="background: linear-gradient(135deg, #1B365D 0%, #228B22 100%); color: white; 
+                    padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍🏫</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">دليل المعلم الاحترافي</div>
+          <div style="font-size: 0.9rem; opacity: 0.9;">إرشادات شاملة لإدارة النشاط بفعالية</div>
+        </div>
+        
+        <div style="display: grid; gap: 1rem;">
+          <div class="tip-card">
+            <div class="tip-header">🎯 إدارة اللعبة</div>
+            <ul style="margin: 0; padding-right: 1rem;">
+              <li>استخدم زر ⛶ ملء الشاشة للعرض الأمثل</li>
+              <li>راقب التحذيرات الاستراتيجية عندما يقترب فريق من الفوز</li>
+              <li>استخدم الاختصارات: 1 للأخضر، 2 للأحمر</li>
+              <li>يمكن إعادة تعيين اللعبة في أي وقت</li>
+            </ul>
+          </div>
+          
+          <div class="tip-card">
+            <div class="tip-header">⚖️ توزيع الفرق</div>
+            <ul style="margin: 0; padding-right: 1rem;">
+              <li><strong>الوضع اليدوي:</strong> اختر الطلاب بناءً على المستوى</li>
+              <li><strong>الوضع العشوائي:</strong> للتوزيع العادل والمفاجآت</li>
+              <li><strong>فريق ضد فريق:</strong> للمجموعات الكبيرة والمنافسة المفتوحة</li>
+              <li>تأكد من التوازن في مستويات الطلاب</li>
+            </ul>
+          </div>
+          
+          <div class="tip-card">
+            <div class="tip-header">🎪 إثارة الحماس</div>
+            <ul style="margin: 0; padding-right: 1rem;">
+              <li>شجع الهتافات الرياضية للفرق</li>
+              <li>استخدم الأصوات والتأثيرات البصرية</li>
+              <li>احتفل بالنقاط والإنجازات الصغيرة</li>
+              <li>اجعل الطلاب يشاركون في التشجيع</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- محتوى دليل الأسئلة -->
+      <div class="tab-content" id="questions-content">
+        <div style="background: linear-gradient(135deg, #DC143C 0%, #FFD700 100%); color: white; 
+                    padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">❓</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">دليل الأسئلة الذكي</div>
+          <div style="font-size: 0.9rem; opacity: 0.9;">استراتيجيات متنوعة لطرح أسئلة فعالة</div>
+        </div>
+        
+        <div style="display: grid; gap: 1rem;">
+          <div class="question-category">
+            <div class="category-header">📚 أسئلة المنهج</div>
+            <div class="category-content">
+              <div class="question-examples">
+                <div><strong>مثال:</strong> حرف "ع" → "علم يدرس الكائنات الحية"</div>
+                <div><strong>الإجابة:</strong> علم الأحياء</div>
+              </div>
+              <div class="question-tips">
+                <div>💡 <strong>نصائح:</strong></div>
+                <ul>
+                  <li>اربط الأسئلة بالمناهج الدراسية</li>
+                  <li>استخدم المصطلحات العلمية والأدبية</li>
+                  <li>نوع بين السهل والصعب</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="question-category">
+            <div class="category-header">🌍 الثقافة العامة</div>
+            <div class="category-content">
+              <div class="question-examples">
+                <div><strong>مثال:</strong> حرف "م" → "عاصمة سلطنة عُمان"</div>
+                <div><strong>الإجابة:</strong> مسقط</div>
+              </div>
+              <div class="question-tips">
+                <div>💡 <strong>نصائح:</strong></div>
+                <ul>
+                  <li>ركز على الثقافة العُمانية والعربية</li>
+                  <li>اسأل عن المعالم والشخصيات</li>
+                  <li>استخدم المعلومات المحلية</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="question-category">
+            <div class="category-header">🎯 استراتيجية الأسئلة</div>
+            <div class="category-content">
+              <div style="background: #F8FAFC; padding: 1rem; border-radius: 8px; border-right: 4px solid #FFD700;">
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">📊 العدد المثالي:</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                  <div>⏰ <strong>10-15 دقيقة:</strong> 8-12 سؤال</div>
+                  <div>⏰ <strong>20-25 دقيقة:</strong> 15-20 سؤال</div>
+                  <div>⏰ <strong>30-40 دقيقة:</strong> 20-25 سؤال</div>
+                </div>
+                
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">🎭 مستويات الصعوبة:</div>
+                <div style="display: grid; gap: 0.5rem;">
+                  <div>🟢 <strong>سهل (40%):</strong> معلومات أساسية ومألوفة</div>
+                  <div>🟡 <strong>متوسط (40%):</strong> تطبيق وتحليل</div>
+                  <div>🔴 <strong>صعب (20%):</strong> تحدي وإبداع</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="question-category">
+            <div class="category-header">⚡ نصائح سريعة</div>
+            <div class="category-content">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="quick-tip">
+                  <div class="tip-icon">⏱️</div>
+                  <div class="tip-text">
+                    <strong>إدارة الوقت:</strong><br>
+                    30-45 ثانية لكل سؤال
+                  </div>
+                </div>
+                <div class="quick-tip">
+                  <div class="tip-icon">🎯</div>
+                  <div class="tip-text">
+                    <strong>التنويع:</strong><br>
+                    امزج بين المواد المختلفة
+                  </div>
+                </div>
+                <div class="quick-tip">
+                  <div class="tip-icon">🤝</div>
+                  <div class="tip-text">
+                    <strong>المشاركة:</strong><br>
+                    اسمح للفريق بالتشاور
+                  </div>
+                </div>
+                <div class="quick-tip">
+                  <div class="tip-icon">🏆</div>
+                  <div class="tip-text">
+                    <strong>التشجيع:</strong><br>
+                    احتفل بكل إجابة صحيحة
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="action-btn" id="understoodBtn">
+          ✅ فهمت
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة الإحصائيات -->
+  <div class="modal-overlay" id="statisticsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">📊 إحصائيات اللعبة</div>
+        <button class="close-btn" id="closeStatisticsBtn">✕</button>
+      </div>
+      <div class="honor-board">
+        <div class="honor-title">
+          🏆 جميع النتائج
+        </div>
+        <div class="honor-list" id="allResultsList"></div>
+      </div>
+      <div class="action-buttons">
+        <button class="action-btn secondary" id="clearStatisticsBtn">
+          🗑️ مسح الإحصائيات
+        </button>
+        <button class="action-btn" id="closeStatisticsModalBtn">
+          ✅ إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- عناصر الصوت -->
+  <audio id="clickSound" src="../assets/media/sounds/Click.mp3" preload="auto"></audio>
+  <audio id="successSound" src="../assets/media/sounds/name-start.mp3" preload="auto"></audio>
+  <audio id="winSound" src="../assets/media/sounds/win.mp3" preload="auto"></audio>
+  <audio id="winBlockbustersSound" src="../assets/media/sounds/win-Blockbusters.mp3" preload="auto"></audio>
+  <audio id="greenPointSound" src="../assets/media/sounds/g.mp3" preload="auto"></audio>
+  <audio id="redPointSound" src="../assets/media/sounds/r.mp3" preload="auto"></audio>
+
+  <script>
+    // ==== متغيرات اللعبة والألوان العُمانية ====
+    const OMAN_COLORS = {
+      red: '#DC143C',
+      green: '#228B22',
+      gold: '#FFD700',
+      navy: '#1B365D',
+      white: '#FFFFFF'
+    };
+
+    // المتغيرات العامة
+    let gameData = {
+      students: [],
+      currentMode: '',
+      gameStarted: false,
+      greenTeam: [],
+      redTeam: [],
+      greenScore: 0,
+      redScore: 0,
+      selectedCell: null,
+      soundEnabled: true,
+      gameStartTime: null
+    };
+
+    // أحرف اللوحة السداسية (5x5)
+    const BOARD_LETTERS = [
+      ['أ', 'ب', 'ت', 'ث', 'ج'],
+      ['ح', 'خ', 'د', 'ذ', 'ر'],
+      ['ز', 'س', 'ش', 'ص', 'ض'],
+      ['ط', 'ظ', 'ع', 'غ', 'ف'],
+      ['ق', 'ك', 'ل', 'م', 'ن']
+    ];
+
+    // عناصر DOM
+    const elements = {
+      // التحكم
+      backBtn: document.getElementById('backBtn'),
+      soundBtn: document.getElementById('soundBtn'),
+      interactiveMessagesBtn: document.getElementById('interactiveMessagesBtn'),
+      instructionsBtn: document.getElementById('instructionsBtn'),
+      fullscreenBtn: document.getElementById('fullscreenBtn'),
+      
+      // الإعدادات
+      settingsPanel: document.getElementById('settingsPanel'),
+      gameSettingsForm: document.getElementById('gameSettingsForm'),
+      classSelect: document.getElementById('classSelect'),
+      modeSelect: document.getElementById('modeSelect'),
+      playersContainer: document.getElementById('playersContainer'),
+      startGameBtn: document.getElementById('startGameBtn'),
+      resetGameBtn: document.getElementById('resetGameBtn'),
+      statisticsBtn: document.getElementById('statisticsBtn'),
+      
+      // منطقة اللعبة
+      gameArea: document.getElementById('gameArea'),
+      hexagonBoard: document.getElementById('hexagonBoard'),
+      
+      // الفرق
+      greenTeamScore: document.getElementById('greenTeamScore'),
+      redTeamScore: document.getElementById('redTeamScore'),
+      greenTeamMembers: document.getElementById('greenTeamMembers'),
+      redTeamMembers: document.getElementById('redTeamMembers'),
+      
+      // النوافذ المنبثقة
+      teamSelectionModal: document.getElementById('teamSelectionModal'),
+      teamSelectionTitle: document.getElementById('teamSelectionTitle'),
+      selectGreenTeamBtn: document.getElementById('selectGreenTeamBtn'),
+      selectRedTeamBtn: document.getElementById('selectRedTeamBtn'),
+      closeTeamSelectionBtn: document.getElementById('closeTeamSelectionBtn'),
+      
+      victoryModal: document.getElementById('victoryModal'),
+      victoryTitle: document.getElementById('victoryTitle'),
+      victoryPlayers: document.getElementById('victoryPlayers'),
+      honorList: document.getElementById('honorList'),
+      newGameBtn: document.getElementById('newGameBtn'),
+      closeVictoryBtn: document.getElementById('closeVictoryBtn'),
+      closeVictoryModalBtn: document.getElementById('closeVictoryModalBtn'),
+      
+      instructionsModal: document.getElementById('instructionsModal'),
+      closeInstructionsBtn: document.getElementById('closeInstructionsBtn'),
+      understoodBtn: document.getElementById('understoodBtn'),
+      
+      statisticsModal: document.getElementById('statisticsModal'),
+      allResultsList: document.getElementById('allResultsList'),
+      clearStatisticsBtn: document.getElementById('clearStatisticsBtn'),
+      closeStatisticsBtn: document.getElementById('closeStatisticsBtn'),
+      closeStatisticsModalBtn: document.getElementById('closeStatisticsModalBtn'),
+      
+      // الأصوات
+      clickSound: document.getElementById('clickSound'),
+      successSound: document.getElementById('successSound'),
+      winSound: document.getElementById('winSound'),
+      winBlockbustersSound: document.getElementById('winBlockbustersSound'),
+      greenPointSound: document.getElementById('greenPointSound'),
+      redPointSound: document.getElementById('redPointSound')
+    };
+
+    // ==== التحقق من وجود العناصر الأساسية ====
+    function verifyEssentialElements() {
+      const essentialElements = [
+        'teamSelectionModal',
+        'teamSelectionTitle', 
+        'selectGreenTeamBtn',
+        'selectRedTeamBtn',
+        'closeTeamSelectionBtn'
+      ];
+      
+      const missingElements = [];
+      essentialElements.forEach(elementName => {
+        if (!elements[elementName]) {
+          missingElements.push(elementName);
+        }
+      });
+      
+      if (missingElements.length > 0) {
+        console.error('❌ عناصر مفقودة:', missingElements);
+        return false;
+      }
+      
+      console.log('✅ جميع العناصر الأساسية موجودة');
+      return true;
+    }
+    function playSound(soundElement, autoMuteAfter = null) {
+      if (!gameData.soundEnabled || !soundElement) return;
+      
+      try {
+        soundElement.currentTime = 0;
+        soundElement.volume = 0.7;
+        const playPromise = soundElement.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log(`🔊 تم تشغيل الصوت: ${soundElement.src?.split('/').pop() || 'مجهول'}`);
+            
+            // إضافة كتم تلقائي إذا تم تحديده
+            if (autoMuteAfter && typeof autoMuteAfter === 'number') {
+              setTimeout(() => {
+                if (!soundElement.paused) {
+                  soundElement.pause();
+                  soundElement.currentTime = 0;
+                  console.log(`🔇 تم كتم الصوت تلقائياً بعد ${autoMuteAfter}ms`);
+                }
+              }, autoMuteAfter);
+            }
+          }).catch(error => {
+            console.log('🔇 تعذر تشغيل الصوت:', error);
+          });
+        }
+      } catch (error) {
+        console.log('🔇 خطأ في تشغيل الصوت:', error);
+      }
+    }
+
+    // ==== تشغيل تسلسل أصوات الفوز ====
+    function playWinSoundSequence() {
+      if (!gameData.soundEnabled) return;
+      
+      console.log('🎵 بدء تسلسل أصوات الفوز...');
+      
+      // تشغيل الصوت الأول (win.mp3)
+      if (elements.winSound) {
+        elements.winSound.currentTime = 0;
+        elements.winSound.volume = 0.7;
+        
+        const playFirstSound = elements.winSound.play();
+        if (playFirstSound !== undefined) {
+          playFirstSound.then(() => {
+            console.log('🔊 تم تشغيل win.mp3');
+            
+            // عند انتهاء الصوت الأول، تشغيل الصوت الثاني
+            const playSecondSound = () => {
+              if (elements.winBlockbustersSound && gameData.soundEnabled) {
+                elements.winBlockbustersSound.currentTime = 0;
+                elements.winBlockbustersSound.volume = 0.7;
+                
+                const playSecond = elements.winBlockbustersSound.play();
+                if (playSecond !== undefined) {
+                  playSecond.then(() => {
+                    console.log('🔊 تم تشغيل win-Blockbusters.mp3');
+                  }).catch(error => {
+                    console.log('🔇 تعذر تشغيل win-Blockbusters.mp3:', error);
+                  });
+                }
+              }
+            };
+            
+            // انتظار انتهاء الصوت الأول أو تشغيل الثاني بعد 3 ثوان (أيهما أقل)
+            elements.winSound.addEventListener('ended', playSecondSound, { once: true });
+            
+            // احتياطي: تشغيل الصوت الثاني بعد 3 ثوان في حالة عدم تفعيل حدث ended
+            setTimeout(() => {
+              if (elements.winSound.paused || elements.winSound.ended) {
+                playSecondSound();
+              }
+            }, 3000);
+            
+          }).catch(error => {
+            console.log('🔇 تعذر تشغيل win.mp3:', error);
+            // في حالة فشل الصوت الأول، جرب الثاني مباشرة
+            playSound(elements.winBlockbustersSound);
+          });
+        }
+      } else {
+        // إذا لم يكن الصوت الأول متاحاً، شغل الثاني مباشرة
+        playSound(elements.winBlockbustersSound);
+      }
+    }
+
+    function toggleSound() {
+      gameData.soundEnabled = !gameData.soundEnabled;
+      elements.soundBtn.textContent = gameData.soundEnabled ? '🔊' : '🔇';
+      elements.soundBtn.title = gameData.soundEnabled ? 'كتم الصوت' : 'تشغيل الصوت';
+      
+      showNotification(
+        gameData.soundEnabled ? 'تم تشغيل الصوت' : 'تم كتم الصوت',
+        gameData.soundEnabled ? 'success' : 'info'
+      );
+    }
+
+    // ==== نظام الرسائل التفاعلية الصوتية ====
+    let lastInteractiveMessageTime = 0;
+    let interactiveMessagesEnabled = true;
+
+    function showInteractiveMessage(messageText, soundPath = "../assets/media/sounds/notification-pop.mp3") {
+      // منع تكرار الرسائل المتقاربة (debounce)
+      const currentTime = Date.now();
+      if (currentTime - lastInteractiveMessageTime < 1000) {
+        return;
+      }
+      lastInteractiveMessageTime = currentTime;
+
+      // التحقق من تفعيل الرسائل
+      if (!interactiveMessagesEnabled) {
+        return;
+      }
+
+      // إزالة الرسالة السابقة إن وجدت
+      const existingMessage = document.querySelector('.interactive-message');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+
+      // إنشاء عنصر الرسالة
+      const messageElement = document.createElement('div');
+      messageElement.className = 'interactive-message';
+      messageElement.innerHTML = messageText;
+
+      // إضافة CSS للرسالة
+      messageElement.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.98));
+        backdrop-filter: blur(15px);
+        border: 2px solid ${OMAN_COLORS.gold};
+        border-radius: 20px;
+        padding: 1.5rem 2rem;
+        font-size: clamp(1.1rem, 5vw, 1.4rem);
+        font-weight: 600;
+        color: ${OMAN_COLORS.navy};
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px ${OMAN_COLORS.gold}40;
+        z-index: 10000;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        max-width: 90vw;
+        word-wrap: break-word;
+        font-family: var(--font-family);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      `;
+
+      // إضافة الرسالة للصفحة
+      document.body.appendChild(messageElement);
+
+      // تشغيل الصوت
+      if (gameData.soundEnabled && soundPath) {
+        try {
+          const audio = new Audio(soundPath);
+          audio.volume = 0.6;
+          audio.play().catch(err => {
+            // في حالة فشل تشغيل الصوت، جرب الصوت الافتراضي
+            const fallbackAudio = new Audio("../assets/media/sounds/Click.mp3");
+            fallbackAudio.volume = 0.4;
+            fallbackAudio.play().catch(() => {}); // تجاهل الأخطاء
+          });
+        } catch (error) {
+          console.log('تعذر تشغيل الصوت:', error);
+        }
+      }
+
+      // إظهار الرسالة مع تأثير
+      setTimeout(() => {
+        messageElement.style.opacity = '1';
+        messageElement.style.transform = 'translate(-50%, -50%) scale(1)';
+      }, 50);
+
+      // إخفاء الرسالة بعد 2.5 ثانية
+      setTimeout(() => {
+        messageElement.style.opacity = '0';
+        messageElement.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        
+        setTimeout(() => {
+          if (messageElement.parentNode) {
+            messageElement.remove();
+          }
+        }, 400);
+      }, 2500);
+    }
+
+    function toggleInteractiveMessages() {
+      interactiveMessagesEnabled = !interactiveMessagesEnabled;
+      const button = document.getElementById('interactiveMessagesBtn');
+      if (button) {
+        button.innerHTML = interactiveMessagesEnabled ? '🔔' : '🔕';
+        button.title = interactiveMessagesEnabled ? 'إيقاف الرسائل التفاعلية' : 'تفعيل الرسائل التفاعلية';
+      }
+      
+      showInteractiveMessage(
+        interactiveMessagesEnabled ? '🔔 تم تفعيل الرسائل التفاعلية' : '🔕 تم إيقاف الرسائل التفاعلية',
+        "../assets/media/sounds/Click.mp3"
+      );
+    }
+
+    // ==== وظائف العرض والإشعارات المتقدمة ====
+    function showAdvancedNotification(title, message, type = 'info', duration = 4000) {
+      const notification = document.createElement('div');
+      notification.className = `advanced-notification ${type}`;
+      
+      const colors = {
+        success: { bg: OMAN_COLORS.green, icon: '✅' },
+        error: { bg: OMAN_COLORS.red, icon: '❌' },
+        warning: { bg: OMAN_COLORS.gold, icon: '⚠️' },
+        info: { bg: OMAN_COLORS.navy, icon: 'ℹ️' }
+      };
+      
+      const style = colors[type] || colors.info;
+      
+      notification.style.cssText = `
+        position: fixed;
+        top: 6rem;
+        right: 2rem;
+        background: linear-gradient(135deg, ${style.bg} 0%, ${style.bg}CC 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        z-index: 3000;
+        animation: slideInBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        font-weight: 600;
+        max-width: 350px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      `;
+      
+      notification.innerHTML = `
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="font-size: 1.5rem; flex-shrink: 0;">${style.icon}</div>
+          <div style="flex: 1;">
+            <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">${title}</div>
+            <div style="font-size: 0.9rem; opacity: 0.9; line-height: 1.4;">${message}</div>
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" 
+                  style="background: none; border: none; color: white; font-size: 1.2rem; 
+                         cursor: pointer; opacity: 0.7; transition: opacity 0.2s; padding: 0; 
+                         line-height: 1; flex-shrink: 0;"
+                  onmouseover="this.style.opacity='1'" 
+                  onmouseout="this.style.opacity='0.7'">×</button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // إضافة الأنيمشن
+      if (!document.getElementById('advanced-animations')) {
+        const style = document.createElement('style');
+        style.id = 'advanced-animations';
+        style.textContent = `
+          @keyframes slideInBounce {
+            0% { transform: translateX(100%) scale(0.8); opacity: 0; }
+            60% { transform: translateX(-10px) scale(1.05); opacity: 1; }
+            100% { transform: translateX(0) scale(1); opacity: 1; }
+          }
+          @keyframes slideOutBounce {
+            0% { transform: translateX(0) scale(1); opacity: 1; }
+            100% { transform: translateX(100%) scale(0.8); opacity: 0; }
+          }
+          .advanced-notification:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // إزالة الإشعار تلقائياً
+      setTimeout(() => {
+        notification.style.animation = 'slideOutBounce 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 400);
+      }, duration);
+    }
+
+    function showLoadingIndicator(message) {
+      // إزالة أي مؤشر تحميل موجود
+      hideLoadingIndicator();
+      
+      const loader = document.createElement('div');
+      loader.id = 'loadingIndicator';
+      loader.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 4000;
+        animation: fadeIn 0.2s ease;
+      `;
+      
+      loader.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 16px; text-align: center; 
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); max-width: 300px; width: 80%;">
+          <div style="width: 40px; height: 40px; margin: 0 auto 1rem; position: relative;">
+            <div style="width: 100%; height: 100%; border: 3px solid #E2E8F0; border-radius: 50%; 
+                        border-top-color: ${OMAN_COLORS.red}; animation: spin 0.8s linear infinite;"></div>
+          </div>
+          <div style="font-size: 1rem; font-weight: 600; color: ${OMAN_COLORS.navy}; 
+                      margin-bottom: 0.5rem; font-family: 'Cairo', sans-serif;">${message}</div>
+          <div style="font-size: 0.8rem; color: #64748B;">انتظر قليلاً...</div>
+        </div>
+      `;
+      
+      document.body.appendChild(loader);
+      
+      // إضافة أنيمشن الدوران إذا لم يكن موجوداً
+      if (!document.getElementById('loader-animations')) {
+        const style = document.createElement('style');
+        style.id = 'loader-animations';
+        style.textContent = `
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // إضافة timeout للإزالة التلقائية في حالة التعليق
+      setTimeout(() => {
+        if (document.getElementById('loadingIndicator')) {
+          hideLoadingIndicator();
+          showAdvancedNotification(
+            '⚠️ انتهت مهلة التحميل',
+            'تم التبديل للوضع الاحتياطي',
+            'warning'
+          );
+        }
+      }, 5000);
+    }
+
+    function hideLoadingIndicator() {
+      const loader = document.getElementById('loadingIndicator');
+      if (loader) {
+        loader.style.animation = 'fadeIn 0.3s ease reverse';
+        setTimeout(() => {
+          if (loader.parentNode) {
+            loader.parentNode.removeChild(loader);
+          }
+        }, 300);
+      }
+    }
+
+    function showNotification(message, type = 'info') {
+      // استخدام النظام المتقدم للإشعارات
+      showAdvancedNotification('إشعار', message, type);
+    }
+
+    function showModal(modalElement) {
+      if (modalElement) {
+        modalElement.style.display = 'flex';
+        modalElement.style.opacity = '0';
+        modalElement.style.animation = 'modalFadeIn 0.3s ease-out forwards';
+        modalElement.classList.add('show'); // إضافة class للتوافق مع الكود الموجود
+        playSound(elements.clickSound);
+        console.log('✅ تم عرض المودال:', modalElement.id);
+      } else {
+        console.error('❌ عنصر المودال غير موجود');
+      }
+    }
+
+    function hideModal(modalElement) {
+      if (modalElement) {
+        modalElement.style.animation = 'modalFadeOut 0.3s ease-out forwards';
+        modalElement.classList.remove('show'); // إزالة class للتوافق مع الكود الموجود
+        setTimeout(() => {
+          modalElement.style.display = 'none';
+        }, 300);
+        playSound(elements.clickSound);
+        console.log('✅ تم إخفاء المودال:', modalElement.id);
+      }
+    }
+
+    // ==== تحميل بيانات الطلاب السريع والذكي ====
+    async function loadStudentData() {
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('انتهت مهلة التحميل')), 3000)
+      );
+      
+      try {
+        console.log('🚀 بدء تحميل بيانات الطلاب...');
+        
+        // محاولة التحميل مع timeout
+        const response = await Promise.race([
+          fetch('../data/studentData.json', {
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }),
+          timeoutPromise
+        ]);
+        
+        if (!response.ok) {
+          throw new Error(`خطأ HTTP: ${response.status} - ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data || typeof data !== 'object') {
+          throw new Error('تنسيق البيانات غير صحيح');
+        }
+        
+        // تحويل البيانات بسرعة
+        gameData.classesData = data;
+        gameData.students = [];
+        
+        let totalStudents = 0;
+        Object.keys(data).forEach(className => {
+          if (Array.isArray(data[className])) {
+            data[className].forEach(studentName => {
+              gameData.students.push({
+                name: studentName,
+                class: className,
+                shortName: extractShortName(studentName)
+              });
+              totalStudents++;
+            });
+          }
+        });
+        
+        populateClassSelect();
+        
+        console.log(`✅ تم تحميل ${totalStudents} طالب من ${Object.keys(data).length} صف`);
+        showAdvancedNotification(
+          '🎓 تحميل ناجح!', 
+          `${totalStudents} طالب • ${Object.keys(data).length} صف دراسي`,
+          'success',
+          3000
+        );
+        
+        return true;
+        
+      } catch (error) {
+        console.warn('⚠️ خطأ في تحميل البيانات:', error.message);
+        
+        // تحميل البيانات الاحتياطية فوراً
+        loadBackupData();
+        
+        showAdvancedNotification(
+          '📚 بيانات احتياطية',
+          'تم تحميل بيانات تجريبية للمتابعة',
+          'warning',
+          4000
+        );
+        
+        return false;
+      }
+    }
+
+    // ==== تحميل البيانات الاحتياطية السريع ====
+    function loadBackupData() {
+      console.log('📦 تحميل البيانات الاحتياطية...');
+      
+      gameData.classesData = {
+        'خامس 1': [
+          'أحمد بن محمد السيابي', 'سعد بن خالد الهطالي', 'عبدالله بن سالم الجابري',
+          'محمد بن يونس الفارسي', 'حمزة بن نصر الحارثي', 'سيف بن سعيد السيابي'
+        ],
+        'خامس 2': [
+          'آدم بن محمد الفارسي', 'أنس بن أحمد الزدجالي', 'بدر بن موسى الفوري',
+          'تيمور بن فيصل اليوسفي', 'حمزة بن إبراهيم المحرمي', 'خالد بن طاهر العميري'
+        ],
+        'سادس 1': [
+          'عمر بن سليمان الحارثي', 'خالد بن يوسف الوهيبي', 'طه محمود عبدالباقي',
+          'صالح بن سلمان البلوشي', 'علي بن ماجد اليحيائي', 'فهر بن عمار البريكي'
+        ],
+        'سادس 2': [
+          'راشد بن ناصر الرواحي', 'فهر بن طلال البريكي', 'يحيى بن علي الصبحي',
+          'محمد بن سالم الوهيبي', 'عبدالله بن أحمد الضامري', 'مؤيد بن أحمد اليحيائي'
+        ]
+      };
+      
+      gameData.students = [];
+      let totalStudents = 0;
+      
+      Object.keys(gameData.classesData).forEach(className => {
+        gameData.classesData[className].forEach(studentName => {
+          gameData.students.push({
+            name: studentName,
+            class: className,
+            shortName: extractShortName(studentName)
+          });
+          totalStudents++;
+        });
+      });
+      
+      populateClassSelect();
+      console.log(`📚 تم تحميل ${totalStudents} طالب احتياطي`);
+    }
+
+    // استخراج الاسم المختصر للعرض
+    function extractShortName(fullName) {
+      const parts = fullName.split(' ');
+      if (parts.length >= 3) {
+        return `${parts[0]} ${parts[2]}`; // الاسم الأول + اسم العائلة
+      }
+      return parts[0] || fullName;
+    }
+
+    // إنشاء قائمة الصفوف مع إحصائيات
+    function populateClassSelect() {
+      const classes = Object.keys(gameData.classesData || {});
+      elements.classSelect.innerHTML = '<option value="">-- اختر الصف الدراسي --</option>';
+      
+      classes.forEach(className => {
+        const studentCount = gameData.classesData[className].length;
+        const option = document.createElement('option');
+        option.value = className;
+        option.textContent = `${className} (${studentCount} طالب)`;
+        elements.classSelect.appendChild(option);
+      });
+      
+      if (classes.length === 0) {
+        const option = document.createElement('option');
+        option.textContent = 'لا توجد بيانات متاحة';
+        option.disabled = true;
+        elements.classSelect.appendChild(option);
+      }
+    }
+
+    // ==== إدارة مدخلات الطلاب المتقدمة ====
+    function updatePlayerInputs() {
+      const classValue = elements.classSelect.value;
+      const modeValue = elements.modeSelect.value;
+      
+      elements.playersContainer.innerHTML = '';
+      
+      if (!classValue || !modeValue) return;
+      
+      const classStudents = gameData.classesData[classValue] || [];
+      console.log(`📚 تم اختيار ${classValue} - ${classStudents.length} طالب متاح`);
+      
+      // تحسين العرض للأجهزة المحمولة
+      if (window.responsiveHelper && window.responsiveHelper.isMobile()) {
+        elements.playersContainer.style.display = 'grid';
+        elements.playersContainer.style.gridTemplateColumns = '1fr';
+        elements.playersContainer.style.gap = '0.75rem';
+        elements.playersContainer.style.width = '100%';
+        elements.playersContainer.style.boxSizing = 'border-box';
+      }
+      
+      // إنشاء واجهة مختلفة حسب نوع اللعبة
+      if (modeValue === 'team2-manual') {
+        createManualPlayerInputs(classStudents, 1);
+      } else if (modeValue === 'team4-manual') {
+        createManualPlayerInputs(classStudents, 2);
+      } else if (modeValue === 'team2-random') {
+        createRandomModeDisplay(classStudents, 2);
+      } else if (modeValue === 'team-free') {
+        createTeamFreeMode();
+      }
+      
+      // إظهار معاينة الطلاب المتاحين
+      showStudentsPreview(classStudents);
+    }
+
+    function createManualPlayerInputs(classStudents, playersPerTeam) {
+      const container = elements.playersContainer;
+      
+      // إنشاء عنوان
+      const header = document.createElement('div');
+      header.style.cssText = `
+        grid-column: 1 / -1;
+        text-align: center;
+        font-weight: 600;
+        color: ${OMAN_COLORS.navy};
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: linear-gradient(135deg, ${OMAN_COLORS.gold}20 0%, ${OMAN_COLORS.navy}10 100%);
+        border-radius: 12px;
+        border: 2px dashed ${OMAN_COLORS.gold};
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: clamp(14px, 4vw, 1rem);
+      `;
+      header.innerHTML = `
+        🎯 اختر ${playersPerTeam === 1 ? 'طالباً واحداً' : 'طالبين'} لكل فريق
+        <div style="font-size: clamp(12px, 3.5vw, 0.9rem); margin-top: 0.5rem; opacity: 0.8;">
+          ${classStudents.length} طالب متاح في ${elements.classSelect.options[elements.classSelect.selectedIndex].text}
+        </div>
+      `;
+      container.appendChild(header);
+      
+      // إنشاء قسم بطاقات الطلاب
+      const studentsCardsSection = document.createElement('div');
+      studentsCardsSection.style.cssText = `
+        grid-column: 1 / -1;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        border: 2px solid ${OMAN_COLORS.gold}30;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      `;
+      
+      const studentsTitle = document.createElement('div');
+      studentsTitle.innerHTML = `
+        <div style="text-align: center; font-weight: 600; color: ${OMAN_COLORS.navy}; margin-bottom: 1rem; font-size: 1.1rem;">
+          👥 قائمة الطلاب المتاحين
+        </div>
+      `;
+      studentsCardsSection.appendChild(studentsTitle);
+      
+      const studentsGrid = document.createElement('div');
+      studentsGrid.style.cssText = `
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.5);
+      `;
+      
+      // إنشاء بطاقات الطلاب
+      classStudents.forEach((studentName, index) => {
+        const studentCard = document.createElement('div');
+        studentCard.className = 'student-card';
+        studentCard.style.cssText = `
+          background: linear-gradient(135deg, white 0%, #f8f9fa 100%);
+          border: 2px solid #e3f2fd;
+          border-radius: 12px;
+          padding: 12px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-weight: 500;
+          color: #333;
+          position: relative;
+          min-height: 60px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          user-select: none;
+        `;
+        
+        studentCard.innerHTML = `
+          <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+          <div style="font-size: 0.9rem; line-height: 1.2;">${studentName}</div>
+        `;
+        
+        // إضافة تأثيرات التفاعل
+        studentCard.addEventListener('mouseenter', () => {
+          studentCard.style.transform = 'translateY(-3px) scale(1.02)';
+          studentCard.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+          studentCard.style.borderColor = OMAN_COLORS.gold;
+        });
+        
+        studentCard.addEventListener('mouseleave', () => {
+          if (!studentCard.classList.contains('selected')) {
+            studentCard.style.transform = 'translateY(0) scale(1)';
+            studentCard.style.boxShadow = 'none';
+            studentCard.style.borderColor = '#e3f2fd';
+          }
+        });
+        
+        // إضافة وظيفة النقر للاختيار
+        studentCard.addEventListener('click', () => {
+          selectStudentForTeam(studentName, studentCard);
+        });
+        
+        studentsGrid.appendChild(studentCard);
+      });
+      
+      studentsCardsSection.appendChild(studentsGrid);
+      container.appendChild(studentsCardsSection);
+      
+      // إنشاء قسم اختيار الفرق
+      const teamsSection = document.createElement('div');
+      teamsSection.style.cssText = `
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 1rem;
+      `;
+      
+      // إنشاء مدخلات الفريق الأخضر
+      for (let i = 0; i < playersPerTeam; i++) {
+        const greenInput = createEnhancedPlayerInput(
+          `${playersPerTeam > 1 ? `الطالب ${i + 1} - ` : ''}الفريق الأخضر`,
+          'green',
+          classStudents,
+          i
+        );
+        teamsSection.appendChild(greenInput);
+      }
+      
+      // إنشاء مدخلات الفريق الأحمر
+      for (let i = 0; i < playersPerTeam; i++) {
+        const redInput = createEnhancedPlayerInput(
+          `${playersPerTeam > 1 ? `الطالب ${i + 1} - ` : ''}الفريق الأحمر`,
+          'red',
+          classStudents,
+          i
+        );
+        teamsSection.appendChild(redInput);
+      }
+      
+      container.appendChild(teamsSection);
+      
+      // إضافة دالة اختيار الطالب
+      window.selectStudentForTeam = function(studentName, cardElement) {
+        // إزالة التحديد السابق
+        document.querySelectorAll('.student-card.selected').forEach(card => {
+          card.classList.remove('selected');
+          card.style.background = 'linear-gradient(135deg, white 0%, #f8f9fa 100%)';
+          card.style.borderColor = '#e3f2fd';
+          card.style.transform = 'translateY(0) scale(1)';
+        });
+        
+        // تحديد البطاقة الحالية
+        cardElement.classList.add('selected');
+        cardElement.style.background = `linear-gradient(135deg, ${OMAN_COLORS.gold}20 0%, ${OMAN_COLORS.navy}10 100%)`;
+        cardElement.style.borderColor = OMAN_COLORS.gold;
+        cardElement.style.transform = 'translateY(-3px) scale(1.05)';
+        cardElement.style.boxShadow = `0 8px 25px ${OMAN_COLORS.gold}40`;
+        
+        // عرض نافذة اختيار الفريق
+        showTeamSelectionModal(studentName, cardElement);
+      };
+    }
+
+    // دالة إنشاء مدخل الفريق المحسن
+    function createEnhancedPlayerInput(placeholder, team, students, index) {
+      const wrapper = document.createElement('div');
+      wrapper.className = `player-input ${team}`;
+      wrapper.style.cssText = `
+        position: relative;
+        background: linear-gradient(135deg, ${team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red}15 0%, white 100%);
+        border-radius: 16px;
+        padding: 1rem;
+        border: 2px solid ${team === 'green' ? OMAN_COLORS.green + '40' : OMAN_COLORS.red + '40'};
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      `;
+      
+      const label = document.createElement('div');
+      label.style.cssText = `
+        font-weight: 600;
+        color: ${team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red};
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      `;
+      label.innerHTML = `${team === 'green' ? '🟢' : '🔴'} ${placeholder}`;
+      
+      const display = document.createElement('div');
+      display.className = `team-display ${team}`;
+      display.style.cssText = `
+        background: rgba(255,255,255,0.9);
+        border: 2px dashed ${team === 'green' ? OMAN_COLORS.green + '30' : OMAN_COLORS.red + '30'};
+        border-radius: 10px;
+        padding: 12px;
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      `;
+      display.textContent = 'انقر على طالب لإضافته هنا';
+      display.setAttribute('data-team', team);
+      display.setAttribute('data-index', index);
+      
+      wrapper.appendChild(label);
+      wrapper.appendChild(display);
+      
+      return wrapper;
+    }
+
+    // دالة عرض نافذة اختيار الفريق
+    function showTeamSelectionModal(studentName, cardElement) {
+      // إنشاء المودال
+      const modal = document.createElement('div');
+      modal.className = 'team-selection-modal';
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: modalFadeIn 0.3s ease-out;
+      `;
+      
+      const content = document.createElement('div');
+      content.style.cssText = `
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        animation: modalFadeIn 0.3s ease-out;
+      `;
+      
+      content.innerHTML = `
+        <div style="font-size: 2rem; margin-bottom: 1rem;">👤</div>
+        <div style="font-size: 1.2rem; font-weight: 600; color: ${OMAN_COLORS.navy}; margin-bottom: 0.5rem;">
+          ${studentName}
+        </div>
+        <div style="color: #666; margin-bottom: 2rem;">
+          اختر الفريق المناسب للطالب
+        </div>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button class="team-select-btn green" style="
+            background: linear-gradient(135deg, ${OMAN_COLORS.green} 0%, #4caf50 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+          " onclick="assignToTeam('${studentName}', 'green', this.parentElement.parentElement.parentElement)">
+            🟢 الفريق الأخضر
+          </button>
+          
+          <button class="team-select-btn red" style="
+            background: linear-gradient(135deg, ${OMAN_COLORS.red} 0%, #f44336 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+          " onclick="assignToTeam('${studentName}', 'red', this.parentElement.parentElement.parentElement)">
+            🔴 الفريق الأحمر
+          </button>
+        </div>
+        
+        <button style="
+          background: #f5f5f5;
+          color: #666;
+          border: none;
+          border-radius: 8px;
+          padding: 8px 16px;
+          cursor: pointer;
+          margin-top: 1rem;
+          font-size: 0.9rem;
+        " onclick="this.parentElement.parentElement.remove()">
+          إلغاء
+        </button>
+      `;
+      
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+      
+      // إضافة تأثيرات الأزرار
+      content.querySelectorAll('.team-select-btn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+          btn.style.transform = 'translateY(-2px) scale(1.05)';
+          btn.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translateY(0) scale(1)';
+          btn.style.boxShadow = 'none';
+        });
+      });
+    }
+
+    // دالة تعيين الطالب للفريق
+    window.assignToTeam = function(studentName, team, modal) {
+      // البحث عن أول مكان فارغ في الفريق المحدد
+      const teamDisplays = document.querySelectorAll(`.team-display.${team}`);
+      let assigned = false;
+      
+      for (let display of teamDisplays) {
+        if (display.textContent === 'انقر على طالب لإضافته هنا') {
+          display.textContent = studentName;
+          display.style.background = `linear-gradient(135deg, ${team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red}20 0%, white 100%)`;
+          display.style.borderColor = team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red;
+          display.style.borderStyle = 'solid';
+          display.style.color = team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red;
+          display.style.fontStyle = 'normal';
+          display.style.fontWeight = '600';
+          assigned = true;
+          break;
+        }
+      }
+      
+      if (assigned) {
+        // إزالة البطاقة من القائمة
+        document.querySelectorAll('.student-card').forEach(card => {
+          if (card.textContent.includes(studentName)) {
+            card.style.opacity = '0.3';
+            card.style.pointerEvents = 'none';
+            card.innerHTML += '<div style="position: absolute; top: 5px; right: 5px; background: green; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>';
+          }
+        });
+        
+        // إضافة معالج لإزالة الطالب عند النقر المزدوج
+        const assignedDisplays = document.querySelectorAll(`.team-display.${team}`);
+        assignedDisplays.forEach(display => {
+          if (display.textContent === studentName) {
+            display.addEventListener('dblclick', () => {
+              // إعادة الطالب للقائمة
+              document.querySelectorAll('.student-card').forEach(card => {
+                if (card.textContent.includes(studentName)) {
+                  card.style.opacity = '1';
+                  card.style.pointerEvents = 'auto';
+                  card.querySelector('div[style*="position: absolute"]')?.remove();
+                }
+              });
+              
+              // إعادة تعيين العرض
+              display.textContent = 'انقر على طالب لإضافته هنا';
+              display.style.background = 'rgba(255,255,255,0.9)';
+              display.style.borderColor = team === 'green' ? OMAN_COLORS.green + '30' : OMAN_COLORS.red + '30';
+              display.style.borderStyle = 'dashed';
+              display.style.color = '#666';
+              display.style.fontStyle = 'italic';
+              display.style.fontWeight = 'normal';
+              
+              showNotification(`🔄 تم إزالة ${studentName} من ${team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر'}`, 'info');
+              
+              // التحقق من حالة الفرق وإظهار البطاقات إذا لزم الأمر
+              checkTeamsStatusAndShowCards();
+            });
+            
+            display.title = 'انقر مرتين لإزالة الطالب';
+          }
+        });
+        
+        showNotification(`✅ تم إضافة ${studentName} إلى ${team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر'}`, 'success');
+        
+        // التحقق من اكتمال الفرق
+        checkIfTeamsComplete();
+        
+      } else {
+        showNotification(`⚠️ الفريق ${team === 'green' ? 'الأخضر' : 'الأحمر'} مكتمل`, 'warning');
+      }
+      
+      // إغلاق المودال
+      modal.remove();
+    };
+
+    // دالة للتحقق من اكتمال الفرق
+    function checkIfTeamsComplete() {
+      const greenDisplays = document.querySelectorAll('.team-display.green');
+      const redDisplays = document.querySelectorAll('.team-display.red');
+      
+      let greenComplete = true;
+      let redComplete = true;
+      
+      greenDisplays.forEach(display => {
+        if (display.textContent === 'انقر على طالب لإضافته هنا') {
+          greenComplete = false;
+        }
+      });
+      
+      redDisplays.forEach(display => {
+        if (display.textContent === 'انقر على طالب لإضافته هنا') {
+          redComplete = false;
+        }
+      });
+      
+      if (greenComplete && redComplete) {
+        // إخفاء بطاقات الطلاب تدريجياً
+        hideStudentCardsGracefully();
+        
+        setTimeout(() => {
+          showNotification('🎉 تم اختيار جميع الطلاب! يمكنك الآن بدء اللعبة', 'success');
+        }, 800);
+      }
+    }
+
+    // دالة إخفاء بطاقات الطلاب بشكل احترافي
+    function hideStudentCardsGracefully() {
+      const studentsSection = document.querySelector('[style*="grid-column: 1 / -1"][style*="margin-bottom: 2rem"]');
+      
+      if (studentsSection) {
+        console.log('🎯 بدء إخفاء بطاقات الطلاب...');
+        
+        // تأثير تلاشي تدريجي
+        studentsSection.style.transition = 'all 0.8s ease-out';
+        studentsSection.style.transform = 'translateY(-20px)';
+        studentsSection.style.opacity = '0';
+        studentsSection.style.maxHeight = studentsSection.offsetHeight + 'px';
+        
+        // إخفاء البطاقات واحدة تلو الأخرى
+        const studentCards = studentsSection.querySelectorAll('.student-card');
+        studentCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.transition = 'all 0.4s ease-out';
+            card.style.transform = 'scale(0.8) rotateY(90deg)';
+            card.style.opacity = '0';
+          }, index * 50);
+        });
+        
+        // تقليل حجم القسم تدريجياً
+        setTimeout(() => {
+          studentsSection.style.maxHeight = '0';
+          studentsSection.style.padding = '0';
+          studentsSection.style.margin = '0';
+          studentsSection.style.border = 'none';
+        }, 400);
+        
+        // إخفاء كامل بعد انتهاء الأنيميشن
+        setTimeout(() => {
+          studentsSection.style.display = 'none';
+          console.log('✅ تم إخفاء بطاقات الطلاب بنجاح');
+        }, 1200);
+        
+        // عرض رسالة تأكيدية
+        setTimeout(() => {
+          showNotification('👥 تم إخفاء قائمة الطلاب - الفرق جاهزة!', 'info');
+        }, 600);
+      }
+    }
+
+    // دالة لإظهار بطاقات الطلاب مرة أخرى (للاستخدام عند إعادة التعيين)
+    function showStudentCardsGracefully() {
+      const studentsSection = document.querySelector('[style*="display: none"][style*="grid-column: 1 / -1"]');
+      
+      if (studentsSection) {
+        console.log('🎯 بدء إظهار بطاقات الطلاب...');
+        
+        // إعادة تعيين الخصائص
+        studentsSection.style.display = 'block';
+        studentsSection.style.maxHeight = 'none';
+        studentsSection.style.padding = '1.5rem';
+        studentsSection.style.margin = '0 0 2rem 0';
+        studentsSection.style.border = `2px solid ${OMAN_COLORS.gold}30`;
+        studentsSection.style.opacity = '0';
+        studentsSection.style.transform = 'translateY(20px)';
+        
+        // أنيميشن الظهور
+        setTimeout(() => {
+          studentsSection.style.transition = 'all 0.8s ease-out';
+          studentsSection.style.opacity = '1';
+          studentsSection.style.transform = 'translateY(0)';
+        }, 100);
+        
+        // إظهار البطاقات واحدة تلو الأخرى
+        const studentCards = studentsSection.querySelectorAll('.student-card');
+        studentCards.forEach((card, index) => {
+          // إعادة تعيين حالة البطاقة
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+          card.style.transform = 'scale(0.8)';
+          card.querySelector('div[style*="position: absolute"]')?.remove();
+          
+          setTimeout(() => {
+            card.style.transition = 'all 0.4s ease-out';
+            card.style.transform = 'scale(1)';
+          }, index * 50 + 300);
+        });
+        
+        console.log('✅ تم إظهار بطاقات الطلاب بنجاح');
+      }
+    }
+
+    // دالة للتحقق من حالة الفرق وإظهار البطاقات عند الحاجة
+    function checkTeamsStatusAndShowCards() {
+      const greenDisplays = document.querySelectorAll('.team-display.green');
+      const redDisplays = document.querySelectorAll('.team-display.red');
+      
+      let hasEmptySlots = false;
+      
+      // التحقق من وجود مكان فارغ في الفرق
+      greenDisplays.forEach(display => {
+        if (display.textContent === 'انقر على طالب لإضافته هنا') {
+          hasEmptySlots = true;
+        }
+      });
+      
+      redDisplays.forEach(display => {
+        if (display.textContent === 'انقر على طالب لإضافته هنا') {
+          hasEmptySlots = true;
+        }
+      });
+      
+      // إذا كان هناك مكان فارغ، أظهر البطاقات
+      if (hasEmptySlots) {
+        const studentsSection = document.querySelector('[style*="display: none"][style*="grid-column: 1 / -1"]');
+        if (studentsSection) {
+          showStudentCardsGracefully();
+          showNotification('📋 تم إظهار قائمة الطلاب - يمكنك اختيار المزيد', 'info');
+        }
+      }
+    }
+
+    function createAdvancedPlayerInput(placeholder, team, students, index) {
+      const wrapper = document.createElement('div');
+      wrapper.className = `player-input ${team}`;
+      wrapper.style.cssText = `
+        position: relative;
+        background: linear-gradient(135deg, ${team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red}10 0%, white 100%);
+        border-radius: 16px;
+        padding: 0.5rem;
+        border: 2px solid ${team === 'green' ? OMAN_COLORS.green + '30' : OMAN_COLORS.red + '30'};
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+      `;
+      
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = placeholder;
+      input.setAttribute('data-team', team);
+      input.setAttribute('data-index', index);
+      input.setAttribute('list', `students-${team}-${index}`);
+      input.required = true;
+      input.style.cssText = `
+        width: 100%;
+        padding: 1rem 3.5rem 1rem 1rem;
+        border: none;
+        border-radius: 12px;
+        font-size: clamp(15px, 4vw, 1rem);
+        font-family: var(--font-family);
+        background: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        min-height: 50px;
+        flex: 1;
+      `;
+      
+      const icon = document.createElement('div');
+      icon.className = 'team-icon';
+      icon.textContent = team === 'green' ? '🟢' : '🔴';
+      icon.style.cssText = `
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        pointer-events: none;
+        z-index: 1;
+      `;
+      
+      // إنشاء قائمة الاقتراحات
+      const datalist = document.createElement('datalist');
+      datalist.id = `students-${team}-${index}`;
+      students.forEach(studentName => {
+        const option = document.createElement('option');
+        option.value = studentName;
+        datalist.appendChild(option);
+      });
+      
+      // إضافة مراقب لتغيير النص
+      input.addEventListener('input', (e) => {
+        const value = e.target.value;
+        const matchedStudent = students.find(s => s.includes(value));
+        
+        if (matchedStudent && value.length > 2) {
+          wrapper.style.borderColor = team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red;
+          wrapper.style.transform = 'translateY(-2px)';
+          wrapper.style.boxShadow = `0 8px 25px ${team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red}30`;
+        } else {
+          wrapper.style.borderColor = team === 'green' ? OMAN_COLORS.green + '30' : OMAN_COLORS.red + '30';
+          wrapper.style.transform = 'none';
+          wrapper.style.boxShadow = 'none';
+        }
+      });
+      
+      wrapper.appendChild(input);
+      wrapper.appendChild(icon);
+      wrapper.appendChild(datalist);
+      
+      return wrapper;
+    }
+
+    function createRandomModeDisplay(classStudents, playersPerTeam) {
+      const container = elements.playersContainer;
+      
+      const randomDisplay = document.createElement('div');
+      randomDisplay.style.cssText = `
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, ${OMAN_COLORS.gold} 0%, ${OMAN_COLORS.navy} 100%);
+        border-radius: 20px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      `;
+      
+      randomDisplay.innerHTML = `
+        <div style="position: relative; z-index: 1;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🎲</div>
+          <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
+            الاختيار العشوائي
+          </div>
+          <div style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
+            سيتم اختيار ${playersPerTeam} طلاب لكل فريق بشكل عشوائي من الصف
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.2); border-radius: 12px; 
+                      padding: 1rem; font-size: 1rem; backdrop-filter: blur(10px);">
+            📊 ${classStudents.length} طالب متاح للاختيار من
+          </div>
+        </div>
+        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; 
+                    background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"2\" fill=\"white\" opacity=\"0.1\"/></svg>') repeat; 
+                    animation: float 20s linear infinite;"></div>
+      `;
+      
+      container.appendChild(randomDisplay);
+    }
+
+    function createTeamFreeMode() {
+      const container = elements.playersContainer;
+      
+      const freeDisplay = document.createElement('div');
+      freeDisplay.style.cssText = `
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, ${OMAN_COLORS.green} 0%, ${OMAN_COLORS.red} 100%);
+        border-radius: 20px;
+        color: white;
+        position: relative;
+      `;
+      
+      freeDisplay.innerHTML = `
+        <div style="font-size: 3rem; margin-bottom: 1rem;">⚔️</div>
+        <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
+          فريق ضد فريق
+        </div>
+        <div style="font-size: 1.1rem; opacity: 0.9;">
+          لا حاجة لأسماء محددة - الفرق جاهزة للمنافسة!
+        </div>
+      `;
+      
+      container.appendChild(freeDisplay);
+    }
+
+    function showStudentsPreview(students) {
+      if (students.length === 0) return;
+      
+      const container = elements.playersContainer;
+      const previewExists = container.querySelector('.students-preview');
+      if (previewExists) previewExists.remove();
+      
+      const preview = document.createElement('div');
+      preview.className = 'students-preview';
+      preview.style.cssText = `
+        grid-column: 1 / -1;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: ${OMAN_COLORS.navy}10;
+        border-radius: 12px;
+        border: 1px solid ${OMAN_COLORS.navy}30;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: clamp(12px, 3.5vw, 0.9rem);
+      `;
+      
+      const sampleStudents = students.slice(0, 6);
+      const moreCount = students.length - sampleStudents.length;
+      
+      preview.innerHTML = `
+        <div style="font-size: 0.9rem; font-weight: 600; color: ${OMAN_COLORS.navy}; 
+                    margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          👥 عينة من الطلاب المتاحين:
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          ${sampleStudents.map(student => {
+            const shortName = extractShortName(student);
+            return `<span style="background: white; padding: 0.25rem 0.75rem; border-radius: 20px; 
+                                  font-size: 0.8rem; color: ${OMAN_COLORS.navy}; border: 1px solid ${OMAN_COLORS.navy}30;
+                                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);">${shortName}</span>`;
+          }).join('')}
+          ${moreCount > 0 ? `<span style="background: ${OMAN_COLORS.gold}; color: white; 
+                                           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; 
+                                           font-weight: 600;">+${moreCount} آخرين</span>` : ''}
+        </div>
+      `;
+      
+      container.appendChild(preview);
+    }
+
+    // ==== تهيئة لوحة الحروف ====
+    function initializeHexBoard() {
+      elements.hexagonBoard.innerHTML = '';
+      
+      BOARD_LETTERS.forEach((row, rowIndex) => {
+        row.forEach((letter, colIndex) => {
+          const hexCell = document.createElement('div');
+          hexCell.className = 'hex-cell';
+          hexCell.setAttribute('data-row', rowIndex);
+          hexCell.setAttribute('data-col', colIndex);
+          hexCell.textContent = letter;
+          
+          hexCell.addEventListener('click', () => handleCellClick(rowIndex, colIndex, hexCell));
+          elements.hexagonBoard.appendChild(hexCell);
+        });
+      });
+    }
+
+    // ==== معالجة النقر على الخلايا المتقدمة ====
+    function handleCellClick(row, col, element) {
+      console.log('🖱️ تم النقر على خلية:', row, col);
+      
+      if (!gameData.gameStarted || element.classList.contains('selected')) {
+        if (!gameData.gameStarted) {
+          console.log('⚠️ اللعبة لم تبدأ بعد');
+          showAdvancedNotification(
+            '⚠️ اللعبة لم تبدأ بعد',
+            'يرجى إعداد الفرق وبدء اللعبة أولاً',
+            'warning'
+          );
+        } else {
+          console.log('⚠️ الخلية مختارة مسبقاً');
+        }
+        return;
+      }
+      
+      console.log('✅ اللعبة بدأت، سيتم عرض نافذة اختيار الفريق');
+      playSound(elements.clickSound);
+      
+      // رسالة تفاعلية عند اختيار الخلية
+      const cellMessages = [
+        '⏳ بانتظار اختياركم!',
+        '🤔 أي فريق سيحصل على هذا الحرف؟',
+        '🎯 اختاروا الفريق المناسب!',
+        '💭 فكروا جيداً قبل الاختيار!'
+      ];
+      const randomCellMessage = cellMessages[Math.floor(Math.random() * cellMessages.length)];
+      setTimeout(() => {
+        showInteractiveMessage(
+          randomCellMessage,
+          '../assets/media/sounds/kingdom-sounds/cosmic-click.mp3'
+        );
+      }, 300);
+      
+      // إضافة تأثير بصري للخلية المختارة
+      element.style.transform = 'scale(1.1)';
+      element.style.boxShadow = `0 8px 25px ${OMAN_COLORS.gold}40`;
+      
+      setTimeout(() => {
+        element.style.transform = '';
+        element.style.boxShadow = '';
+      }, 200);
+      
+      gameData.selectedCell = { row, col, element };
+      console.log('📝 تم حفظ الخلية المختارة:', gameData.selectedCell);
+      
+      const letter = BOARD_LETTERS[row][col];
+      console.log('🔤 الحرف المختار:', letter);
+      
+      if (elements.teamSelectionTitle) {
+        elements.teamSelectionTitle.innerHTML = `
+          <div style="font-size: 1.5rem; margin-bottom: 1rem;">
+            أي فريق يريد الإجابة على حرف "<span style="color: ${OMAN_COLORS.gold}; 
+            font-weight: 800; font-size: 2rem;">${letter}</span>"؟
+          </div>
+          <div style="font-size: 1rem; opacity: 0.8; color: ${OMAN_COLORS.navy};">
+            الموقع: الصف ${row + 1} - العمود ${col + 1}
+          </div>
+        `;
+        console.log('✅ تم تحديث عنوان نافذة اختيار الفريق');
+      } else {
+        console.error('❌ عنصر teamSelectionTitle غير موجود');
+      }
+      
+      // إضافة معلومات الاستراتيجية
+      addStrategicInfo(row, col);
+      
+      console.log('🔄 محاولة عرض نافذة اختيار الفريق...');
+      if (elements.teamSelectionModal) {
+        showModal(elements.teamSelectionModal);
+        console.log('✅ تم استدعاء showModal لنافذة اختيار الفريق');
+      } else {
+        console.error('❌ عنصر teamSelectionModal غير موجود!');
+      }
+    }
+
+    function addStrategicInfo(row, col) {
+      // التحقق من الخلايا المجاورة
+      const greenCellsInRow = countTeamCellsInRow(row, 'green');
+      const redCellsInCol = countTeamCellsInCol(col, 'red');
+      const greenCellsInCol = countTeamCellsInCol(col, 'green');
+      const redCellsInRow = countTeamCellsInRow(row, 'red');
+      
+      let strategicInfo = '';
+      
+      if (greenCellsInRow >= 3) {
+        strategicInfo += `<div style="color: ${OMAN_COLORS.green}; font-weight: 600;">
+          ⚠️ الفريق الأخضر قريب من الفوز! (${greenCellsInRow}/5 في هذا الصف)
+        </div>`;
+      }
+      
+      if (redCellsInCol >= 3) {
+        strategicInfo += `<div style="color: ${OMAN_COLORS.red}; font-weight: 600;">
+          ⚠️ الفريق الأحمر قريب من الفوز! (${redCellsInCol}/5 في هذا العمود)
+        </div>`;
+      }
+      
+      if (greenCellsInCol >= 2) {
+        strategicInfo += `<div style="color: ${OMAN_COLORS.green}; font-size: 0.9rem;">
+          💡 الفريق الأخضر له ${greenCellsInCol} خلايا في هذا العمود
+        </div>`;
+      }
+      
+      if (redCellsInRow >= 2) {
+        strategicInfo += `<div style="color: ${OMAN_COLORS.red}; font-size: 0.9rem;">
+          💡 الفريق الأحمر له ${redCellsInRow} خلايا في هذا الصف
+        </div>`;
+      }
+      
+      if (strategicInfo) {
+        const existingInfo = elements.teamSelectionModal.querySelector('.strategic-info');
+        if (existingInfo) existingInfo.remove();
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'strategic-info';
+        infoDiv.style.cssText = `
+          background: ${OMAN_COLORS.navy}10;
+          border-radius: 12px;
+          padding: 1rem;
+          margin: 1rem 0;
+          border-left: 4px solid ${OMAN_COLORS.gold};
+        `;
+        infoDiv.innerHTML = strategicInfo;
+        
+        const modalContent = elements.teamSelectionModal.querySelector('.modal-content');
+        modalContent.insertBefore(infoDiv, modalContent.querySelector('.team-buttons'));
+      }
+    }
+
+    function countTeamCellsInRow(row, team) {
+      let count = 0;
+      for (let col = 0; col < 5; col++) {
+        const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        if (cell && cell.classList.contains(team)) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    function countTeamCellsInCol(col, team) {
+      let count = 0;
+      for (let row = 0; row < 5; row++) {
+        const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        if (cell && cell.classList.contains(team)) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    function selectTeamForCell(team) {
+      if (!gameData.selectedCell) return;
+      
+      const { row, col, element } = gameData.selectedCell;
+      const letter = BOARD_LETTERS[row][col];
+      
+      // إضافة تأثير بصري عند اختيار الفريق
+      element.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+      element.style.transform = 'scale(1.2) rotate(360deg)';
+      
+      setTimeout(() => {
+        element.classList.add('selected', team);
+        element.style.transform = 'scale(1)';
+        element.style.transition = '';
+        
+        // إضافة تأثير النبض
+        element.style.animation = 'pulse 0.6s ease-in-out';
+        setTimeout(() => {
+          element.style.animation = '';
+        }, 600);
+        
+      }, 250);
+      
+      // تحديث النقاط مع تأثيرات
+      if (team === 'green') {
+        gameData.greenScore++;
+        updateScoreWithAnimation(elements.greenTeamScore, gameData.greenScore, OMAN_COLORS.green);
+        playSound(elements.greenPointSound);
+        
+        showAdvancedNotification(
+          '🟢 نقطة للفريق الأخضر!',
+          `اختار حرف "${letter}" - المجموع: ${gameData.greenScore}`,
+          'success',
+          2000
+        );
+        
+        // رسالة تفاعلية للفريق الأخضر
+        const greenMessages = [
+          '🔥 اختيار رائع!',
+          '✅ إجابة ممتازة!',
+          '🎯 الفريق الأخضر يتقدم!',
+          '💚 عمل جيد!'
+        ];
+        const randomGreenMessage = greenMessages[Math.floor(Math.random() * greenMessages.length)];
+        showInteractiveMessage(
+          randomGreenMessage,
+          '../assets/media/sounds/kingdom-sounds/bonus-collect.mp3'
+        );
+      } else {
+        gameData.redScore++;
+        updateScoreWithAnimation(elements.redTeamScore, gameData.redScore, OMAN_COLORS.red);
+        playSound(elements.redPointSound);
+        
+        showAdvancedNotification(
+          '🔴 نقطة للفريق الأحمر!',
+          `اختار حرف "${letter}" - المجموع: ${gameData.redScore}`,
+          'success',
+          2000
+        );
+        
+        // رسالة تفاعلية للفريق الأحمر
+        const redMessages = [
+          '🔥 اختيار رائع!',
+          '✅ إجابة ممتازة!',
+          '🎯 الفريق الأحمر يتقدم!',
+          '❤️ عمل جيد!'
+        ];
+        const randomRedMessage = redMessages[Math.floor(Math.random() * redMessages.length)];
+        showInteractiveMessage(
+          randomRedMessage,
+          '../assets/media/sounds/kingdom-sounds/bonus-collect.mp3'
+        );
+      }
+      
+      hideModal(elements.teamSelectionModal);
+      gameData.selectedCell = null;
+      
+      // التحقق من الفوز بعد قليل
+      setTimeout(() => checkForWinAdvanced(), 800);
+    }
+
+    function updateScoreWithAnimation(scoreElement, newScore, color) {
+      scoreElement.style.transform = 'scale(1.5)';
+      scoreElement.style.color = color;
+      scoreElement.style.textShadow = `0 0 20px ${color}40`;
+      
+      setTimeout(() => {
+        scoreElement.textContent = newScore;
+        setTimeout(() => {
+          scoreElement.style.transform = 'scale(1)';
+          scoreElement.style.textShadow = '';
+        }, 200);
+      }, 100);
+    }
+
+    // ==== فحص حالات الفوز المتقدم ====
+    function checkForWinAdvanced() {
+      const greenCells = document.querySelectorAll('.hex-cell.green');
+      const redCells = document.querySelectorAll('.hex-cell.red');
+      const totalCells = greenCells.length + redCells.length;
+      
+      console.log(`🎯 فحص الفوز: أخضر=${greenCells.length}, أحمر=${redCells.length}, المجموع=${totalCells}/25`);
+      
+      // فحص فوز الفريق الأخضر (صف أفقي كامل)
+      const greenWinResult = checkGreenWinCondition();
+      if (greenWinResult.hasWon) {
+        declareAdvancedWinner('green', 'إكمال صف أفقي', greenWinResult);
+        return;
+      }
+      
+      // فحص فوز الفريق الأحمر (عمود رأسي كامل)
+      const redWinResult = checkRedWinCondition();
+      if (redWinResult.hasWon) {
+        declareAdvancedWinner('red', 'إكمال عمود رأسي', redWinResult);
+        return;
+      }
+      
+      // فحص امتلاء اللوحة
+      if (totalCells === 25) {
+        handleBoardFullScenario();
+        return;
+      }
+      
+      // إظهار إحصائيات التقدم
+      showProgressUpdate(greenCells.length, redCells.length, totalCells);
+    }
+
+    function checkGreenWinCondition() {
+      for (let row = 0; row < 5; row++) {
+        let greenRowCount = 0;
+        const rowCells = [];
+        
+        for (let col = 0; col < 5; col++) {
+          const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+          rowCells.push(cell);
+          if (cell && cell.classList.contains('green')) {
+            greenRowCount++;
+          }
+        }
+        
+        if (greenRowCount === 5) {
+          return {
+            hasWon: true,
+            winType: 'row',
+            position: row + 1,
+            cells: rowCells,
+            letters: rowCells.map(cell => cell.textContent).join('')
+          };
+        }
+      }
+      
+      return { hasWon: false };
+    }
+
+    function checkRedWinCondition() {
+      for (let col = 0; col < 5; col++) {
+        let redColCount = 0;
+        const colCells = [];
+        
+        for (let row = 0; row < 5; row++) {
+          const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+          colCells.push(cell);
+          if (cell && cell.classList.contains('red')) {
+            redColCount++;
+          }
+        }
+        
+        if (redColCount === 5) {
+          return {
+            hasWon: true,
+            winType: 'column',
+            position: col + 1,
+            cells: colCells,
+            letters: colCells.map(cell => cell.textContent).join('')
+          };
+        }
+      }
+      
+      return { hasWon: false };
+    }
+
+    function handleBoardFullScenario() {
+      if (gameData.greenScore > gameData.redScore) {
+        declareAdvancedWinner('green', 'الأكثر نقاطاً', {
+          scoreGreen: gameData.greenScore,
+          scoreRed: gameData.redScore,
+          margin: gameData.greenScore - gameData.redScore
+        });
+      } else if (gameData.redScore > gameData.greenScore) {
+        declareAdvancedWinner('red', 'الأكثر نقاطاً', {
+          scoreGreen: gameData.greenScore,
+          scoreRed: gameData.redScore,
+          margin: gameData.redScore - gameData.greenScore
+        });
+      } else {
+        declareAdvancedTie();
+      }
+    }
+
+    function showProgressUpdate(greenCount, redCount, totalCount) {
+      const remaining = 25 - totalCount;
+      
+      if (remaining <= 5 && remaining > 0) {
+        const leadingTeam = greenCount > redCount ? 'الأخضر' : 
+                           redCount > greenCount ? 'الأحمر' : 'متعادل';
+        
+        showAdvancedNotification(
+          '⏰ المراحل الأخيرة!',
+          `${remaining} خلايا متبقية - الفريق ${leadingTeam} في المقدمة`,
+          'warning',
+          3000
+        );
+        
+        // رسالة تفاعلية للتحفيز
+        const urgencyMessages = [
+          '🔥 المنافسة تحتدم!',
+          '⚡ اللحظات الحاسمة!',
+          '🎯 كل اختيار مهم الآن!',
+          '💪 اعطوا كل ما لديكم!'
+        ];
+        const randomUrgencyMessage = urgencyMessages[Math.floor(Math.random() * urgencyMessages.length)];
+        setTimeout(() => {
+          showInteractiveMessage(
+            randomUrgencyMessage,
+            '../assets/media/sounds/kingdom-sounds/final-countdown.mp3'
+          );
+        }, 1000);
+      }
+    }
+
+    function declareAdvancedWinner(team, reason, winData) {
+      gameData.gameStarted = false;
+      
+      const teamName = team === 'green' ? 'الفريق الأخضر' : 'الفريق الأحمر';
+      const teamMembers = team === 'green' ? gameData.greenTeam : gameData.redTeam;
+      const teamScore = team === 'green' ? gameData.greenScore : gameData.redScore;
+      const teamColor = team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red;
+      
+      // رسالة فوز تفاعلية
+      const winMessages = {
+        green: [
+          '🏆 الفريق الأخضر يفوز!',
+          '🎉 انتصار رائع للفريق الأخضر!',
+          '💚 تهانينا للفريق الأخضر!',
+          '🥇 الفريق الأخضر هو الفائز!'
+        ],
+        red: [
+          '🏆 الفريق الأحمر يفوز!',
+          '🎉 انتصار رائع للفريق الأحمر!',
+          '❤️ تهانينا للفريق الأحمر!',
+          '🥇 الفريق الأحمر هو الفائز!'
+        ]
+      };
+      
+      const randomWinMessage = winMessages[team][Math.floor(Math.random() * winMessages[team].length)];
+      showInteractiveMessage(
+        randomWinMessage,
+        '../assets/media/sounds/kingdom-sounds/epic-victory.mp3'
+      );
+      
+      // تأثير الفوز المرئي
+      addWinningAnimation(team, winData);
+      
+      // تشغيل تسلسل أصوات الفوز المطور
+      playWinSoundSequence();
+      
+      // تأثير الاحتفال المتقدم
+      triggerAdvancedCelebration(teamColor);
+      
+      // حفظ النتيجة مع تفاصيل إضافية
+      saveAdvancedGameResult(teamName, teamMembers, teamScore, reason, winData);
+      
+      // إظهار نافذة الفوز
+      showAdvancedVictoryModal(teamName, teamMembers, reason, winData);
+    }
+
+    function declareAdvancedTie() {
+      gameData.gameStarted = false;
+      
+      // رسالة تعادل تفاعلية
+      showInteractiveMessage(
+        '🤝 تعادل مثير! كلا الفريقين أبدع!',
+        '../assets/media/sounds/kingdom-sounds/crowd-cheer.mp3'
+      );
+      
+      showAdvancedNotification(
+        '🤝 تعادل مثير!',
+        `الفريقان حققا نفس النقاط (${gameData.greenScore}-${gameData.redScore})`,
+        'info',
+        5000
+      );
+      
+      // حفظ التعادل
+      saveAdvancedGameResult('تعادل', [...gameData.greenTeam, ...gameData.redTeam], 
+                           gameData.greenScore, 'تعادل في النقاط', {
+                             scoreGreen: gameData.greenScore,
+                             scoreRed: gameData.redScore
+                           });
+    }
+
+    function addWinningAnimation(team, winData) {
+      if (winData.cells) {
+        // تأثير خاص للخلايا الفائزة
+        winData.cells.forEach((cell, index) => {
+          setTimeout(() => {
+            cell.style.animation = 'winningPulse 1s infinite';
+            cell.style.boxShadow = `0 0 30px ${team === 'green' ? OMAN_COLORS.green : OMAN_COLORS.red}`;
+          }, index * 100);
+        });
+        
+        // إضافة أنيمشن الفوز
+        if (!document.getElementById('winning-animations')) {
+          const style = document.createElement('style');
+          style.id = 'winning-animations';
+          style.textContent = `
+            @keyframes winningPulse {
+              0%, 100% { transform: scale(1); }
+              50% { transform: scale(1.1); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+    }
+
+    function triggerAdvancedCelebration(color) {
+      // تأثير الكونفيتي إذا كان متاحاً
+      if (typeof confetti !== 'undefined') {
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: [color, OMAN_COLORS.gold, OMAN_COLORS.white]
+        });
+        
+        // موجة ثانية من الاحتفال
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: [color, OMAN_COLORS.gold]
+          });
+        }, 500);
+        
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: [color, OMAN_COLORS.gold]
+          });
+        }, 1000);
+      }
+    }
+
+    // ==== إدارة النتائج المتقدمة ====
+    function saveAdvancedGameResult(teamName, members, score, reason, winData) {
+      const results = JSON.parse(localStorage.getItem('blockbusters-results') || '[]');
+      
+      const result = {
+        team: teamName,
+        members: Array.isArray(members) ? members.map(name => extractShortName(name)).join(' و ') : members,
+        fullMembers: Array.isArray(members) ? members : [members],
+        score: score,
+        reason: reason,
+        date: new Date().toLocaleDateString('ar-SA'),
+        time: new Date().toLocaleTimeString('ar-SA', { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        }),
+        timestamp: Date.now(),
+        gameMode: gameData.currentMode,
+        winData: winData || {},
+        duration: calculateGameDuration()
+      };
+      
+      results.unshift(result);
+      
+      // الاحتفاظ بآخر 50 نتيجة
+      if (results.length > 50) {
+        results.splice(50);
+      }
+      
+      localStorage.setItem('blockbusters-results', JSON.stringify(results));
+      console.log('💾 تم حفظ النتيجة:', result);
+      
+      // فحص الإنجازات
+      checkAchievements(result);
+    }
+
+    function calculateGameDuration() {
+      if (gameData.gameStartTime) {
+        const duration = Math.floor((Date.now() - gameData.gameStartTime) / 1000);
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }
+      return 'غير محدد';
+    }
+
+    function loadGameResults() {
+      return JSON.parse(localStorage.getItem('blockbusters-results') || '[]');
+    }
+
+    function clearGameResults() {
+      if (confirm('هل أنت متأكد من مسح جميع الإحصائيات؟ لا يمكن التراجع عن هذا الإجراء.')) {
+        localStorage.removeItem('blockbusters-results');
+        showAdvancedNotification(
+          '🗑️ تم مسح الإحصائيات',
+          'تم حذف جميع النتائج المحفوظة بنجاح',
+          'success'
+        );
+        updateStatisticsDisplay();
+      }
+    }
+
+    // ==== إظهار النوافذ المتقدمة ====
+    function showAdvancedVictoryModal(teamName, members, reason, winData) {
+      const teamColor = teamName.includes('أخضر') ? OMAN_COLORS.green : OMAN_COLORS.red;
+      
+      elements.victoryTitle.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
+          <div style="font-size: 3rem;">${teamName.includes('أخضر') ? '🟢' : '🔴'}</div>
+          <div>
+            <div style="color: ${teamColor}; font-size: 2.5rem; font-weight: 800;">
+              ${teamName} فاز!
+            </div>
+            <div style="font-size: 1.2rem; color: ${OMAN_COLORS.navy}; font-weight: 500;">
+              ${reason}
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // عرض تفاصيل الفوز
+      let victoryDetails = '';
+      if (winData.winType) {
+        victoryDetails += `<div style="background: ${teamColor}15; padding: 1rem; border-radius: 12px; margin: 1rem 0;">`;
+        if (winData.winType === 'row') {
+          victoryDetails += `🎯 <strong>فوز بالصف ${winData.position}:</strong> ${winData.letters}`;
+        } else if (winData.winType === 'column') {
+          victoryDetails += `🎯 <strong>فوز بالعمود ${winData.position}:</strong> ${winData.letters}`;
+        }
+        victoryDetails += `</div>`;
+      }
+      
+      if (winData.scoreGreen !== undefined) {
+        victoryDetails += `
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div style="background: ${OMAN_COLORS.green}15; padding: 1rem; border-radius: 12px; text-align: center;">
+              <div style="color: ${OMAN_COLORS.green}; font-size: 2rem; font-weight: 700;">${winData.scoreGreen}</div>
+              <div style="font-size: 0.9rem;">الفريق الأخضر</div>
+            </div>
+            <div style="background: ${OMAN_COLORS.red}15; padding: 1rem; border-radius: 12px; text-align: center;">
+              <div style="color: ${OMAN_COLORS.red}; font-size: 2rem; font-weight: 700;">${winData.scoreRed}</div>
+              <div style="font-size: 0.9rem;">الفريق الأحمر</div>
+            </div>
+          </div>
+        `;
+        
+        if (winData.margin) {
+          victoryDetails += `<div style="text-align: center; font-weight: 600; color: ${OMAN_COLORS.navy};">
+            فارق النقاط: ${winData.margin}
+          </div>`;
+        }
+      }
+      
+      if (members.length > 0 && !teamName.includes('تعادل')) {
+        elements.victoryPlayers.innerHTML = `
+          <div style="background: ${teamColor}10; padding: 1.5rem; border-radius: 16px; margin: 1rem 0;">
+            <div style="font-size: 1.3rem; font-weight: 600; color: ${teamColor}; margin-bottom: 0.5rem;">
+              🏆 الأبطال
+            </div>
+            <div style="font-size: 1.1rem; color: ${OMAN_COLORS.navy};">
+              ${members.map(name => extractShortName(name)).join(' • ')}
+            </div>
+            ${victoryDetails}
+            <div style="font-size: 0.9rem; color: ${OMAN_COLORS.navy}; margin-top: 1rem; opacity: 0.8;">
+              ⏱️ مدة اللعبة: ${calculateGameDuration()}
+            </div>
+          </div>
+        `;
+      } else {
+        elements.victoryPlayers.innerHTML = victoryDetails;
+      }
+      
+      updateAdvancedHonorBoard();
+      showModal(elements.victoryModal);
+    }
+
+    function updateAdvancedHonorBoard() {
+      const results = loadGameResults().slice(0, 5);
+      elements.honorList.innerHTML = '';
+      
+      if (results.length === 0) {
+        elements.honorList.innerHTML = `
+          <div style="text-align: center; padding: 2rem; color: ${OMAN_COLORS.navy}; opacity: 0.7;">
+            لا توجد نتائج محفوظة بعد
+          </div>
+        `;
+        return;
+      }
+      
+      results.forEach((result, index) => {
+        const item = document.createElement('div');
+        item.className = 'honor-item';
+        
+        const medalEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅';
+        const teamColor = result.team.includes('أخضر') ? OMAN_COLORS.green : 
+                         result.team.includes('أحمر') ? OMAN_COLORS.red : OMAN_COLORS.navy;
+        
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+            <div style="font-size: 1.5rem;">${medalEmoji}</div>
+            <div style="flex: 1;">
+              <div style="color: ${teamColor}; font-weight: 700; font-size: 1.1rem;">
+                ${result.team}
+              </div>
+              <div style="font-size: 0.9rem; color: ${OMAN_COLORS.navy}; margin-top: 0.25rem;">
+                ${result.members}
+              </div>
+              <div style="font-size: 0.8rem; color: ${OMAN_COLORS.navy}; opacity: 0.7; margin-top: 0.25rem;">
+                ${result.reason} • ${result.score} نقاط
+              </div>
+            </div>
+            <div style="text-align: left; font-size: 0.8rem; color: ${OMAN_COLORS.navy}; opacity: 0.7;">
+              <div>${result.date}</div>
+              <div>${result.time}</div>
+            </div>
+          </div>
+        `;
+        
+        elements.honorList.appendChild(item);
+      });
+    }
+
+    function updateStatisticsDisplay() {
+      const results = loadGameResults();
+      elements.allResultsList.innerHTML = '';
+      
+      if (results.length === 0) {
+        elements.allResultsList.innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: ${OMAN_COLORS.navy};">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📊</div>
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">لا توجد إحصائيات</div>
+            <div style="opacity: 0.7;">ابدأ لعبة جديدة لرؤية النتائج هنا</div>
+          </div>
+        `;
+        return;
+      }
+      
+      // إحصائيات عامة
+      const stats = calculateAdvancedStats(results);
+      const statsHeader = document.createElement('div');
+      statsHeader.style.cssText = `
+        background: linear-gradient(135deg, ${OMAN_COLORS.navy} 0%, ${OMAN_COLORS.gold} 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      `;
+      
+      statsHeader.innerHTML = `
+        <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">📈 إحصائيات شاملة</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+          <div>
+            <div style="font-size: 1.5rem; font-weight: 800;">${results.length}</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">إجمالي الألعاب</div>
+          </div>
+          <div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: ${OMAN_COLORS.green};">${stats.greenWins}</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">انتصارات خضراء</div>
+          </div>
+          <div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: ${OMAN_COLORS.red};">${stats.redWins}</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">انتصارات حمراء</div>
+          </div>
+          <div>
+            <div style="font-size: 1.5rem; font-weight: 800;">${stats.ties}</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">تعادل</div>
+          </div>
+        </div>
+      `;
+      
+      elements.allResultsList.appendChild(statsHeader);
+      
+      // قائمة النتائج
+      results.forEach((result, index) => {
+        const item = document.createElement('div');
+        item.className = 'honor-item';
+        item.style.cssText += `
+          margin-bottom: 0.75rem;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        `;
+        
+        const teamColor = result.team.includes('أخضر') ? OMAN_COLORS.green : 
+                         result.team.includes('أحمر') ? OMAN_COLORS.red : OMAN_COLORS.navy;
+        
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+            <div style="background: ${teamColor}15; color: ${teamColor}; font-weight: 700; 
+                        padding: 0.5rem; border-radius: 8px; min-width: 2.5rem; text-align: center;">
+              ${index + 1}
+            </div>
+            <div style="flex: 1;">
+              <div style="color: ${teamColor}; font-weight: 700; font-size: 1.1rem;">
+                ${result.team} - ${result.score} نقاط
+              </div>
+              <div style="font-size: 0.9rem; color: ${OMAN_COLORS.navy}; margin: 0.25rem 0;">
+                👥 ${result.members}
+              </div>
+              <div style="font-size: 0.8rem; color: ${OMAN_COLORS.navy}; opacity: 0.7;">
+                🏆 ${result.reason} • ⏱️ ${result.duration || 'غير محدد'} • 🎮 ${getModeDisplayName(result.gameMode)}
+              </div>
+            </div>
+            <div style="text-align: left; font-size: 0.8rem; color: ${OMAN_COLORS.navy}; opacity: 0.7;">
+              <div>${result.date}</div>
+              <div>${result.time}</div>
+            </div>
+          </div>
+        `;
+        
+        // إضافة تأثير التفاعل
+        item.addEventListener('mouseenter', () => {
+          item.style.transform = 'translateX(-5px)';
+          item.style.boxShadow = `0 8px 25px ${teamColor}20`;
+        });
+        
+        item.addEventListener('mouseleave', () => {
+          item.style.transform = '';
+          item.style.boxShadow = '';
+        });
+        
+        elements.allResultsList.appendChild(item);
+      });
+    }
+
+    function calculateAdvancedStats(results) {
+      const stats = {
+        greenWins: 0,
+        redWins: 0,
+        ties: 0,
+        totalGames: results.length
+      };
+      
+      results.forEach(result => {
+        if (result.team.includes('أخضر')) {
+          stats.greenWins++;
+        } else if (result.team.includes('أحمر')) {
+          stats.redWins++;
+        } else {
+          stats.ties++;
+        }
+      });
+      
+      return stats;
+    }
+
+    function getModeDisplayName(mode) {
+      const modes = {
+        'team2-manual': 'طالب واحد',
+        'team4-manual': 'طالبان',
+        'team2-random': 'عشوائي',
+        'team-free': 'فريق حر'
+      };
+      return modes[mode] || 'غير محدد';
+    }
+
+    // ==== بدء اللعبة المتقدم ====
+    function startGame(e) {
+      e.preventDefault();
+      
+      const classValue = elements.classSelect.value;
+      const modeValue = elements.modeSelect.value;
+      
+      if (!classValue || !modeValue) {
+        showAdvancedNotification(
+          '⚠️ معلومات ناقصة',
+          'يرجى اختيار الصف الدراسي ونوع المسابقة أولاً',
+          'warning'
+        );
+        return;
+      }
+      
+      showLoadingIndicator('🎮 جاري تحضير اللعبة...');
+      
+      setTimeout(() => {
+        try {
+          const classStudents = gameData.classesData[classValue] || [];
+          gameData.currentMode = modeValue;
+          
+          // تحديد أعضاء الفرق
+          gameData.greenTeam = [];
+          gameData.redTeam = [];
+          
+          if (modeValue === 'team2-random') {
+            setupRandomTeams(classStudents, 2);
+          } else if (modeValue === 'team-free') {
+            setupFreeTeams();
+          } else {
+            if (!setupManualTeams()) {
+              hideLoadingIndicator();
+              return;
+            }
+          }
+          
+          // تحديث عرض الفرق مع تأثيرات بصرية
+          updateTeamDisplays();
+          
+          // إخفاء الإعدادات وإظهار اللعبة
+          elements.settingsPanel.classList.add('hidden');
+          elements.gameArea.classList.remove('hidden');
+          
+          // بدء اللعبة
+          gameData.gameStarted = true;
+          gameData.greenScore = 0;
+          gameData.redScore = 0;
+          elements.greenTeamScore.textContent = '0';
+          elements.redTeamScore.textContent = '0';
+          
+          // إعادة تعيين اللوحة مع تأثيرات
+          resetBoardWithAnimation();
+          
+          hideLoadingIndicator();
+          
+          // تشغيل صوت بدء اللعبة مع كتم تلقائي بعد 4 ثوان
+          playSound(elements.successSound, 4000);
+          
+          // رسالة ترحيب مخصصة
+          const welcomeMessage = generateWelcomeMessage();
+          showAdvancedNotification(
+            '🎉 بدأت اللعبة!',
+            welcomeMessage,
+            'success',
+            5000
+          );
+          
+          // رسالة تفاعلية لبدء اللعبة
+          setTimeout(() => {
+            const gameStartMessages = [
+              '🚀 لتبدأ المعركة الذكية!',
+              '⚡ الآن يمكنكم اختيار الحروف!',
+              '🎯 اختاروا بحكمة لتحققوا النصر!',
+              '🏁 المنافسة بدأت رسمياً!'
+            ];
+            const randomStartMessage = gameStartMessages[Math.floor(Math.random() * gameStartMessages.length)];
+            showInteractiveMessage(
+              randomStartMessage,
+              '../assets/media/sounds/kingdom-sounds/battle-horn.mp3'
+            );
+          }, 2000);
+          
+          // إضافة تأثير احتفالي
+          addGameStartAnimation();
+          
+        } catch (error) {
+          console.error('خطأ في بدء اللعبة:', error);
+          hideLoadingIndicator();
+          showAdvancedNotification(
+            '❌ خطأ في بدء اللعبة',
+            'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.',
+            'error'
+          );
+        }
+      }, 1000);
+    }
+
+    function setupRandomTeams(classStudents, playersPerTeam) {
+      if (classStudents.length < playersPerTeam * 2) {
+        throw new Error('عدد الطلاب غير كافي للاختيار العشوائي');
+      }
+      
+      const shuffled = [...classStudents].sort(() => 0.5 - Math.random());
+      gameData.greenTeam = shuffled.slice(0, playersPerTeam);
+      gameData.redTeam = shuffled.slice(playersPerTeam, playersPerTeam * 2);
+      
+      console.log('🎲 تم اختيار الفرق عشوائياً:', {
+        green: gameData.greenTeam,
+        red: gameData.redTeam
+      });
+    }
+
+    function setupFreeTeams() {
+      gameData.greenTeam = ['الفريق الأخضر'];
+      gameData.redTeam = ['الفريق الأحمر'];
+    }
+
+    function setupManualTeams() {
+      // البحث عن العناصر الجديدة (team-display) بدلاً من input
+      const teamDisplays = elements.playersContainer.querySelectorAll('.team-display');
+      const selectedStudents = new Set();
+      let hasError = false;
+      
+      // إعادة تعيين الفرق
+      gameData.greenTeam = [];
+      gameData.redTeam = [];
+      
+      teamDisplays.forEach(display => {
+        const studentName = display.textContent.trim();
+        const team = display.dataset.team;
+        
+        // تجاهل العناصر التي لم يتم اختيار طالب لها
+        if (studentName === 'انقر على طالب لإضافته هنا') {
+          return;
+        }
+        
+        if (!studentName) {
+          showInteractiveMessage(
+            '⚠️ يرجى اختيار جميع الطلاب المطلوبين!',
+            '../assets/media/sounds/kingdom-sounds/ancient-bell.mp3',
+            '#FF6B6B'
+          );
+          hasError = true;
+          return;
+        }
+        
+        // التحقق من عدم تكرار الطالب
+        if (selectedStudents.has(studentName)) {
+          showInteractiveMessage(
+            `⚠️ الطالب "${extractShortName(studentName)}" مختار مسبقاً!`,
+            '../assets/media/sounds/kingdom-sounds/ancient-bell.mp3',
+            '#FF6B6B'
+          );
+          hasError = true;
+          return;
+        }
+        
+        selectedStudents.add(studentName);
+        
+        if (team === 'green') {
+          gameData.greenTeam.push(studentName);
+        } else if (team === 'red') {
+          gameData.redTeam.push(studentName);
+        }
+      });
+      
+      if (hasError) return false;
+      
+      // التحقق من وجود طلاب في كلا الفريقين
+      if (gameData.greenTeam.length === 0 || gameData.redTeam.length === 0) {
+        showInteractiveMessage(
+          '⚠️ يجب أن يحتوي كل فريق على طالب واحد على الأقل!',
+          '../assets/media/sounds/kingdom-sounds/ancient-bell.mp3',
+          '#FF6B6B'
+        );
+        return false;
+      }
+      
+      console.log('✅ تم إعداد الفرق:', {
+        green: gameData.greenTeam,
+        red: gameData.redTeam
+      });
+      
+      // رسالة نجاح إعداد الفرق اليدوي
+      showInteractiveMessage(
+        '✅ تم إعداد الفرق بنجاح! جاهزون للمنافسة',
+        '../assets/media/sounds/kingdom-sounds/achievement-unlock.mp3',
+        '#27AE60'
+      );
+      
+      return true;
+    }
+
+    function updateTeamDisplays() {
+      // عرض الفريق الأخضر
+      const greenNames = gameData.greenTeam.map(name => extractShortName(name)).join(' و ');
+      elements.greenTeamMembers.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">
+            ${greenNames}
+          </div>
+          <div style="font-size: 0.8rem; opacity: 0.7;">
+            ${gameData.greenTeam.length} ${gameData.greenTeam.length === 1 ? 'عضو' : 'أعضاء'}
+          </div>
+        </div>
+      `;
+      
+      // عرض الفريق الأحمر
+      const redNames = gameData.redTeam.map(name => extractShortName(name)).join(' و ');
+      elements.redTeamMembers.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">
+            ${redNames}
+          </div>
+          <div style="font-size: 0.8rem; opacity: 0.7;">
+            ${gameData.redTeam.length} ${gameData.redTeam.length === 1 ? 'عضو' : 'أعضاء'}
+          </div>
+        </div>
+      `;
+      
+      // رسائل تفاعلية لتشجيع الفرق
+      setTimeout(() => {
+        showInteractiveMessage(
+          '🟢 الفريق الأخضر مستعد!',
+          '../assets/media/sounds/kingdom-sounds/brain-activate.mp3'
+        );
+      }, 500);
+      
+      setTimeout(() => {
+        showInteractiveMessage(
+          '🔴 الفريق الأحمر جاهز للتحدي!',
+          '../assets/media/sounds/kingdom-sounds/brain-activate.mp3'
+        );
+      }, 1500);
+    }
+
+    function generateWelcomeMessage() {
+      const messages = [
+        `الفريق الأخضر يحتاج لإكمال صف أفقي، والأحمر يحتاج لعمود رأسي`,
+        `${gameData.greenTeam.length + gameData.redTeam.length} طلاب جاهزون للمنافسة!`,
+        `اختر الحروف بحكمة لتحقق النصر لفريقك`,
+        `المعركة الذكية بدأت - من سيكون الأذكى؟`
+      ];
+      
+      return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function resetBoardWithAnimation() {
+      const cells = document.querySelectorAll('.hex-cell');
+      
+      cells.forEach((cell, index) => {
+        // إزالة الفئات السابقة
+        cell.classList.remove('selected', 'green', 'red');
+        
+        // تأثير إعادة التعيين المتتالي
+        setTimeout(() => {
+          cell.style.transform = 'scale(0.8) rotate(180deg)';
+          cell.style.opacity = '0.5';
+          
+          setTimeout(() => {
+            cell.style.transform = 'scale(1) rotate(0deg)';
+            cell.style.opacity = '1';
+          }, 200);
+        }, index * 50);
+      });
+    }
+
+    function addGameStartAnimation() {
+      // تأثير احتفالي للوحة اللعبة
+      const gameArea = elements.gameArea;
+      gameArea.style.transform = 'scale(0.95)';
+      gameArea.style.opacity = '0.8';
+      
+      setTimeout(() => {
+        gameArea.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        gameArea.style.transform = 'scale(1)';
+        gameArea.style.opacity = '1';
+        
+        setTimeout(() => {
+          gameArea.style.transition = '';
+        }, 500);
+      }, 100);
+    }
+
+    // ==== إعادة تعيين اللعبة ====
+    function resetGame() {
+      gameData.gameStarted = false;
+      gameData.greenScore = 0;
+      gameData.redScore = 0;
+      gameData.greenTeam = [];
+      gameData.redTeam = [];
+      gameData.selectedCell = null;
+      
+      elements.greenTeamScore.textContent = '0';
+      elements.redTeamScore.textContent = '0';
+      elements.greenTeamMembers.textContent = 'في انتظار بدء اللعبة';
+      elements.redTeamMembers.textContent = 'في انتظار بدء اللعبة';
+      
+      // إعادة تعيين اللوحة
+      document.querySelectorAll('.hex-cell').forEach(cell => {
+        cell.classList.remove('selected', 'green', 'red');
+      });
+      
+      // إظهار الإعدادات وإخفاء اللعبة
+      elements.settingsPanel.classList.remove('hidden');
+      elements.gameArea.classList.add('hidden');
+      
+      // إعادة تعيين النموذج
+      elements.gameSettingsForm.reset();
+      elements.playersContainer.innerHTML = '';
+      
+      // إخفاء جميع النوافذ
+      hideModal(elements.teamSelectionModal);
+      hideModal(elements.victoryModal);
+      
+      showNotification('تم إعادة تعيين اللعبة', 'success');
+      
+      // رسالة تفاعلية لإعادة التعيين
+      showInteractiveMessage(
+        '🔄 تم إعادة تشغيل اللعبة بنجاح - ابدؤوا من جديد!',
+        '../assets/media/sounds/kingdom-sounds/menu-open.mp3',
+        '#4ECDC4'
+      );
+    }
+
+    // ==== وظائف التحكم المتقدمة ====
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+          showAdvancedNotification(
+            '⛶ وضع ملء الشاشة',
+            'تم تفعيل ملء الشاشة بنجاح',
+            'success',
+            2000
+          );
+        }).catch(err => {
+          console.log('خطأ في ملء الشاشة:', err);
+          showAdvancedNotification(
+            '❌ خطأ في ملء الشاشة',
+            'تعذر تفعيل وضع ملء الشاشة',
+            'error'
+          );
+        });
+      } else {
+        document.exitFullscreen().then(() => {
+          showAdvancedNotification(
+            '⛶ تم إلغاء ملء الشاشة',
+            'تم العودة للوضع العادي',
+            'info',
+            2000
+          );
+        });
+      }
+    }
+
+    // ==== إضافات بصرية متقدمة ====
+    function addFloatingAnimation() {
+      if (!document.getElementById('floating-animation')) {
+        const style = document.createElement('style');
+        style.id = 'floating-animation';
+        style.textContent = `
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(-10px) rotate(-5deg); }
+          }
+          .floating {
+            animation: float 6s ease-in-out infinite;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    }
+
+    // ==== تحسينات الأداء ====
+    function optimizeGamePerformance() {
+      // تحسين الصوت
+      Object.values(elements).forEach(element => {
+        if (element && element.tagName === 'AUDIO') {
+          element.preload = 'auto';
+          element.volume = 0.7;
+        }
+      });
+      
+      // تحسين الرسوميات
+      if (window.devicePixelRatio > 1) {
+        document.body.style.imageRendering = 'crisp-edges';
+      }
+    }
+
+    // ==== نظام الإنجازات ====
+    function checkAchievements(result) {
+      const achievements = JSON.parse(localStorage.getItem('blockbusters-achievements') || '[]');
+      const newAchievements = [];
+      
+      // إنجاز الفوز الأول
+      if (achievements.length === 0) {
+        newAchievements.push({
+          id: 'first_win',
+          title: '🏆 الفوز الأول',
+          description: 'أول انتصار في لعبة بلوك باسترز',
+          date: new Date().toLocaleDateString('ar-SA')
+        });
+      }
+      
+      // إنجاز الفوز السريع
+      if (result.duration && result.duration.includes(':')) {
+        const [minutes, seconds] = result.duration.split(':').map(Number);
+        const totalSeconds = minutes * 60 + seconds;
+        if (totalSeconds < 120) { // أقل من دقيقتين
+          newAchievements.push({
+            id: 'speed_win',
+            title: '⚡ فوز سريع',
+            description: 'الفوز في أقل من دقيقتين',
+            date: new Date().toLocaleDateString('ar-SA')
+          });
+        }
+      }
+      
+      // حفظ الإنجازات الجديدة
+      if (newAchievements.length > 0) {
+        const allAchievements = [...achievements, ...newAchievements];
+        localStorage.setItem('blockbusters-achievements', JSON.stringify(allAchievements));
+        
+        newAchievements.forEach(achievement => {
+          setTimeout(() => {
+            showAdvancedNotification(
+              '🎖️ إنجاز جديد!',
+              `${achievement.title}: ${achievement.description}`,
+              'success',
+              5000
+            );
+          }, 1000);
+        });
+      }
+    }
+
+    // ==== تهيئة التطبيق السريع ====
+    function initializeApp() {
+      console.log('🚀 تهيئة سريعة للعبة بلوك باسترز...');
+      
+      // التحقق من وجود العناصر الأساسية
+      if (!verifyEssentialElements()) {
+        console.error('❌ فشل في التحقق من العناصر الأساسية');
+        return;
+      }
+      
+      // إظهار شاشة تحميل خفيفة
+      showLoadingIndicator('⚡ تهيئة سريعة...');
+      
+      // تهيئة فورية للعناصر الأساسية
+      initializeHexBoard();
+      gameData.gameStartTime = null;
+      setupEventListeners();
+      optimizeGamePerformance();
+      
+      // تحميل البيانات بشكل غير متزامن
+      loadStudentData()
+        .then((success) => {
+          hideLoadingIndicator();
+          
+          if (success) {
+            showAdvancedNotification(
+              '🎉 جاهز للعب!',
+              'جميع المكونات تم تحميلها بنجاح',
+              'success',
+              3000
+            );
+            
+            // رسالة ترحيب تفاعلية
+            setTimeout(() => {
+              showInteractiveMessage(
+                '🎉 مرحبًا بكم في لعبة Blockbusters!',
+                '../assets/media/sounds/kingdom-sounds/achievement-unlock.mp3'
+              );
+            }, 1000);
+          }
+          
+          // إضافة تحسينات بصرية
+          addFloatingAnimation();
+          
+          // نصائح تفاعلية بعد فترة قصيرة
+          setTimeout(() => showGameTips(), 1500);
+          
+        })
+        .catch((error) => {
+          console.error('❌ خطأ في التهيئة:', error);
+          hideLoadingIndicator();
+          showAdvancedNotification(
+            '❌ خطأ في التهيئة',
+            'تم تحميل البيانات الاحتياطية للمتابعة',
+            'warning'
+          );
+        });
+    }
+
+    // ==== إعداد مستمعي الأحداث ====
+    function setupEventListeners() {
+      // أزرار التحكم
+      elements.backBtn.addEventListener('click', handleBackButton);
+      elements.soundBtn.addEventListener('click', toggleSound);
+      elements.interactiveMessagesBtn.addEventListener('click', toggleInteractiveMessages);
+      elements.instructionsBtn.addEventListener('click', () => showModal(elements.instructionsModal));
+      elements.fullscreenBtn.addEventListener('click', toggleFullscreen);
+      
+      // الإعدادات
+      elements.gameSettingsForm.addEventListener('submit', handleGameStart);
+      elements.classSelect.addEventListener('change', handleClassChange);
+      elements.modeSelect.addEventListener('change', handleModeChange);
+      elements.resetGameBtn.addEventListener('click', handleGameReset);
+      elements.statisticsBtn.addEventListener('click', handleStatisticsView);
+      
+      // اختيار الفريق
+      elements.selectGreenTeamBtn.addEventListener('click', () => selectTeamForCell('green'));
+      elements.selectRedTeamBtn.addEventListener('click', () => selectTeamForCell('red'));
+      elements.closeTeamSelectionBtn.addEventListener('click', () => hideModal(elements.teamSelectionModal));
+      
+      // نافذة الفوز
+      elements.newGameBtn.addEventListener('click', handleNewGame);
+      elements.closeVictoryBtn.addEventListener('click', () => hideModal(elements.victoryModal));
+      elements.closeVictoryModalBtn.addEventListener('click', () => hideModal(elements.victoryModal));
+      
+      // نافذة التعليمات
+      elements.closeInstructionsBtn.addEventListener('click', () => hideModal(elements.instructionsModal));
+      elements.understoodBtn.addEventListener('click', () => hideModal(elements.instructionsModal));
+      
+      // تفعيل التبويبات في نافذة التعليمات
+      setupInstructionsTabs();
+      
+      // نافذة الإحصائيات
+      elements.clearStatisticsBtn.addEventListener('click', handleClearStatistics);
+      elements.closeStatisticsBtn.addEventListener('click', () => hideModal(elements.statisticsModal));
+      elements.closeStatisticsModalBtn.addEventListener('click', () => hideModal(elements.statisticsModal));
+      
+      // أحداث لوحة المفاتيح
+      setupAdvancedKeyboardEvents();
+      setupModalCloseEvents();
+    }
+
+    // ==== معالجات الأحداث المتقدمة ====
+    function handleBackButton() {
+      if (gameData.gameStarted) {
+        if (confirm('🏠 هل تريد العودة لصفحة الأنشطة؟\n\n⚠️ سيتم فقدان التقدم الحالي في اللعبة')) {
+          window.location.href = '../main.html';
+        }
+      } else {
+        window.location.href = '../main.html';
+      }
+    }
+
+    function handleGameStart(e) {
+      gameData.gameStartTime = Date.now();
+      startGame(e);
+    }
+
+    function handleClassChange() {
+      updatePlayerInputs();
+      
+      // تحسين خاص للأجهزة المحمولة
+      if (window.responsiveHelper && window.responsiveHelper.isMobile()) {
+        setTimeout(() => {
+          ensurePlayersContainerVisibility();
+        }, 100);
+      }
+      
+      const classValue = elements.classSelect.value;
+      if (classValue) {
+        const studentCount = gameData.classesData[classValue]?.length || 0;
+        showAdvancedNotification(
+          '📚 تم اختيار الصف',
+          `${classValue} - ${studentCount} طالب متاح`,
+          'info',
+          2000
+        );
+      }
+    }
+
+    function handleModeChange() {
+      updatePlayerInputs();
+      
+      // تحسين خاص للأجهزة المحمولة
+      if (window.responsiveHelper && window.responsiveHelper.isMobile()) {
+        setTimeout(() => {
+          ensurePlayersContainerVisibility();
+        }, 100);
+      }
+      
+      const modeValue = elements.modeSelect.value;
+      const modeNames = {
+        'team2-manual': 'طالب واحد لكل فريق (اختيار يدوي)',
+        'team4-manual': 'طالبان لكل فريق (اختيار يدوي)',
+        'team2-random': 'طالبان لكل فريق (اختيار عشوائي)',
+        'team-free': 'فريق ضد فريق (بدون أسماء)'
+      };
+      
+      if (modeValue && modeNames[modeValue]) {
+        showAdvancedNotification(
+          '🎮 تم اختيار نوع اللعبة',
+          modeNames[modeValue],
+          'info',
+          2000
+        );
+      }
+    }
+
+    function handleGameReset() {
+      if (gameData.gameStarted) {
+        if (confirm('🔄 هل تريد إعادة تعيين اللعبة؟\n\n⚠️ سيتم فقدان التقدم الحالي')) {
+          resetGameAdvanced();
+        }
+      } else {
+        resetGameAdvanced();
+      }
+    }
+
+    function handleStatisticsView() {
+      updateStatisticsDisplay();
+      showModal(elements.statisticsModal);
+      
+      showAdvancedNotification(
+        '📊 عرض الإحصائيات',
+        'تصفح نتائج الألعاب السابقة',
+        'info',
+        2000
+      );
+    }
+
+    function handleNewGame() {
+      hideModal(elements.victoryModal);
+      resetGameAdvanced();
+      showAdvancedNotification(
+        '🎮 لعبة جديدة',
+        'جهز فريقك واستعد للمنافسة!',
+        'success'
+      );
+    }
+
+    function handleClearStatistics() {
+      clearGameResults();
+    }
+
+    // ==== إعادة تعيين متقدمة ====
+    function resetGameAdvanced() {
+      gameData.gameStarted = false;
+      gameData.gameStartTime = null;
+      gameData.greenScore = 0;
+      gameData.redScore = 0;
+      gameData.greenTeam = [];
+      gameData.redTeam = [];
+      gameData.selectedCell = null;
+      
+      elements.greenTeamScore.textContent = '0';
+      elements.redTeamScore.textContent = '0';
+      elements.greenTeamMembers.innerHTML = `
+        <div style="text-align: center; color: ${OMAN_COLORS.navy}; opacity: 0.7;">
+          في انتظار بدء اللعبة
+        </div>
+      `;
+      elements.redTeamMembers.innerHTML = `
+        <div style="text-align: center; color: ${OMAN_COLORS.navy}; opacity: 0.7;">
+          في انتظار بدء اللعبة
+        </div>
+      `;
+      
+      // إعادة تعيين اللوحة مع تأثيرات
+      resetBoardWithAnimation();
+      
+      // إظهار الإعدادات وإخفاء اللعبة
+      elements.settingsPanel.classList.remove('hidden');
+      elements.gameArea.classList.add('hidden');
+      
+      // إعادة تعيين النموذج
+      elements.gameSettingsForm.reset();
+      elements.playersContainer.innerHTML = '';
+      
+      // إخفاء جميع النوافذ
+      hideModal(elements.teamSelectionModal);
+      hideModal(elements.victoryModal);
+      
+      showAdvancedNotification(
+        '🔄 تم إعادة تعيين اللعبة',
+        'جاهز لبدء مسابقة جديدة',
+        'success'
+      );
+    }
+
+    // ==== إعداد الأحداث المتقدمة ====
+    function setupAdvancedKeyboardEvents() {
+      document.addEventListener('keydown', (e) => {
+        // مفتاح Escape لإغلاق النوافذ
+        if (e.key === 'Escape') {
+          hideModal(elements.teamSelectionModal);
+          hideModal(elements.victoryModal);
+          hideModal(elements.instructionsModal);
+          hideModal(elements.statisticsModal);
+        }
+        
+        // مفاتيح سريعة للتحكم السريع
+        if (e.ctrlKey || e.metaKey) {
+          switch(e.key) {
+            case 'h': // Ctrl+H للمساعدة
+              e.preventDefault();
+              showModal(elements.instructionsModal);
+              break;
+            case 's': // Ctrl+S للإحصائيات
+              e.preventDefault();
+              handleStatisticsView();
+              break;
+            case 'r': // Ctrl+R لإعادة التعيين
+              e.preventDefault();
+              handleGameReset();
+              break;
+          }
+        }
+        
+        // أرقام للاختيار السريع (1 للأخضر، 2 للأحمر)
+        if (gameData.selectedCell && elements.teamSelectionModal.classList.contains('show')) {
+          if (e.key === '1') {
+            selectTeamForCell('green');
+          } else if (e.key === '2') {
+            selectTeamForCell('red');
+          }
+        }
+      });
+    }
+
+    function setupModalCloseEvents() {
+      [elements.teamSelectionModal, elements.victoryModal, 
+       elements.instructionsModal, elements.statisticsModal].forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            hideModal(modal);
+          }
+        });
+      });
+    }
+
+    function showGameTips() {
+      const tips = [
+        'استخدم Ctrl+H لعرض التعليمات السريعة',
+        'اضغط 1 للفريق الأخضر و 2 للفريق الأحمر عند اختيار الحرف',
+        'الفريق الأخضر يحتاج صف أفقي والأحمر يحتاج عمود رأسي',
+        'راقب الخلايا الاستراتيجية لمنع الخصم من الفوز'
+      ];
+      
+      const randomTip = tips[Math.floor(Math.random() * tips.length)];
+      
+      showAdvancedNotification(
+        '💡 نصيحة سريعة',
+        randomTip,
+        'info',
+        6000
+      );
+    }
+
+    // ==== إعداد تبويبات التعليمات ====
+    function setupInstructionsTabs() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+          
+          // إزالة الحالة النشطة من جميع التبويبات
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+          
+          // تفعيل التبويب المختار
+          button.classList.add('active');
+          const targetContent = document.getElementById(`${targetTab}-content`);
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+          
+          // تأثير صوتي
+          playSound(elements.clickSound);
+          
+          console.log(`📖 تم التبديل لتبويب: ${targetTab}`);
+        });
+      });
+    }
+
+    // بدء التطبيق عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+    console.log('🧩 تم تحميل لعبة بلوك باسترز الاحترافية بنجاح!');
+  </script>
+
+  <!-- ===== JavaScript للتصميم المتجاوب ===== -->
+  <script src="../assets/js/responsive-helper.js"></script>
+  <script>
+    // تهيئة التصميم المتجاوب
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.responsiveHelper) {
+        console.log('🎯 تم تفعيل نظام التصميم المتجاوب في Blockbusters.html');
+        
+        // استمع لتغييرات الجهاز
+        window.addEventListener('devicechange', (e) => {
+          console.log('📱 تم تغيير نوع الجهاز إلى:', e.detail.device);
+          
+          // إضافة فئات CSS حسب نوع الجهاز
+          document.body.classList.remove('mobile-device', 'tablet-device', 'desktop-device');
+          document.body.classList.add(e.detail.device + '-device');
+          
+          // تحسين لوحة الحروف حسب الجهاز
+          const hexagonBoard = document.querySelector('.hexagon-board');
+          const gameArea = document.querySelector('.game-area');
+          
+          if (hexagonBoard) {
+            if (e.detail.device === 'mobile') {
+              hexagonBoard.style.gridTemplateColumns = 'repeat(5, 1fr)';
+              hexagonBoard.style.maxWidth = '280px';
+              hexagonBoard.style.gap = '0.25rem';
+            } else if (e.detail.device === 'tablet') {
+              hexagonBoard.style.gridTemplateColumns = 'repeat(5, 1fr)';
+              hexagonBoard.style.maxWidth = '400px';
+            } else {
+              hexagonBoard.style.gridTemplateColumns = 'repeat(5, 1fr)';
+              hexagonBoard.style.maxWidth = '500px';
+            }
+          }
+          
+          if (gameArea) {
+            if (e.detail.device === 'mobile') {
+              gameArea.style.gridTemplateColumns = '1fr';
+              gameArea.style.gap = '1rem';
+            } else if (e.detail.device === 'tablet') {
+              gameArea.style.gridTemplateColumns = '1fr';
+              gameArea.style.gap = '1.5rem';
+            }
+          }
+        });
+
+        // استمع لتغييرات الاتجاه
+        window.addEventListener('orientationchange', (e) => {
+          console.log('🔄 تم تغيير اتجاه الشاشة إلى:', e.detail.orientation);
+          
+          // إضافة فئات CSS حسب الاتجاه
+          document.body.classList.remove('portrait-mode', 'landscape-mode');
+          document.body.classList.add(e.detail.orientation + '-mode');
+          
+          // تحسين الأدوات في الوضع الأفقي للهواتف
+          if (e.detail.orientation === 'landscape' && window.responsiveHelper.isMobile()) {
+            const controlHeader = document.querySelector('.control-header');
+            if (controlHeader) {
+              controlHeader.style.padding = '0.5rem 1rem';
+            }
+            
+            const gameArea = document.querySelector('.game-area');
+            if (gameArea && !gameArea.classList.contains('hidden')) {
+              gameArea.style.gridTemplateColumns = '1fr 1.5fr 1fr';
+              gameArea.style.gap = '0.75rem';
+            }
+            
+            // تحسين حاوية الطلاب في الوضع الأفقي
+            const playersContainer = document.querySelector('.players-container');
+            if (playersContainer) {
+              playersContainer.style.gridTemplateColumns = '1fr 1fr';
+              playersContainer.style.gap = '0.5rem';
+            }
+          }
+        });
+
+        // تحسين تجربة اللمس للأجهزة المحمولة
+        if (window.responsiveHelper.isTouchDevice()) {
+          // تحسين حاوية الطلاب للمس
+          const observePlayersContainer = () => {
+            const playersContainer = document.querySelector('.players-container');
+            if (playersContainer) {
+              playersContainer.style.minHeight = '60px';
+              playersContainer.style.display = 'grid';
+              
+              // تحسين مدخلات الطلاب للمس
+              const playerInputs = playersContainer.querySelectorAll('.player-input');
+              playerInputs.forEach(input => {
+                input.style.minHeight = '60px';
+                input.style.touchAction = 'manipulation';
+                
+                const inputField = input.querySelector('input');
+                if (inputField) {
+                  inputField.style.fontSize = '16px'; // منع التكبير في iOS
+                  inputField.style.minHeight = '50px';
+                }
+              });
+            }
+          };
+
+          // مراقبة تغييرات حاوية الطلاب
+          const playersObserver = new MutationObserver(observePlayersContainer);
+          const playersContainer = document.getElementById('playersContainer');
+          if (playersContainer) {
+            playersObserver.observe(playersContainer, { 
+              childList: true, 
+              subtree: true 
+            });
+          }
+          
+          // تحسين بطاقات الحروف
+          const observerCallback = (mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach((node) => {
+                  if (node.nodeType === 1 && node.classList.contains('hex-cell')) {
+                    // تحسين استجابة اللمس
+                    node.addEventListener('touchstart', function() {
+                      this.style.transform = 'scale(0.95)';
+                    }, { passive: true });
+                    
+                    node.addEventListener('touchend', function() {
+                      setTimeout(() => {
+                        if (!this.classList.contains('selected')) {
+                          this.style.transform = '';
+                        }
+                      }, 100);
+                    }, { passive: true });
+                  }
+                });
+              }
+            });
+          };
+
+          const observer = new MutationObserver(observerCallback);
+          const hexagonBoard = document.getElementById('hexagonBoard');
+          if (hexagonBoard) {
+            observer.observe(hexagonBoard, { childList: true });
+          }
+
+          // تحسين الأزرار
+          const actionButtons = document.querySelectorAll('.control-btn, .action-btn');
+          actionButtons.forEach(button => {
+            button.style.minHeight = '44px';
+            button.style.minWidth = '44px';
+          });
+        }
+
+        // تحسين الحقول للأجهزة المحمولة
+        const inputs = document.querySelectorAll('.setting-input, .setting-select');
+        if (window.responsiveHelper.isMobile()) {
+          inputs.forEach(input => {
+            // تحسين حجم الخط لمنع التكبير في iOS
+            input.style.fontSize = '16px';
+            
+            // إضافة تأثير التركيز
+            input.addEventListener('focus', function() {
+              this.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+              this.style.transform = '';
+            });
+          });
+        }
+
+        // تحسين الأداء للأجهزة الضعيفة
+        const reduceAnimations = window.responsiveHelper.isMobile() && 
+                                 window.devicePixelRatio < 2;
+        
+        if (reduceAnimations) {
+          console.log('🔧 تقليل التأثيرات البصرية للأجهزة الضعيفة');
+          
+          const style = document.createElement('style');
+          style.textContent = `
+            .hex-cell { transition: transform 0.1s ease !important; }
+            .control-btn { transition: all 0.1s ease !important; }
+            .action-btn { transition: all 0.1s ease !important; }
+            .team-panel { transition: all 0.1s ease !important; }
+            * { animation-duration: 0.1s !important; }
+          `;
+          document.head.appendChild(style);
+        }
+
+        // تحسين عرض النقاط
+        function updateResponsiveScores() {
+          const scoreElements = document.querySelectorAll('.team-score');
+          if (window.responsiveHelper.isMobile()) {
+            scoreElements.forEach(score => {
+              score.style.fontSize = 'clamp(1.8rem, 6vw, 2.5rem)';
+            });
+          }
+        }
+
+        // تحسين لوحة الحروف ديناميكياً (الحفاظ على الشبكة 5×5)
+        function adjustHexagonBoard() {
+          const hexBoard = document.querySelector('.hexagon-board');
+          if (hexBoard && window.responsiveHelper.isMobile()) {
+            const viewportWidth = window.innerWidth;
+            // الحفاظ على الشبكة 5×5 في جميع الأحوال
+            hexBoard.style.gridTemplateColumns = 'repeat(5, 1fr)';
+            
+            if (viewportWidth <= 360) {
+              hexBoard.style.maxWidth = '240px';
+              hexBoard.style.gap = '0.15rem';
+            } else if (viewportWidth <= 480) {
+              hexBoard.style.maxWidth = '280px';
+              hexBoard.style.gap = '0.25rem';
+            } else {
+              hexBoard.style.maxWidth = '300px';
+              hexBoard.style.gap = '0.3rem';
+            }
+          }
+        }
+
+        // تطبيق التحسينات عند التحميل
+        setTimeout(() => {
+          updateResponsiveScores();
+          adjustHexagonBoard();
+          ensurePlayersContainerVisibility();
+        }, 500);
+
+        // دالة ضمان ظهور حاوية الطلاب
+        function ensurePlayersContainerVisibility() {
+          const playersContainer = document.getElementById('playersContainer');
+          if (playersContainer && window.responsiveHelper.isMobile()) {
+            playersContainer.style.display = 'grid';
+            playersContainer.style.visibility = 'visible';
+            playersContainer.style.opacity = '1';
+            playersContainer.style.minHeight = '20px';
+            playersContainer.style.width = '100%';
+            playersContainer.style.gridTemplateColumns = '1fr';
+            playersContainer.style.gap = '0.75rem';
+            
+            // مراقبة التغييرات
+            const observer = new MutationObserver(() => {
+              const inputs = playersContainer.querySelectorAll('.player-input');
+              inputs.forEach(input => {
+                input.style.display = 'flex';
+                input.style.visibility = 'visible';
+                input.style.width = '100%';
+                input.style.minHeight = '60px';
+              });
+            });
+            
+            observer.observe(playersContainer, {
+              childList: true,
+              subtree: true
+            });
+          }
+        }
+
+        // استمع لتغيير حجم النافذة
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            adjustHexagonBoard();
+            updateResponsiveScores();
+          }, 250);
+        });
+      }
+    });
+
+    // تحسين أداء التمرير على الأجهزة المحمولة
+    let scrollTicking = false;
+    function updateOnScroll() {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          // تحسينات أداء التمرير
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }
+
+    if (window.responsiveHelper && window.responsiveHelper.isMobile()) {
+      window.addEventListener('scroll', updateOnScroll, { passive: true });
+    }
+
+    // تحسين إدارة الذاكرة على الأجهزة المحمولة
+    if (window.responsiveHelper && window.responsiveHelper.isMobile()) {
+      // تنظيف الذاكرة عند إخفاء الصفحة
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          // تنظيف المتغيرات غير الضرورية
+          if (window.gc) {
+            window.gc();
+          }
+        }
+      });
+    }
+  </script>
+  
+  <!-- تم تحديث الملف بنجاح - Blockbusters Mobile Responsive -->
+</body>
+</html>

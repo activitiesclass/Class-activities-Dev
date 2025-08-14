@@ -1,0 +1,5062 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🏰 مركز الممالك الذكية | نظام التعلم التفاعلي المتقدم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+            --royal-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6347 100%);
+            --wisdom-gradient: linear-gradient(135deg, #8A2BE2 0%, #4169E1 50%, #00CED1 100%);
+            
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-light: #a0aec0;
+            --text-royal: #FFD700;
+            --bg-primary: #f7fafc;
+            --bg-secondary: #edf2f7;
+            --border-radius: 20px;
+            --shadow-light: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-heavy: 0 20px 40px rgba(0,0,0,0.15);
+            --shadow-royal: 0 15px 35px rgba(255, 215, 0, 0.3);
+            
+            --arabic-font: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --royal-font: 'Amiri', 'Cairo', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--arabic-font);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            color: var(--text-primary);
+            direction: rtl;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== PARTICLES BACKGROUND ===== */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ==== أزرار التحكم العلوية الاحترافية ==== */
+        .cosmic-control-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.5);
+            padding: 1rem 2rem;
+            z-index: 99999;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            display: flex;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .control-buttons-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            height: 60px;
+        }
+
+        .app-title-cosmic {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            visibility: visible;
+        }
+
+        .title-icon {
+            font-size: 2rem;
+            animation: cosmic-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes cosmic-glow {
+            from { 
+                text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+                transform: scale(1);
+            }
+            to { 
+                text-shadow: 0 0 20px #FF6347, 0 0 30px #FF6347, 0 0 40px #FF6347;
+                transform: scale(1.05);
+            }
+        }
+
+        .title-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--royal-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .control-buttons-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cosmic-btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 107, 53, 0.2));
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cosmic-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .cosmic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cosmic-btn:hover::before {
+            left: 100%;
+        }
+
+        /* ===== CONTENT WRAPPER ===== */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 1rem 4rem 1rem;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* ===== WELCOME MODAL ===== */
+        .welcome-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .welcome-modal-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 215, 0, 0.1), transparent 30%);
+            animation: rotate 8s linear infinite;
+            pointer-events: none;
+        }
+
+        .modal-header {
+            position: relative;
+            z-index: 3;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-crown {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: crownBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes crownBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--royal-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .modal-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .students-welcome-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 0 0.5rem;
+        }
+
+        .student-welcome-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .student-welcome-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        /* تحسين تجربة اللمس على الهاتف المحمول */
+        @media (hover: none) and (pointer: coarse) {
+            .student-welcome-card:hover {
+                transform: none;
+            }
+            
+            .student-welcome-card:active {
+                transform: scale(0.98);
+                opacity: 0.8;
+            }
+            
+            .kingdom-card:hover {
+                transform: none;
+            }
+            
+            .kingdom-card:active {
+                transform: scale(0.98);
+                opacity: 0.8;
+            }
+        }
+
+        .student-welcome-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s;
+        }
+
+        .student-welcome-card:hover::before {
+            transform: rotate(45deg) scale(1.2);
+        }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--royal-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .student-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-actions {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-btn.secondary {
+            background: var(--dark-gradient);
+        }
+
+        /* ===== CELEBRATION MODAL ===== */
+        .celebration-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 10001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .celebration-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            border-radius: 30px;
+            padding: 4rem;
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            animation: celebrationPulse 0.8s ease-out;
+        }
+
+        @keyframes celebrationPulse {
+            0% {
+                transform: scale(0.5) rotate(-10deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .celebration-fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.8) 0%, transparent 20%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.8) 0%, transparent 20%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.6) 0%, transparent 15%);
+            animation: fireworksAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes fireworksAnimation {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .celebration-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .celebration-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-celebration-info {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== ENHANCED WELCOME SECTION ===== */
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-royal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 215, 0, 0.1), transparent 30%);
+            animation: rotate 10s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .royal-crown {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: var(--royal-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .main-header {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .main-title {
+            font-family: var(--royal-font);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            background: var(--royal-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            color: white;
+        }
+
+        .class-info {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .class-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-royal);
+            margin-bottom: 0.5rem;
+        }
+
+        .students-count {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .students-preview {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            color: white;
+        }
+
+        .game-guide {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .guide-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-royal);
+        }
+
+        .guide-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .guide-step {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .guide-step:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-royal);
+        }
+
+        .step-description {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+            color: white;
+        }
+
+        .overall-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: var(--shadow-royal);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text-royal);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 500;
+            color: white;
+        }
+
+        .kingdoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .kingdom-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .kingdom-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .kingdom-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s;
+        }
+
+        .kingdom-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .kingdom-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            text-align: center;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .kingdom-name {
+            font-family: var(--royal-font);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: var(--royal-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .kingdom-description {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            flex-grow: 1;
+            color: white;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .kingdom-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            background: rgba(0,0,0,0.25);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: auto;
+        }
+
+        .kingdom-stat {
+            text-align: center;
+        }
+
+        .kingdom-stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-royal);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        }
+
+        .kingdom-stat-label {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-top: 0.3rem;
+            color: white;
+        }
+
+        .kingdom-status {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--success-gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-shadow: none;
+        }
+
+        .coming-soon {
+            background: var(--warning-gradient);
+        }
+
+        /* ألوان مخصصة للممالك */
+        .lightning-kingdom {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 107, 53, 0.25));
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .wisdom-kingdom {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.25), rgba(52, 152, 219, 0.25));
+            border-color: rgba(155, 89, 182, 0.3);
+        }
+
+        .creative-kingdom {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.25), rgba(230, 126, 34, 0.25));
+            border-color: rgba(241, 196, 15, 0.3);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 1rem 0.5rem;
+                margin: 0 auto;
+            }
+            
+            .kingdoms-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 0.5rem;
+            }
+            
+            .overall-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            .welcome-section {
+                padding: 1.5rem 1rem;
+                margin: 0 0.5rem;
+            }
+            
+            .guide-steps {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .cosmic-control-header {
+                padding: 0.5rem 1rem;
+            }
+
+            .control-buttons-container {
+                flex-direction: column;
+                gap: 1rem;
+                height: auto;
+            }
+
+            .app-title-cosmic {
+                order: 1;
+            }
+
+            .control-buttons-right {
+                order: 2;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .cosmic-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            /* تحسين البطاقات للتابلت */
+            .students-welcome-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 1rem;
+                padding: 0 0.25rem;
+            }
+            
+            .student-welcome-card {
+                padding: 0.875rem;
+            }
+            
+            .kingdom-card {
+                padding: 1.75rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-wrapper {
+                padding: 0.75rem 0.25rem;
+            }
+            
+            .overall-stats {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .kingdom-card {
+                min-height: 280px;
+                padding: 1.5rem 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .stat-card {
+                padding: 1.5rem 1rem;
+            }
+
+            /* تحسين البطاقات للهاتف المحمول */
+            .students-welcome-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                padding: 0;
+                margin: 1.5rem 0;
+            }
+            
+            .student-welcome-card {
+                padding: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+            }
+            
+            .welcome-section {
+                padding: 1rem 0.75rem;
+                margin: 0 0.25rem;
+            }
+            
+            .kingdoms-grid {
+                gap: 1rem;
+                padding: 0 0.25rem;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== LOADING ANIMATION ===== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== SOUND CONTROLS ===== */
+        .sound-control {
+            position: relative;
+            display: inline-block;
+        }
+
+        .sound-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .sound-btn.muted {
+            opacity: 0.5;
+        }
+
+        /* ===== MOBILE RESPONSIVE DESIGN ===== */
+        
+        /* Tablets and Large Phones (768px and below) */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 1rem;
+            }
+            
+            .app-title-cosmic {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .title-text {
+                font-size: 1.2rem;
+            }
+            
+            .title-icon {
+                font-size: 1.5rem;
+            }
+            
+            .control-buttons-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .cosmic-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .kingdoms-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 0.5rem;
+            }
+            
+            .kingdom-card {
+                padding: 2rem 1.5rem;
+                min-height: auto;
+            }
+            
+            .kingdom-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+                padding: 1rem;
+            }
+            
+            .kingdom-stat-number {
+                font-size: 1.4rem;
+            }
+            
+            .kingdom-stat-label {
+                font-size: 0.75rem;
+            }
+            
+            /* Modal Responsive */
+            .welcome-modal-content {
+                padding: 2rem 1.5rem;
+                max-width: 95%;
+                margin: 1rem;
+            }
+            
+            .modal-title {
+                font-size: 1.8rem;
+            }
+            
+            .modal-subtitle {
+                font-size: 1rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .modal-btn {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            
+            .celebration-modal .modal-content {
+                padding: 2rem 1rem;
+                max-width: 95%;
+            }
+        }
+        
+        /* Small Phones (480px and below) */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+            
+            .content-wrapper {
+                padding: 0.5rem;
+            }
+            
+            .title-text {
+                font-size: 1rem;
+            }
+            
+            .title-icon {
+                font-size: 1.2rem;
+            }
+            
+            .cosmic-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.75rem;
+                border-radius: 20px;
+            }
+            
+            .kingdoms-grid {
+                gap: 1rem;
+                padding: 0;
+            }
+            
+            .kingdom-card {
+                padding: 1.5rem 1rem;
+                border-radius: 20px;
+            }
+            
+            .kingdom-title {
+                font-size: 1.3rem;
+            }
+            
+            .kingdom-description {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .kingdom-stats {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+            
+            .kingdom-stat-number {
+                font-size: 1.2rem;
+            }
+            
+            .kingdom-stat-label {
+                font-size: 0.7rem;
+            }
+            
+            /* Modal Extra Small */
+            .welcome-modal-content {
+                padding: 1.5rem 1rem;
+                border-radius: 20px;
+                margin: 0.5rem;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+                line-height: 1.3;
+            }
+            
+            .modal-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .modal-btn {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+                border-radius: 15px;
+            }
+        }
+        
+        /* Very Small Phones (360px and below) */
+        @media (max-width: 360px) {
+            .title-text {
+                font-size: 0.9rem;
+            }
+            
+            .cosmic-btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
+            
+            .kingdom-card {
+                padding: 1rem 0.8rem;
+            }
+            
+            .kingdom-title {
+                font-size: 1.1rem;
+            }
+            
+            .kingdom-description {
+                font-size: 0.85rem;
+            }
+            
+            .welcome-modal-content {
+                padding: 1rem 0.8rem;
+                margin: 0.25rem;
+            }
+            
+            .modal-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Landscape Mobile Orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .welcome-modal-content {
+                max-height: 90vh;
+                overflow-y: auto;
+                padding: 1rem;
+            }
+            
+            .kingdom-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .kingdom-stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .kingdom-card,
+            .cosmic-btn,
+            .modal-btn {
+                min-height: 44px; /* Apple's recommended touch target size */
+            }
+            
+            .cosmic-btn {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .kingdom-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+        
+        /* Ensure text is readable on small screens */
+        @media (max-width: 768px) {
+            * {
+                -webkit-text-size-adjust: 100%;
+                text-size-adjust: 100%;
+            }
+            
+            /* Prevent horizontal scrolling */
+            html, body {
+                overflow-x: hidden;
+            }
+            
+            /* Better button spacing for touch */
+            .control-buttons-right .cosmic-btn:not(:last-child) {
+                margin-left: 0.5rem;
+            }
+        }
+
+        /* ===== RESPONSIVE DESIGN MEDIA QUERIES ===== */
+        
+        /* Tablets (≤1024px) */
+        @media screen and (max-width: 1024px) {
+            .main-container {
+                padding: 15px;
+                margin: 0 10px;
+            }
+            
+            .kingdoms-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 15px;
+            }
+            
+            .kingdom-card {
+                margin-bottom: 15px;
+            }
+            
+            .header-controls {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .control-panel {
+                padding: 15px;
+            }
+            
+            .cosmic-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Medium Tablets (≤768px) */
+        @media screen and (max-width: 768px) {
+            .main-container {
+                padding: 10px;
+                margin: 0 5px;
+            }
+            
+            .kingdoms-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .kingdom-card {
+                padding: 15px;
+                margin-bottom: 12px;
+            }
+            
+            .cosmic-title {
+                font-size: 2rem;
+                text-align: center;
+            }
+            
+            .kingdom-title {
+                font-size: 1.5rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .cosmic-btn {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .navigation-tabs {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+        }
+        
+        /* Mobile Phones (≤480px) */
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+            
+            .main-container {
+                padding: 8px;
+                margin: 0;
+            }
+            
+            .kingdom-card {
+                padding: 1rem 0.75rem;
+                margin-bottom: 0.75rem;
+                border-radius: 12px;
+                min-height: 220px;
+            }
+            
+            /* تحسين البطاقات للشاشات الصغيرة جداً */
+            .students-welcome-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                padding: 0;
+                margin: 1rem 0;
+            }
+            
+            .student-welcome-card {
+                padding: 0.5rem;
+                margin-bottom: 0.5rem;
+                border-radius: 12px;
+                font-size: 0.85rem;
+            }
+            
+            .cosmic-title {
+                font-size: 1.5rem;
+            }
+            
+            .kingdom-title {
+                font-size: 1.1rem;
+                line-height: 1.3;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            .kingdom-description {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                margin-bottom: 1rem;
+            }
+            
+            .cosmic-btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                min-height: 44px;
+            }
+            
+            .control-button {
+                min-height: 44px;
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .modal-content {
+                width: 98%;
+                margin: 2% auto;
+                padding: 12px;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+            
+            .kingdom-description {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+            
+            .score-display {
+                font-size: 1rem;
+            }
+            
+            .grid-2-cols {
+                grid-template-columns: 1fr;
+            }
+            
+            .flex-wrap {
+                flex-wrap: wrap;
+            }
+            
+            .kingdom-stats {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .feature-list {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .navigation-tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .nav-tab {
+                width: 100%;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .progress-indicators {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+        
+        /* Small Mobile Phones (≤360px) */
+        @media screen and (max-width: 360px) {
+            body {
+                font-size: 13px;
+            }
+            
+            .main-container {
+                padding: 5px;
+            }
+            
+            .kingdom-card {
+                padding: 10px;
+                margin-bottom: 8px;
+            }
+            
+            .cosmic-title {
+                font-size: 1.3rem;
+            }
+            
+            .kingdom-title {
+                font-size: 1.1rem;
+            }
+            
+            .cosmic-btn {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+                min-height: 44px;
+            }
+            
+            .modal-content {
+                width: 100%;
+                margin: 0;
+                padding: 10px;
+                border-radius: 0;
+                max-height: 100vh;
+            }
+            
+            .kingdom-description {
+                font-size: 0.85rem;
+            }
+            
+            .score-display {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Landscape Orientation (Low Height) */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .modal-content {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            
+            .kingdom-card {
+                padding: 8px;
+                margin-bottom: 6px;
+            }
+            
+            .cosmic-title {
+                font-size: 1.2rem;
+            }
+            
+            .cosmic-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .kingdoms-grid {
+                gap: 8px;
+            }
+        }
+        
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .cosmic-btn,
+            .control-button,
+            .kingdom-card,
+            .nav-tab,
+            .close-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .cosmic-btn:hover {
+                transform: none;
+            }
+            
+            .kingdom-card:hover {
+                transform: none;
+            }
+            
+            /* Remove hover effects on touch devices */
+            *:hover {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Fix iOS font size issues */
+            input,
+            textarea,
+            select {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>🏰 تحميل مركز الممالك الذكية...</h3>
+            <p>جاري إعداد رحلتك التعليمية المميزة</p>
+        </div>
+    </div>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Cosmic Control Header -->
+    <div class="cosmic-control-header mobile-full-width">
+        <div class="control-buttons-container mobile-flex-wrap">
+            <div class="app-title-cosmic mobile-text-center">
+                <span class="title-icon">🏰</span>
+                <span class="title-text">مركز الممالك الذكية</span>
+            </div>
+            <div class="control-buttons-right mobile-flex-wrap">
+                <button class="cosmic-btn touch-target" onclick="returnToChallengesUltimate()" title="العودة لاختيار الصف مع إعادة تعيين كاملة">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>عودة واختيار صف</span>
+                </button>
+                <button class="cosmic-btn touch-target" onclick="showStudentsWelcome()" title="عرض الطلاب">
+                    <i class="fas fa-users"></i>
+                    <span>الطلاب</span>
+                </button>
+                <button class="cosmic-btn touch-target" onclick="showDiagnosticInfo()" title="تشخيص البيانات">
+                    <i class="fas fa-bug"></i>
+                    <span>تشخيص</span>
+                </button>
+                <button class="cosmic-btn touch-target" onclick="exportData()" title="تصدير البيانات">
+                    <i class="fas fa-download"></i>
+                    <span>تصدير</span>
+                </button>
+                <div class="sound-control">
+                    <button class="cosmic-btn touch-target" onclick="toggleSound()" title="تشغيل/إيقاف الصوت">
+                        <i class="fas fa-volume-up" id="soundIcon"></i>
+                        <span id="soundText">صوت</span>
+                    </button>
+                </div>
+                <button class="cosmic-btn touch-target" onclick="goHome()" title="العودة للرئيسية">
+                    <i class="fas fa-home"></i>
+                    <span>الرئيسية</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Modal -->
+    <div class="welcome-modal responsive-modal" id="welcomeModal">
+        <div class="welcome-modal-content mobile-full-width mobile-full-height">
+            <div class="modal-header mobile-text-center">
+                <div class="welcome-crown">👑</div>
+                <h2 class="modal-title mobile-text-center">مرحباً بكم في مركز الممالك!</h2>
+                <p class="modal-subtitle mobile-text-center">أهلاً وسهلاً بصف <span id="modalClassName"></span></p>
+            </div>
+            <div class="students-welcome-grid mobile-grid-auto responsive-gap mobile-scroll" id="studentsWelcomeGrid">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+            <div class="modal-actions mobile-text-center responsive-margin">
+                <button class="modal-btn touch-target mobile-full-width" onclick="startAdventure()">
+                    <i class="fas fa-rocket"></i>
+                    ابدأ الرحلة!
+                </button>
+                <button class="modal-btn secondary touch-target mobile-full-width responsive-margin-small" onclick="closeWelcomeModal()">
+                    <i class="fas fa-times"></i>
+                    إغلاق
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div class="celebration-modal" id="celebrationModal">
+        <div class="celebration-content">
+            <div class="celebration-fireworks"></div>
+            <h2 class="celebration-title">🎉 تهانينا! 🎉</h2>
+            <p class="celebration-message">لقد حققتم إنجازاً رائعاً!</p>
+            <div class="class-celebration-info" id="celebrationInfo">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn" onclick="closeCelebrationModal()">
+                    <i class="fas fa-check"></i>
+                    رائع!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Welcome Section -->
+        <div class="welcome-section mobile-full-width" id="welcomeSection">
+            <div class="royal-crown">👑</div>
+            <div class="main-header mobile-text-center">
+                <h1 class="main-title mobile-text-center">🏰 مركز الممالك الذكية</h1>
+                <p class="subtitle mobile-text-center">⚡ نظام التعلم التفاعلي المتقدم | رحلتك في عالم المعرفة والإبداع</p>
+                
+                <!-- Class and Students Info -->
+                <div class="class-info mobile-text-center" id="classInfo" style="display: none;">
+                    <div class="class-name" id="className">لم يتم اختيار صف</div>
+                    <div class="students-count" id="studentsCount">0 طالب مختار</div>
+                    <div class="students-preview" id="studentsPreview"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Guide Section -->
+        <div class="game-guide" id="gameGuide" style="display: none;">
+            <h2 class="guide-title">📖 دليل اللعب السريع</h2>
+            <div class="guide-steps">
+                <div class="guide-step">
+                    <span class="step-icon">🎯</span>
+                    <h3 class="step-title">اختر مملكتك</h3>
+                    <p class="step-description">انقر على المملكة التي تريد استكشافها وبدء التحديات الممتعة</p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-icon">⚡</span>
+                    <h3 class="step-title">واجه التحديات</h3>
+                    <p class="step-description">حل الألغاز والمسائل لكسب النقاط والتقدم في المستويات</p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-icon">🏆</span>
+                    <h3 class="step-title">احصل على الجوائز</h3>
+                    <p class="step-description">اجمع النقاط واحصل على الإنجازات والمكافآت المميزة</p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-icon">👥</span>
+                    <h3 class="step-title">تنافس مع الأصدقاء</h3>
+                    <p class="step-description">شارك طلابك في المنافسات والتحديات الجماعية</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overall Statistics -->
+        <div class="overall-stats">
+            <div class="stat-card">
+                <span class="stat-icon">🎯</span>
+                <div class="stat-number" id="totalCompletedChallenges">0</div>
+                <div class="stat-label">إجمالي التحديات المكتملة</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⭐</span>
+                <div class="stat-number" id="totalScore">0</div>
+                <div class="stat-label">إجمالي النقاط</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">📈</span>
+                <div class="stat-number" id="averageLevel">1</div>
+                <div class="stat-label">متوسط المستوى</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🏁</span>
+                <div class="stat-number" id="completionRate">0%</div>
+                <div class="stat-label">نسبة الإكمال</div>
+            </div>
+        </div>
+
+        <!-- Kingdoms Grid -->
+        <div class="kingdoms-grid mobile-grid-auto responsive-gap">
+            <!-- مملكة البرق -->
+            <div class="kingdom-card lightning-kingdom touch-target" onclick="goToKingdom('lightning-kingdom.html')">
+                <div class="kingdom-status">✅ متاحة</div>
+                <div class="kingdom-icon">⚡</div>
+                <h3 class="kingdom-name">مملكة البرق</h3>
+                <p class="kingdom-description">تحديات سريعة لاختبار سرعة التفكير والذكاء الفوري. استعد لمواجهة أسئلة متنوعة تتطلب سرعة البديهة والتفكير السريع!</p>
+                <div class="kingdom-stats mobile-grid-2">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="lightning-challenges">0</div>
+                        <div class="kingdom-stat-label">تحديات</div>
+                    </div>
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="lightning-score">0</div>
+                        <div class="kingdom-stat-label">نقاط</div>
+                    </div>
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="lightning-level">1</div>
+                        <div class="kingdom-stat-label">مستوى</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة الحكمة -->
+            <div class="kingdom-card wisdom-kingdom touch-target" onclick="goToKingdom('wisdom-kingdom.html')">
+                <div class="kingdom-status">✅ متاحة</div>
+                <div class="kingdom-icon">🧠</div>
+                <h3 class="kingdom-name">مملكة الحكمة</h3>
+                <p class="kingdom-description">تحديات فكرية عميقة لتطوير الذكاء والإبداع. اختبر قدراتك المنطقية وحل المسائل المعقدة بطريقة إبداعية!</p>
+                <div class="kingdom-stats mobile-grid-2">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="wisdom-challenges">0</div>
+                        <div class="kingdom-stat-label">تحديات</div>
+                    </div>
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="wisdom-score">0</div>
+                        <div class="kingdom-stat-label">نقاط</div>
+                    </div>
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="wisdom-level">1</div>
+                        <div class="kingdom-stat-label">مستوى</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- التحديات النهائية -->
+            <div class="kingdom-card creative-kingdom touch-target" onclick="goToKingdom('challenges-ultimate.html')">
+                <div class="kingdom-status">🔥 مميزة</div>
+                <div class="kingdom-icon">🏆</div>
+                <h3 class="kingdom-name">التحديات النهائية</h3>
+                <p class="kingdom-description">نظام التحديات المتقدم والشامل مع اختيار الصفوف والطلاب. التجربة الأكثر تطورًا وتفاعلية!</p>
+                <div class="kingdom-stats mobile-grid-auto">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="ultimate-challenges">∞</div>
+                        <div class="kingdom-stat-label">تحديات</div>
+                    </div>
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="ultimate-score">0</div>
+                        <div class="kingdom-stat-label">نقاط</div>
+                    </div>
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number" id="ultimate-level">MAX</div>
+                        <div class="kingdom-stat-label">مستوى</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة الإبداع -->
+            <div class="kingdom-card creative-kingdom touch-target" onclick="showComingSoon('مملكة الإبداع')">
+                <div class="kingdom-status coming-soon">🚧 قريباً</div>
+                <div class="kingdom-icon">🎨</div>
+                <h3 class="kingdom-name">مملكة الإبداع</h3>
+                <p class="kingdom-description">تحديات إبداعية لتنمية الخيال والابتكار. ارسم، أبدع، واخترع حلولاً فريدة للمشاكل!</p>
+                <div class="kingdom-stats mobile-grid-2">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number">قريباً</div>
+                        <div class="kingdom-stat-label">في التطوير</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة العلوم -->
+            <div class="kingdom-card science-kingdom touch-target" onclick="showComingSoon('مملكة العلوم')">
+                <div class="kingdom-status coming-soon">🚧 قريباً</div>
+                <div class="kingdom-icon">🔬</div>
+                <h3 class="kingdom-name">مملكة العلوم</h3>
+                <p class="kingdom-description">تجارب علمية تفاعلية واكتشافات مذهلة. استكشف عجائب الكون والطبيعة!</p>
+                <div class="kingdom-stats mobile-grid-2">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number">قريباً</div>
+                        <div class="kingdom-stat-label">في التطوير</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة اللغة -->
+            <div class="kingdom-card language-kingdom" onclick="showComingSoon('مملكة اللغة')">
+                <div class="kingdom-status coming-soon">🚧 قريباً</div>
+                <div class="kingdom-icon">📚</div>
+                <h3 class="kingdom-name">مملكة اللغة</h3>
+                <p class="kingdom-description">تحديات لغوية لإثراء المفردات والبلاغة. اكتشف جمال اللغة العربية وأسرارها!</p>
+                <div class="kingdom-stats">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number">قريباً</div>
+                        <div class="kingdom-stat-label">في التطوير</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة الرياضيات -->
+            <div class="kingdom-card math-kingdom" onclick="showComingSoon('مملكة الرياضيات')">
+                <div class="kingdom-status coming-soon">🚧 قريباً</div>
+                <div class="kingdom-icon">🔢</div>
+                <h3 class="kingdom-name">مملكة الرياضيات</h3>
+                <p class="kingdom-description">مسائل رياضية ممتعة وألغاز حسابية. اكتشف عالم الأرقام والمعادلات الساحر!</p>
+                <div class="kingdom-stats">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number">قريباً</div>
+                        <div class="kingdom-stat-label">في التطوير</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة التاريخ -->
+            <div class="kingdom-card history-kingdom" onclick="showComingSoon('مملكة التاريخ')">
+                <div class="kingdom-status coming-soon">🚧 قريباً</div>
+                <div class="kingdom-icon">📜</div>
+                <h3 class="kingdom-name">مملكة التاريخ</h3>
+                <p class="kingdom-description">رحلة عبر التاريخ والحضارات العريقة. استكشف قصص الماضي العظيم!</p>
+                <div class="kingdom-stats">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number">قريباً</div>
+                        <div class="kingdom-stat-label">في التطوير</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مملكة الألغاز -->
+            <div class="kingdom-card mystery-kingdom" onclick="showComingSoon('مملكة الألغاز')">
+                <div class="kingdom-status coming-soon">🚧 قريباً</div>
+                <div class="kingdom-icon">🔮</div>
+                <h3 class="kingdom-name">مملكة الألغاز</h3>
+                <p class="kingdom-description">ألغاز معقدة وأحاجي تتحدى العقل. فك الشيفرات واكتشف الأسرار المخفية!</p>
+                <div class="kingdom-stats">
+                    <div class="kingdom-stat">
+                        <div class="kingdom-stat-number">قريباً</div>
+                        <div class="kingdom-stat-label">في التطوير</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti for celebrations -->
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        const kingdomsData = {
+            lightning: { key: 'lightning-kingdom-data', challenges: 0, score: 0, level: 1 },
+            wisdom: { key: 'wisdom-kingdom-data', challenges: 0, score: 0, level: 1 },
+            ultimate: { key: 'kingdomGameState', challenges: 0, score: 0, level: 1 }
+        };
+
+        let classData = null;
+        let studentsData = [];
+
+        // ===== GAME ECONOMY SYSTEM =====
+        let gameEconomy = {
+            entryFee: 100, // ريال عماني لكل لاعب
+            totalPrize: 0,
+            playersAlive: 0,
+            playersEliminated: 0,
+            prizeHistory: [],
+            kingdomsCompleted: 0,
+            currentRound: 1,
+            eliminationBonus: 100, // مكافأة إضافية لكل لاعب مُستبعد
+            gameActive: false
+        };
+
+        // متغير للتحكم في عرض الرسائل الترحيبية
+        let welcomeShown = false;
+
+        // حفظ واستعادة بيانات الاقتصاد
+        function saveGameEconomy() {
+            localStorage.setItem('gameEconomy', JSON.stringify(gameEconomy));
+        }
+
+        function loadGameEconomy() {
+            const saved = localStorage.getItem('gameEconomy');
+            if (saved) {
+                gameEconomy = {...gameEconomy, ...JSON.parse(saved)};
+            }
+        }
+
+        // حفظ واستعادة بيانات اللاعبين
+        function savePlayersData() {
+            if (window.playersData) {
+                localStorage.setItem('squidGamePlayers', JSON.stringify(window.playersData));
+            }
+        }
+
+        function loadPlayersData() {
+            const saved = localStorage.getItem('squidGamePlayers');
+            if (saved) {
+                try {
+                    const playersData = JSON.parse(saved);
+                    // التأكد من أن جميع اللاعبين لديهم الحقول المطلوبة
+                    window.playersData = playersData.map(player => ({
+                        ...player,
+                        totalEarnings: player.totalEarnings || 0,
+                        eliminationRound: player.eliminationRound || null,
+                        eliminationReason: player.eliminationReason || null
+                    }));
+                    return true;
+                } catch (e) {
+                    console.log('خطأ في تحميل بيانات اللاعبين:', e);
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        function resetAllPlayersToAlive() {
+            if (window.playersData) {
+                window.playersData.forEach(player => {
+                    player.status = 'alive';
+                    player.eliminationRound = null;
+                    player.eliminationReason = null;
+                });
+                savePlayersData();
+                console.log('✅ تم إعادة تعيين جميع اللاعبين كأحياء');
+            }
+        }
+
+        // ===== INITIALIZATION =====
+        
+        function addEconomyPanel() {
+            // إضافة لوحة الاقتصاد إلى الواجهة الرئيسية
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent && !document.getElementById('economyInfo')) {
+                const economyDiv = document.createElement('div');
+                economyDiv.id = 'economyInfo';
+                economyDiv.className = 'economy-display';
+                economyDiv.innerHTML = generateEconomyHTML();
+                
+                // إضافة ستايل للوحة
+                const economyStyle = document.createElement('style');
+                economyStyle.textContent = `
+                    .economy-display {
+                        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                        border: 2px solid #FFD700;
+                        border-radius: 15px;
+                        padding: 1.5rem;
+                        margin: 2rem 0;
+                        box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+                    }
+                    
+                    .economy-display .economy-panel {
+                        background: transparent;
+                        padding: 0;
+                    }
+                    
+                    .economy-display .economy-header h3 {
+                        text-align: center;
+                        font-size: 1.8rem;
+                        margin-bottom: 1rem;
+                    }
+                    
+                    .economy-display .game-status {
+                        text-align: center;
+                        display: block;
+                        margin-bottom: 1.5rem;
+                        font-size: 1.2rem;
+                    }
+                    
+                    .economy-display .economy-stats {
+                        margin-bottom: 1.5rem;
+                    }
+                    
+                    .economy-display .stat-box {
+                        background: rgba(0, 0, 0, 0.5);
+                        border: 1px solid #FFD700;
+                    }
+                `;
+                
+                if (!document.getElementById('economyDisplayStyle')) {
+                    economyStyle.id = 'economyDisplayStyle';
+                    document.head.appendChild(economyStyle);
+                }
+                
+                // إدراج بعد عنصر التقدم
+                const progressSection = document.querySelector('.progress-section');
+                if (progressSection) {
+                    progressSection.parentNode.insertBefore(economyDiv, progressSection.nextSibling);
+                } else {
+                    mainContent.appendChild(economyDiv);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load sound preferences first
+            loadSoundPreference();
+            
+            // تحميل البيانات الاقتصادية
+            loadGameEconomy();
+            
+            initializeParticles();
+            loadClassAndStudentsData();
+            loadAllKingdomsData();
+            updateProgressSummary();
+            
+            // إضافة لوحة الاقتصاد
+            setTimeout(() => {
+                addEconomyPanel();
+                updateEconomyDisplay();
+            }, 1000);
+            
+            // Hide loading overlay
+            setTimeout(() => {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                if (loadingOverlay) {
+                    loadingOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                        showWelcomeAnimation();
+                        
+                        // Play welcome sound after loading
+                        setTimeout(() => {
+                            playWelcomeSound();
+                            
+                            // Show student welcome if available - تم إزالة التكرار
+                            if (classData && studentsData.length > 0 && !welcomeShown) {
+                                setTimeout(() => {
+                                    showStudentsWelcome();
+                                }, 2000);
+                            }
+                        }, 1000);
+                    }, 500);
+                }
+            }, 2000);
+        });
+
+        // ===== PARTICLES BACKGROUND =====
+        function initializeParticles() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: ['#FFD700', '#FFA500', '#FF6347', '#4169E1', '#8A2BE2'] },
+                        shape: {
+                            type: ['circle', 'triangle', 'polygon'],
+                            polygon: { nb_sides: 6 }
+                        },
+                        opacity: {
+                            value: 0.6,
+                            random: true,
+                            anim: { enable: true, speed: 1, opacity_min: 0.3 }
+                        },
+                        size: {
+                            value: 4,
+                            random: true,
+                            anim: { enable: true, speed: 2, size_min: 1 }
+                        },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: '#ffffff',
+                            opacity: 0.2,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 2,
+                            direction: 'none',
+                            random: true,
+                            straight: false,
+                            out_mode: 'out',
+                            bounce: false
+                        }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: {
+                            onhover: { enable: true, mode: 'repulse' },
+                            onclick: { enable: true, mode: 'push' },
+                            resize: true
+                        },
+                        modes: {
+                            repulse: { distance: 100, duration: 0.4 },
+                            push: { particles_nb: 4 }
+                        }
+                    },
+                    retina_detect: true
+                });
+            }
+        }
+
+        // ===== WELCOME ANIMATION =====
+        function showWelcomeAnimation() {
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FFA500', '#FF6347', '#4169E1', '#8A2BE2']
+                });
+            }
+        }
+
+        // ===== LOAD CLASS AND STUDENTS DATA =====
+        function loadClassAndStudentsData() {
+            try {
+                console.log('🔍 محاولة تحميل بيانات الطلاب...');
+                
+                // إعادة تعيين حالة الترحيب للبيانات الجديدة
+                resetWelcomeState();
+                
+                // أولاً: فحص بيانات النقل المباشر
+                const transferData = localStorage.getItem('kingdomTransferData');
+                if (transferData) {
+                    try {
+                        const data = JSON.parse(transferData);
+                        console.log('🚀 تم العثور على بيانات النقل المباشر:', data);
+                        
+                        if (data.selectedClass && data.selectedStudents && data.selectedStudents.length > 0) {
+                            classData = data.selectedClass;
+                            studentsData = data.selectedStudents;
+                            
+                            // إنشاء أو تحميل بيانات اللاعبين
+                            if (!loadPlayersData()) {
+                                createPlayersData();
+                            } else {
+                                // التأكد من أن جميع اللاعبين أحياء في البداية إذا لم تبدأ اللعبة
+                                if (!gameEconomy.gameActive) {
+                                    resetAllPlayersToAlive();
+                                }
+                            }
+                            
+                            console.log('✅ تم تحميل بيانات النقل بنجاح');
+                            updateClassInfo();
+                            showGameGuide();
+                            playWelcomeSound();
+                            
+                            // تم إزالة الاستدعاء المكرر لـ showSquidGameWelcome
+                            
+                            return;
+                        }
+                    } catch (e) {
+                        console.log('❌ خطأ في قراءة بيانات النقل:', e);
+                    }
+                }
+                
+                // ثانياً: طرق متعددة لتحميل البيانات المحفوظة
+                const dataSources = [
+                    {
+                        key: 'kingdomGameState',
+                        classField: 'selectedClass',
+                        studentsField: 'selectedStudents'
+                    },
+                    {
+                        key: 'kingdomSettingsAdvanced',
+                        classField: 'selectedClass',
+                        studentsField: 'selectedStudents'
+                    },
+                    {
+                        key: 'teacherSession',
+                        classField: 'selectedClass',
+                        studentsField: 'selectedStudents'
+                    },
+                    {
+                        key: 'kingdomSettings',
+                        classField: 'selectedClass',
+                        studentsField: 'selectedStudents'
+                    }
+                ];
+                
+                let dataFound = false;
+                
+                for (const source of dataSources) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(source.key) || '{}');
+                        console.log(`🔍 فحص ${source.key}:`, data);
+                        
+                        if (data[source.classField] && data[source.studentsField]) {
+                            classData = data[source.classField];
+                            studentsData = Array.isArray(data[source.studentsField]) ? 
+                                         data[source.studentsField] : 
+                                         Object.values(data[source.studentsField]);
+                            
+                            if (studentsData.length > 0) {
+                                console.log(`✅ تم العثور على البيانات في ${source.key}`);
+                                console.log(`📚 الصف: ${classData}`);
+                                console.log(`👥 الطلاب: ${studentsData.length} طالب`);
+                                
+                                // إنشاء أو تحميل بيانات اللاعبين
+                                if (!loadPlayersData()) {
+                                    createPlayersData();
+                                } else {
+                                    // التأكد من أن جميع اللاعبين أحياء في البداية إذا لم تبدأ اللعبة
+                                    if (!gameEconomy.gameActive) {
+                                        resetAllPlayersToAlive();
+                                    }
+                                }
+                                
+                                dataFound = true;
+                                updateClassInfo();
+                                showGameGuide();
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        console.log(`❌ خطأ في قراءة ${source.key}:`, e);
+                    }
+                }
+                
+                if (!dataFound) {
+                    console.log('❌ لم يتم العثور على بيانات الطلاب في أي مصدر');
+                    console.log('📋 محتويات localStorage:');
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key.includes('kingdom') || key.includes('class') || key.includes('student')) {
+                            console.log(`${key}:`, localStorage.getItem(key));
+                        }
+                    }
+                    
+                    // إظهار معلومات عدم وجود البيانات
+                    updateClassInfo();
+                    showGameGuide();
+                }
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحميل بيانات الصف والطلاب:', error);
+            }
+        }
+
+        // ===== CREATE PLAYERS DATA =====
+        function createPlayersData() {
+            if (!studentsData || studentsData.length === 0) return;
+            
+            // بيانات اللاعبين مستوحاة من لعبة الحبار
+            const playerNumbers = generatePlayerNumbers(studentsData.length);
+            
+            window.playersData = studentsData.map((student, index) => ({
+                id: index + 1,
+                playerNumber: playerNumbers[index],
+                name: student,
+                status: 'alive', // جميع اللاعبين أحياء في البداية
+                score: 0, // البداية بصفر نقطة
+                level: 1, // البداية بالمستوى الأول
+                gamesWon: 0, // لا انتصارات في البداية
+                gamesLost: 0, // لا خسائر في البداية
+                currentStreak: 0, // سلسلة انتصارات حالية
+                bestStreak: 0, // أفضل سلسلة انتصارات
+                kingdomsCompleted: 0, // الممالك المكتملة
+                questionsAnswered: 0, // الأسئلة المجاب عليها
+                correctAnswers: 0, // الإجابات الصحيحة
+                lastActivity: new Date().toISOString(),
+                joinDate: new Date().toISOString(),
+                avatar: `👤`,
+                achievements: getStarterAchievements(),
+                totalEarnings: 0, // بدء بدون مكاسب
+                eliminationRound: null, // لم يتم الاستبعاد بعد
+                eliminationReason: null, // لا يوجد سبب استبعاد
+                experiencePoints: 0, // نقاط الخبرة
+                rank: 'مبتدئ' // الرتبة الابتدائية
+            }));
+            
+            // حفظ بيانات اللاعبين
+            localStorage.setItem('squidGamePlayers', JSON.stringify(window.playersData));
+            console.log('🎮 تم إنشاء بيانات اللاعبين:', window.playersData);
+        }
+
+        // ===== GENERATE PLAYER NUMBERS =====
+        function generatePlayerNumbers(count) {
+            const numbers = [];
+            const used = new Set();
+            
+            while (numbers.length < count) {
+                const num = Math.floor(Math.random() * 456) + 1; // مرجع للعبة الحبار (456 لاعب)
+                if (!used.has(num)) {
+                    used.add(num);
+                    numbers.push(num.toString().padStart(3, '0'));
+                }
+            }
+            
+            return numbers;
+        }
+
+        // ===== GENERATE RANDOM ACHIEVEMENTS =====
+        function getStarterAchievements() {
+            return [
+                { name: 'مرحباً', icon: '👋', earned: true, description: 'انضم إلى مركز الممالك' },
+                { name: 'البداية', icon: '🎯', earned: true, description: 'أول خطوة في الرحلة' }
+            ];
+        }
+
+        function generateRandomAchievements() {
+            const allAchievements = [
+                { name: 'المبتدئ', icon: '🥉', earned: false, description: 'أجب على 5 أسئلة صحيحة' },
+                { name: 'الباحث', icon: '🔍', earned: false, description: 'اكمل مملكة واحدة' },
+                { name: 'المحارب', icon: '⚔️', earned: false, description: 'اربح 3 مباريات متتالية' },
+                { name: 'العالم', icon: '🧠', earned: false, description: 'احصل على 90% إجابات صحيحة' },
+                { name: 'الأسطورة', icon: '👑', earned: false, description: 'اكمل جميع الممالك' },
+                { name: 'الخبير', icon: '🎓', earned: false, description: 'وصل للمستوى 10' },
+                { name: 'السريع', icon: '⚡', earned: false, description: 'أجب على سؤال في أقل من 5 ثوان' },
+                { name: 'المثابر', icon: '💪', earned: false, description: 'اربح 10 مباريات' }
+            ];
+            
+            return allAchievements.slice(0, 2); // إعطاء إنجازين ابتدائيين فقط
+        }
+
+        // ===== SCORING AND LEVEL SYSTEM =====
+        function updatePlayerScore(playerId, points, reason = 'نشاط عام') {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return false;
+
+            const oldScore = player.score;
+            player.score += points;
+            player.experiencePoints += points;
+            
+            // تحديث آخر نشاط
+            player.lastActivity = new Date().toISOString();
+            
+            // فحص ترقية المستوى
+            checkLevelUp(player);
+            
+            // تحديث الرتبة
+            updatePlayerRank(player);
+            
+            // فحص الإنجازات
+            checkAchievements(player);
+            
+            // حفظ البيانات
+            savePlayersData();
+            
+            console.log(`📈 ${player.name}: ${oldScore} → ${player.score} (+${points}) - ${reason}`);
+            return true;
+        }
+
+        function checkLevelUp(player) {
+            const requiredXP = player.level * 100; // كل مستوى يحتاج 100 نقطة إضافية
+            
+            if (player.experiencePoints >= requiredXP) {
+                const oldLevel = player.level;
+                player.level = Math.floor(player.experiencePoints / 100) + 1;
+                
+                if (player.level > oldLevel) {
+                    // منح نقاط إضافية عند الترقية
+                    player.score += player.level * 50;
+                    
+                    // إضافة إنجاز جديد إذا وصل لمستوى معين
+                    if (player.level === 5) {
+                        addAchievement(player, 'متمرس', '🔥', 'وصل للمستوى 5');
+                    } else if (player.level === 10) {
+                        addAchievement(player, 'الخبير', '🎓', 'وصل للمستوى 10');
+                    }
+                    
+                    console.log(`🎉 ${player.name} ترقى للمستوى ${player.level}!`);
+                }
+            }
+        }
+
+        function updatePlayerRank(player) {
+            const score = player.score;
+            
+            if (score >= 5000) {
+                player.rank = 'أسطورة';
+            } else if (score >= 3000) {
+                player.rank = 'خبير';
+            } else if (score >= 2000) {
+                player.rank = 'محترف';
+            } else if (score >= 1000) {
+                player.rank = 'متقدم';
+            } else if (score >= 500) {
+                player.rank = 'متوسط';
+            } else if (score >= 100) {
+                player.rank = 'مبتدئ متقدم';
+            } else {
+                player.rank = 'مبتدئ';
+            }
+        }
+
+        function recordVictory(playerId, gameType = 'تحدي عام') {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return false;
+
+            player.gamesWon++;
+            player.currentStreak++;
+            
+            if (player.currentStreak > player.bestStreak) {
+                player.bestStreak = player.currentStreak;
+            }
+            
+            // منح نقاط للانتصار
+            const victoryPoints = 100 + (player.currentStreak * 20); // مكافأة إضافية للسلسلة
+            updatePlayerScore(playerId, victoryPoints, `انتصار في ${gameType}`);
+            
+            // فحص إنجازات الانتصارات
+            if (player.currentStreak >= 3) {
+                addAchievement(player, 'المحارب', '⚔️', 'سلسلة 3 انتصارات');
+            }
+            
+            if (player.gamesWon >= 10) {
+                addAchievement(player, 'المثابر', '💪', '10 انتصارات');
+            }
+            
+            console.log(`🏆 ${player.name} انتصر في ${gameType}! السلسلة: ${player.currentStreak}`);
+            return true;
+        }
+
+        function recordDefeat(playerId, gameType = 'تحدي عام') {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return false;
+
+            player.gamesLost++;
+            player.currentStreak = 0; // قطع السلسلة
+            
+            // خصم نقاط قليلة للخسارة
+            updatePlayerScore(playerId, -20, `خسارة في ${gameType}`);
+            
+            console.log(`💔 ${player.name} خسر في ${gameType}`);
+            return true;
+        }
+
+        function recordCorrectAnswer(playerId, difficulty = 'متوسط') {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return false;
+
+            player.questionsAnswered++;
+            player.correctAnswers++;
+            
+            // نقاط حسب الصعوبة
+            const difficultyPoints = {
+                'سهل': 10,
+                'متوسط': 20,
+                'صعب': 30
+            };
+            
+            const points = difficultyPoints[difficulty] || 20;
+            updatePlayerScore(playerId, points, `إجابة صحيحة (${difficulty})`);
+            
+            // فحص معدل الإجابات الصحيحة
+            const accuracy = (player.correctAnswers / player.questionsAnswered) * 100;
+            if (accuracy >= 90 && player.questionsAnswered >= 10) {
+                addAchievement(player, 'العالم', '🧠', 'دقة 90% في الإجابات');
+            }
+            
+            return true;
+        }
+
+        function recordWrongAnswer(playerId) {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return false;
+
+            player.questionsAnswered++;
+            // لا نخصم نقاط للإجابة الخاطئة، فقط نسجلها
+            
+            return true;
+        }
+
+        function completeKingdom(playerId, kingdomName) {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return false;
+
+            player.kingdomsCompleted++;
+            
+            // مكافأة كبيرة لإكمال المملكة
+            updatePlayerScore(playerId, 500, `إكمال مملكة ${kingdomName}`);
+            
+            // إنجازات الممالك
+            if (player.kingdomsCompleted === 1) {
+                addAchievement(player, 'الباحث', '🔍', 'أكمل مملكة واحدة');
+            } else if (player.kingdomsCompleted >= 4) {
+                addAchievement(player, 'الأسطورة', '👑', 'أكمل جميع الممالك');
+            }
+            
+            return true;
+        }
+
+        function addAchievement(player, name, icon, description) {
+            // فحص إذا كان الإنجاز موجود مسبقاً
+            const existingAchievement = player.achievements.find(a => a.name === name);
+            if (existingAchievement) {
+                existingAchievement.earned = true;
+                return;
+            }
+            
+            // إضافة إنجاز جديد
+            player.achievements.push({
+                name: name,
+                icon: icon,
+                earned: true,
+                description: description,
+                earnedDate: new Date().toISOString()
+            });
+            
+            // مكافأة للإنجاز
+            player.score += 100;
+            
+            console.log(`🏅 ${player.name} حصل على إنجاز: ${icon} ${name}`);
+        }
+
+        // ===== DIAGNOSTIC FUNCTION =====
+        function diagnosisStudentData() {
+            console.log('🔍 === تشخيص شامل لبيانات الطلاب ===');
+            
+            // فحص جميع مفاتيح localStorage
+            const allKeys = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                allKeys.push(localStorage.key(i));
+            }
+            
+            console.log('📋 جميع مفاتيح localStorage:', allKeys);
+            
+            // فحص المفاتيح ذات الصلة
+            const relevantKeys = allKeys.filter(key => 
+                key.includes('kingdom') || 
+                key.includes('class') || 
+                key.includes('student') ||
+                key.includes('game')
+            );
+            
+            console.log('🎯 المفاتيح ذات الصلة:', relevantKeys);
+            
+            relevantKeys.forEach(key => {
+                try {
+                    const data = localStorage.getItem(key);
+                    const parsed = JSON.parse(data);
+                    console.log(`📁 ${key}:`, parsed);
+                    
+                    // البحث عن بيانات الصف والطلاب
+                    Object.keys(parsed).forEach(field => {
+                        if (field.toLowerCase().includes('class') || 
+                            field.toLowerCase().includes('student')) {
+                            console.log(`  🔎 ${field}:`, parsed[field]);
+                        }
+                    });
+                } catch (e) {
+                    console.log(`📁 ${key} (نص خام):`, localStorage.getItem(key));
+                }
+            });
+            
+            // عرض الحالة الحالية
+            console.log('📊 الحالة الحالية:');
+            console.log('  📚 classData:', classData);
+            console.log('  👥 studentsData:', studentsData);
+            console.log('  📈 studentsData.length:', studentsData ? studentsData.length : 'undefined');
+        }
+
+        // إضافة دالة للوحة المفاتيح للتشخيص
+        function showDiagnosticInfo() {
+            diagnosisStudentData();
+            
+            const diagnosticMessage = `
+🔍 تشخيص البيانات:
+📚 الصف الحالي: ${classData || 'غير محدد'}
+👥 عدد الطلاب: ${studentsData ? studentsData.length : 0}
+📊 الطلاب: ${studentsData ? studentsData.slice(0, 3).join('، ') + (studentsData.length > 3 ? '...' : '') : 'لا توجد'}
+
+ℹ️ تم عرض تفاصيل أكثر في وحدة التحكم (F12)
+            `;
+            
+            showNotification(diagnosticMessage, 'info', 8000);
+        }
+        function updateClassInfo() {
+            const classInfo = document.getElementById('classInfo');
+            const className = document.getElementById('className');
+            const studentsCount = document.getElementById('studentsCount');
+            const studentsPreview = document.getElementById('studentsPreview');
+            
+            if (classData && studentsData.length > 0) {
+                className.textContent = `📚 ${classData}`;
+                studentsCount.textContent = `� ${studentsData.length} طالب مختار`;
+                
+                // Show preview of students
+                if (studentsData.length <= 5) {
+                    studentsPreview.textContent = `الطلاب: ${studentsData.join(' • ')}`;
+                } else {
+                    studentsPreview.textContent = `الطلاب: ${studentsData.slice(0, 3).join(' • ')} وآخرون...`;
+                }
+                
+                classInfo.style.display = 'block';
+                classInfo.style.background = 'linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2))';
+                classInfo.style.borderColor = 'rgba(76, 175, 80, 0.5)';
+                
+                // Add welcome message
+                updateWelcomeMessage();
+                
+                console.log('✅ تم تحديث معلومات الصف بنجاح');
+            } else {
+                // إظهار حالة عدم وجود البيانات
+                className.textContent = '⚠️ لم يتم اختيار صف';
+                studentsCount.textContent = '👥 0 طالب مختار';
+                studentsPreview.innerHTML = `
+                    <span style="color: #FF9800;">⚠️ يرجى اختيار صف وطلاب من صفحة التحديات أولاً</span><br>
+                    <span style="font-size: 0.85rem; opacity: 0.8;">انقر على زر "تشخيص" لمزيد من المعلومات</span>
+                `;
+                
+                classInfo.style.display = 'block';
+                classInfo.style.background = 'linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 193, 7, 0.2))';
+                classInfo.style.borderColor = 'rgba(255, 152, 0, 0.5)';
+                
+                console.log('⚠️ لا توجد بيانات صف أو طلاب');
+            }
+        }
+
+        // ===== UPDATE WELCOME MESSAGE =====
+        function updateWelcomeMessage() {
+            if (classData && studentsData.length > 0) {
+                const subtitle = document.querySelector('.subtitle');
+                const originalText = subtitle.textContent;
+                
+                setTimeout(() => {
+                    subtitle.innerHTML = `
+                        <span style="color: #FFD700;">🎉 أهلاً وسهلاً بصف ${classData}!</span><br>
+                        <span style="font-size: 1.1rem;">مرحباً بكم ${studentsData.length} طالب في رحلة التعلم المذهلة</span><br>
+                        <span style="font-size: 0.95rem; opacity: 0.9;">${originalText}</span>
+                    `;
+                }, 1000);
+            }
+        }
+
+        // ===== SHOW GAME GUIDE =====
+        function showGameGuide() {
+            const gameGuide = document.getElementById('gameGuide');
+            gameGuide.style.display = 'block';
+            gameGuide.style.opacity = '0';
+            gameGuide.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                gameGuide.style.transition = 'all 0.6s ease';
+                gameGuide.style.opacity = '1';
+                gameGuide.style.transform = 'translateY(0)';
+            }, 500);
+        }
+
+        // ===== LOAD ALL KINGDOMS DATA =====
+        function loadAllKingdomsData() {
+            let totalChallenges = 0;
+            let totalScore = 0;
+            let totalLevels = 0;
+            let activeKingdoms = 0;
+
+            try {
+                // مملكة البرق
+                const lightningData = JSON.parse(localStorage.getItem('lightning-kingdom-data') || '{}');
+                kingdomsData.lightning.challenges = lightningData.completedChallenges || 0;
+                kingdomsData.lightning.score = lightningData.totalScore || 0;
+                kingdomsData.lightning.level = Math.floor(kingdomsData.lightning.score / 100) + 1;
+
+                // مملكة الحكمة
+                const wisdomData = JSON.parse(localStorage.getItem('wisdom-kingdom-data') || '{}');
+                kingdomsData.wisdom.challenges = wisdomData.completedChallenges || 0;
+                kingdomsData.wisdom.score = wisdomData.totalScore || 0;
+                kingdomsData.wisdom.level = wisdomData.wisdomLevel || 1;
+
+                // التحديات النهائية
+                const ultimateData = JSON.parse(localStorage.getItem('kingdomGameState') || '{}');
+                kingdomsData.ultimate.challenges = ultimateData.completedChallenges || 0;
+                kingdomsData.ultimate.score = ultimateData.totalScore || 0;
+                kingdomsData.ultimate.level = ultimateData.currentLevel || 1;
+
+                // حساب الإجماليات
+                Object.values(kingdomsData).forEach(kingdom => {
+                    totalChallenges += kingdom.challenges;
+                    totalScore += kingdom.score;
+                    totalLevels += kingdom.level;
+                    if (kingdom.challenges > 0) activeKingdoms++;
+                });
+
+                // تحديث الواجهة
+                updateOverallStats(totalChallenges, totalScore, totalLevels, activeKingdoms);
+                updateKingdomStats();
+                
+                console.log('📊 تم تحديث بيانات جميع الممالك بنجاح');
+            } catch (error) {
+                console.error('❌ خطأ في تحميل بيانات الممالك:', error);
+            }
+        }
+
+        // ===== UPDATE OVERALL STATS =====
+        function updateOverallStats(challenges, score, levels, activeKingdoms) {
+            document.getElementById('totalCompletedChallenges').textContent = challenges;
+            document.getElementById('totalScore').textContent = score.toLocaleString();
+            
+            const averageLevel = activeKingdoms > 0 ? (levels / Object.keys(kingdomsData).length).toFixed(1) : 1;
+            document.getElementById('averageLevel').textContent = averageLevel;
+            
+            const totalPossibleChallenges = Object.keys(kingdomsData).length * 20; // افتراض 20 تحدي لكل مملكة
+            const completionRate = ((challenges / totalPossibleChallenges) * 100).toFixed(0);
+            document.getElementById('completionRate').textContent = completionRate + '%';
+            
+            // إضافة تأثيرات بصرية للإحصائيات
+            animateNumbers();
+        }
+
+        // ===== UPDATE KINGDOM STATS =====
+        function updateKingdomStats() {
+            // مملكة البرق
+            document.getElementById('lightning-challenges').textContent = kingdomsData.lightning.challenges;
+            document.getElementById('lightning-score').textContent = kingdomsData.lightning.score.toLocaleString();
+            document.getElementById('lightning-level').textContent = kingdomsData.lightning.level;
+
+            // مملكة الحكمة
+            document.getElementById('wisdom-challenges').textContent = kingdomsData.wisdom.challenges;
+            document.getElementById('wisdom-score').textContent = kingdomsData.wisdom.score.toLocaleString();
+            document.getElementById('wisdom-level').textContent = kingdomsData.wisdom.level;
+
+            // التحديات النهائية
+            if (document.getElementById('ultimate-score')) {
+                document.getElementById('ultimate-score').textContent = kingdomsData.ultimate.score.toLocaleString();
+            }
+        }
+
+        // ===== ANIMATE NUMBERS =====
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number, .kingdom-stat-number');
+            numbers.forEach(num => {
+                if (!isNaN(parseInt(num.textContent))) {
+                    num.style.transform = 'scale(1.1)';
+                    num.style.color = '#FFD700';
+                    setTimeout(() => {
+                        num.style.transform = 'scale(1)';
+                        num.style.color = '';
+                    }, 300);
+                }
+            });
+        }
+
+        // ===== GO TO KINGDOM =====
+        function goToKingdom(kingdomPage) {
+            playClickSound();
+            
+            // Check if class and students are selected
+            if (!classData || studentsData.length === 0) {
+                showNotification('يرجى اختيار صف وطلاب من صفحة التحديات أولاً! 📚', 'warning');
+                return;
+            }
+            
+            try {
+                // حفظ البيانات الحالية
+                const centerData = {
+                    lastVisited: new Date().toISOString(),
+                    totalVisits: (JSON.parse(localStorage.getItem('kingdoms-center-data') || '{}')).totalVisits + 1 || 1,
+                    fromClass: classData,
+                    withStudents: studentsData
+                };
+                localStorage.setItem('kingdoms-center-data', JSON.stringify(centerData));
+                
+                // Show loading message
+                showNotification('🚀 جاري الانتقال للمملكة...', 'info', 2000);
+                
+                // تأثير بصري للانتقال
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#FFD700', '#FFA500', '#FF6347']
+                    });
+                }
+                
+                playSuccessSound();
+                
+                // الانتقال للمملكة مع تأخير قصير للتأثير
+                setTimeout(() => {
+                    window.location.href = kingdomPage;
+                }, 1000);
+                
+                console.log(`🚀 الانتقال إلى: ${kingdomPage}`);
+            } catch (error) {
+                console.error('❌ خطأ في الانتقال:', error);
+                showNotification('❌ حدث خطأ في الانتقال للمملكة', 'error');
+            }
+        }
+
+        // ===== SHOW COMING SOON =====
+        function showComingSoon(kingdomName) {
+            playClickSound();
+            
+            showNotification(`🚧 ${kingdomName} قريباً!\n✨ هذه المملكة تحت التطوير وستكون متاحة قريباً`, 'warning', 5000);
+            
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 30,
+                    spread: 50,
+                    origin: { y: 0.7 },
+                    colors: ['#43e97b', '#38f9d7']
+                });
+            }
+        }
+
+        // ===== RETURN TO CHALLENGES ULTIMATE WITH CACHE CLEAR =====
+        // تم استبدال وظيفة refreshData() بـ returnToChallengesUltimate()
+        // إذا كنت ترى زر "تحديث" بعد، يرجى تحديث المتصفح أو مسح ذاكرة التخزين المؤقت
+        function returnToChallengesUltimate() {
+            playClickSound();
+            
+            // تأكيد العملية من المعلم
+            const confirmMessage = `
+🔄 إعادة تعيين وعودة لاختيار الصف
+
+هل تريد العودة لصفحة اختيار الصف مع تفريغ كامل للذاكرة المؤقتة؟
+
+🗑️ سيتم حذف جميع البيانات المؤقتة
+👥 سيتمكن معلم آخر من بدء لعبة جديدة
+📊 ستبقى البيانات المحفوظة سليمة
+
+هذا مفيد عند انتهاء المعلم من الاستخدام وتسليم الجهاز لمعلم آخر.
+            `;
+
+            if (confirm(confirmMessage)) {
+                showNotification('🔄 جاري تفريغ الذاكرة المؤقتة والعودة...', 'info', 3000);
+                
+                // تأثير بصري للعملية
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#ff6b6b', '#4ecdc4', '#45b7d1']
+                    });
+                }
+                
+                setTimeout(() => {
+                    // تفريغ الذاكرة المؤقتة بالكامل
+                    clearAllCacheData();
+                    
+                    // العودة إلى صفحة اختيار الصف مع معامل التنظيف
+                    window.location.href = 'challenges-ultimate.html?cache_cleared=1';
+                }, 2000);
+            }
+        }
+
+        // ===== CLEAR ALL CACHE DATA =====
+        function clearAllCacheData() {
+            try {
+                showNotification('🗑️ تفريغ الذاكرة المؤقتة...', 'warning', 2000);
+                
+                // قائمة شاملة بجميع البيانات المؤقتة
+                const cacheKeys = [
+                    // بيانات الطلاب والصف
+                    'classData',
+                    'studentsData',
+                    'selectedClass',
+                    'currentClass',
+                    'currentStudents',
+                    
+                    // بيانات اللعبة العامة
+                    'squidGamePlayers',
+                    'gameState',
+                    'currentGameMode',
+                    'gameSettings',
+                    'gameConfig',
+                    
+                    // بيانات الممالك
+                    'kingdomGameState',
+                    'kingdomTransferData',
+                    'kingdomResults',
+                    'lightning-kingdom-results',
+                    'wisdom-kingdom-results',
+                    'courage-kingdom-results',
+                    'creativity-kingdom-results',
+                    
+                    // بيانات الجلسة الحالية
+                    'currentSession',
+                    'sessionData',
+                    'tempData',
+                    'cachedData',
+                    'lastActivity',
+                    'userPreferences',
+                    
+                    // بيانات الألعاب المختلفة
+                    'quiz-results',
+                    'blockbusters-data',
+                    'vote-results',
+                    'timer-settings',
+                    'random-data',
+                    'whois-data',
+                    
+                    // بيانات إضافية
+                    'transferData',
+                    'temporaryResults',
+                    'sessionResults',
+                    'currentActivity',
+                    'activityData',
+                    'progressData'
+                ];
+                
+                console.log('🗑️ بدء تفريغ الذاكرة المؤقتة...');
+                
+                let clearedCount = 0;
+                cacheKeys.forEach(key => {
+                    if (localStorage.getItem(key)) {
+                        localStorage.removeItem(key);
+                        clearedCount++;
+                        console.log(`✅ تم حذف: ${key}`);
+                    }
+                });
+                
+                // تفريغ أي بيانات إضافية قد تكون موجودة
+                const allKeys = Object.keys(localStorage);
+                allKeys.forEach(key => {
+                    // حذف أي مفاتيح تحتوي على كلمات مؤقتة
+                    if (key.includes('temp') || 
+                        key.includes('cache') || 
+                        key.includes('session') || 
+                        key.includes('current') ||
+                        key.includes('transfer') ||
+                        key.includes('activity') ||
+                        key.includes('game') ||
+                        key.includes('kingdom') ||
+                        key.includes('quiz') ||
+                        key.includes('result')) {
+                        
+                        localStorage.removeItem(key);
+                        clearedCount++;
+                        console.log(`🧹 تم حذف إضافي: ${key}`);
+                    }
+                });
+                
+                // تفريغ sessionStorage أيضاً
+                sessionStorage.clear();
+                
+                console.log(`✅ تم تفريغ ${clearedCount} عنصر من الذاكرة المؤقتة`);
+                console.log('🧹 تم تفريغ sessionStorage بالكامل');
+                
+                showNotification(`✅ تم تفريغ ${clearedCount} عنصر من الذاكرة المؤقتة بنجاح!`, 'success');
+                
+                // تفريغ ذاكرة المتصفح إذا أمكن
+                if ('caches' in window) {
+                    caches.keys().then(names => {
+                        names.forEach(name => {
+                            caches.delete(name);
+                        });
+                    });
+                }
+                
+            } catch (error) {
+                console.error('❌ خطأ في تفريغ الذاكرة المؤقتة:', error);
+                showNotification('⚠️ حدث خطأ في تفريغ الذاكرة المؤقتة، لكن تم المتابعة', 'warning');
+            }
+        }
+
+        // ===== RESET PROGRESS =====
+        function resetProgress() {
+            const confirmMessage = `
+🚨 تحذير: إعادة تعيين جميع البيانات
+
+هل أنت متأكد من رغبتك في حذف جميع البيانات التالية؟
+
+📊 جميع النقاط والمستويات
+🏆 الإنجازات والشارات
+📈 إحصائيات التقدم
+👥 بيانات الصف والطلاب
+
+⚠️ هذا الإجراء لا يمكن التراجع عنه!
+            `;
+            
+            if (confirm(confirmMessage.trim())) {
+                if (confirm('❓ هل أنت متأكد 100%؟ سيتم حذف كل شيء!')) {
+                    try {
+                        // حذف جميع البيانات
+                        const keysToRemove = [
+                            'lightning-kingdom-data',
+                            'wisdom-kingdom-data',
+                            'kingdomGameState',
+                            'kingdomSettingsAdvanced',
+                            'kingdomSettings',
+                            'lightning-leaderboard',
+                            'kingdoms-center-data',
+                            'kingdomAchievements'
+                        ];
+                        
+                        keysToRemove.forEach(key => localStorage.removeItem(key));
+                        
+                        showNotification('🗑️ تم حذف جميع البيانات بنجاح!\n🔄 سيتم إعادة تحميل الصفحة الآن', 'success', 2000);
+                        
+                        // إعادة تحميل الصفحة
+                        setTimeout(() => location.reload(), 1000);
+                    } catch (error) {
+                        console.error('❌ خطأ في إعادة التعيين:', error);
+                        showNotification('❌ حدث خطأ في إعادة تعيين البيانات', 'error');
+                    }
+                }
+            }
+        }
+
+        // ===== EXPORT DATA =====
+        function exportData() {
+            playClickSound();
+            showNotification('جاري تجهيز البيانات للتصدير...', 'info', 2000);
+            
+            try {
+                const allData = {
+                    exportInfo: {
+                        date: new Date().toISOString(),
+                        version: '2.0',
+                        className: classData,
+                        studentsCount: studentsData.length,
+                        students: studentsData
+                    },
+                    kingdomsData: {
+                        lightningKingdom: JSON.parse(localStorage.getItem('lightning-kingdom-data') || '{}'),
+                        wisdomKingdom: JSON.parse(localStorage.getItem('wisdom-kingdom-data') || '{}'),
+                        ultimateChallenges: JSON.parse(localStorage.getItem('kingdomGameState') || '{}'),
+                        settings: JSON.parse(localStorage.getItem('kingdomSettingsAdvanced') || '{}')
+                    },
+                    leaderboards: {
+                        lightning: JSON.parse(localStorage.getItem('lightning-leaderboard') || '[]')
+                    },
+                    achievements: JSON.parse(localStorage.getItem('kingdomAchievements') || '[]'),
+                    centerData: JSON.parse(localStorage.getItem('kingdoms-center-data') || '{}')
+                };
+
+                const dataStr = JSON.stringify(allData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                const fileName = `kingdoms-data-${classData || 'unknown'}-${new Date().toISOString().split('T')[0]}.json`;
+                link.download = fileName;
+                link.click();
+                
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#43e97b', '#38f9d7', '#4facfe']
+                    });
+                }
+                
+                setTimeout(() => {
+                    showNotification(`📊 تم تصدير البيانات بنجاح!\n📁 اسم الملف: ${fileName}\n💾 يحتوي على جميع بياناتك وإحصائياتك`, 'success');
+                }, 500);
+            } catch (error) {
+                console.error('❌ خطأ في تصدير البيانات:', error);
+                showNotification('❌ حدث خطأ في تصدير البيانات', 'error');
+            }
+        }
+
+        // ===== GO HOME =====
+        function goHome() {
+            playClickSound();
+            showNotification('هل تريد العودة للصفحة الرئيسية؟', 'info', 3000);
+            
+            setTimeout(() => {
+                if (confirm('🏠 هل تريد العودة للصفحة الرئيسية؟')) {
+                    showNotification('جاري الانتقال للصفحة الرئيسية...', 'info', 1500);
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 1000);
+                }
+            }, 500);
+        }
+
+        // ===== UPDATE PROGRESS SUMMARY =====
+        function updateProgressSummary() {
+            try {
+                // حساب إجمالي الإنجازات
+                const lightningData = JSON.parse(localStorage.getItem('lightning-kingdom-data') || '{}');
+                const wisdomData = JSON.parse(localStorage.getItem('wisdom-kingdom-data') || '{}');
+                const ultimateData = JSON.parse(localStorage.getItem('kingdomGameState') || '{}');
+                const achievements = JSON.parse(localStorage.getItem('kingdomAchievements') || '[]');
+                
+                const totalAchievements = (lightningData.completedChallenges || 0) + 
+                                        (wisdomData.completedChallenges || 0) + 
+                                        (ultimateData.completedChallenges || 0) +
+                                        achievements.length;
+                
+                document.getElementById('totalAchievements').textContent = totalAchievements;
+
+                // حساب الوقت المستغرق (تقدير)
+                const totalTime = ((lightningData.completedChallenges || 0) * 2) + 
+                                ((wisdomData.completedChallenges || 0) * 3) + 
+                                ((ultimateData.completedChallenges || 0) * 4);
+                document.getElementById('totalTimeSpent').textContent = totalTime + ' دقيقة';
+
+                // المملكة المفضلة
+                let favoriteKingdom = 'لم يتم تحديدها بعد';
+                const scores = {
+                    lightning: lightningData.totalScore || 0,
+                    wisdom: wisdomData.totalScore || 0,
+                    ultimate: ultimateData.totalScore || 0
+                };
+                
+                const maxScore = Math.max(...Object.values(scores));
+                if (maxScore > 0) {
+                    const favorite = Object.keys(scores).find(key => scores[key] === maxScore);
+                    const kingdomNames = {
+                        lightning: '⚡ مملكة البرق',
+                        wisdom: '🧠 مملكة الحكمة',
+                        ultimate: '🏆 التحديات النهائية'
+                    };
+                    favoriteKingdom = kingdomNames[favorite] || favoriteKingdom;
+                }
+                
+                document.getElementById('favoriteKingdom').textContent = favoriteKingdom;
+
+                // آخر نشاط
+                const lastActivities = [
+                    lightningData.lastPlayed,
+                    wisdomData.lastPlayed,
+                    ultimateData.lastPlayed
+                ].filter(Boolean);
+                
+                if (lastActivities.length > 0) {
+                    const lastActivity = new Date(Math.max(...lastActivities.map(d => new Date(d))));
+                    document.getElementById('lastActivity').textContent = lastActivity.toLocaleDateString('ar-SA');
+                } else {
+                    document.getElementById('lastActivity').textContent = 'لم يتم تسجيله';
+                }
+            } catch (error) {
+                console.error('❌ خطأ في تحديث ملخص التقدم:', error);
+            }
+        }
+
+        // ===== EVENT LISTENERS =====
+        
+        // تحديث البيانات عند العودة للصفحة
+        window.addEventListener('focus', function() {
+            loadClassAndStudentsData();
+            loadAllKingdomsData();
+            updateProgressSummary();
+            console.log('🔄 تم تحديث بيانات المركز تلقائياً (focus)');
+        });
+
+        // تحديث البيانات عند إظهار الصفحة مرة أخرى
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                loadClassAndStudentsData();
+                loadAllKingdomsData();
+                updateProgressSummary();
+                console.log('👁️ تم تحديث البيانات عند إظهار الصفحة');
+            }
+        });
+
+        // ===== GAME ECONOMY FUNCTIONS =====
+        
+        function initializeGameEconomy() {
+            if (!studentsData || studentsData.length === 0) {
+                showNotification('لا يمكن بدء اللعبة بدون طلاب!', 'error');
+                return false;
+            }
+
+            const totalPlayers = studentsData.length;
+            gameEconomy.playersAlive = totalPlayers;
+            gameEconomy.playersEliminated = 0;
+            gameEconomy.totalPrize = totalPlayers * gameEconomy.entryFee;
+            gameEconomy.gameActive = true;
+            gameEconomy.currentRound = 1;
+            gameEconomy.kingdomsCompleted = 0;
+            gameEconomy.prizeHistory = [];
+
+            // تسجيل بداية اللعبة
+            gameEconomy.prizeHistory.push({
+                round: 0,
+                action: 'بداية اللعبة',
+                players: totalPlayers,
+                prize: gameEconomy.totalPrize,
+                timestamp: new Date().toLocaleString('ar-EG')
+            });
+
+            saveGameEconomy();
+            updateEconomyDisplay();
+            
+            showNotification(`🎮 بدأت اللعبة!
+            💰 إجمالي الجائزة: ${gameEconomy.totalPrize} ريال عماني
+            👥 عدد اللاعبين: ${totalPlayers}
+            💵 مساهمة كل لاعب: ${gameEconomy.entryFee} ريال عماني`, 'success', 6000);
+
+            playSound('crown-ceremony');
+            return true;
+        }
+
+        function eliminatePlayer(playerId, reason = 'خسر في التحدي') {
+            if (!gameEconomy.gameActive) {
+                showNotification('اللعبة غير نشطة!', 'error');
+                return false;
+            }
+
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) {
+                showNotification('اللاعب غير موجود!', 'error');
+                return false;
+            }
+
+            if (player.status === 'eliminated') {
+                showNotification('اللاعب مُستبعد مسبقاً!', 'warning');
+                return false;
+            }
+
+            // استبعاد اللاعب
+            player.status = 'eliminated';
+            player.eliminationRound = gameEconomy.currentRound;
+            player.eliminationReason = reason;
+
+            // تحديث الإحصائيات
+            gameEconomy.playersAlive--;
+            gameEconomy.playersEliminated++;
+            
+            // إضافة مكافأة الاستبعاد للجائزة
+            const oldPrize = gameEconomy.totalPrize;
+            gameEconomy.totalPrize += gameEconomy.eliminationBonus;
+
+            // تسجيل الاستبعاد
+            gameEconomy.prizeHistory.push({
+                round: gameEconomy.currentRound,
+                action: `استبعاد ${player.name}`,
+                reason: reason,
+                playersRemaining: gameEconomy.playersAlive,
+                prizeIncrease: gameEconomy.eliminationBonus,
+                newPrize: gameEconomy.totalPrize,
+                timestamp: new Date().toLocaleString('ar-EG')
+            });
+
+            saveGameEconomy();
+            updateEconomyDisplay();
+
+            // تحديث بيانات اللاعب
+            savePlayersData();
+
+            showNotification(`❌ ${player.name} تم استبعاده!
+            💰 الجائزة ازدادت من ${oldPrize} إلى ${gameEconomy.totalPrize} ريال عماني
+            👥 اللاعبون المتبقون: ${gameEconomy.playersAlive}`, 'info', 5000);
+
+            playSound('battle-victory');
+
+            // فحص إنهاء اللعبة
+            if (gameEconomy.playersAlive === 1) {
+                finishGame();
+            } else if (gameEconomy.playersAlive === 0) {
+                showNotification('لا يوجد فائزون! اللعبة انتهت.', 'error');
+                gameEconomy.gameActive = false;
+                saveGameEconomy();
+            }
+
+            return true;
+        }
+
+        function finishGame() {
+            if (!gameEconomy.gameActive) return;
+
+            const winner = window.playersData.find(p => p.status === 'alive');
+            if (!winner) {
+                showNotification('خطأ: لا يمكن العثور على الفائز!', 'error');
+                return;
+            }
+
+            gameEconomy.gameActive = false;
+            
+            // تسجيل انتهاء اللعبة
+            gameEconomy.prizeHistory.push({
+                round: gameEconomy.currentRound,
+                action: `انتهاء اللعبة - الفائز: ${winner.name}`,
+                winner: winner.name,
+                finalPrize: gameEconomy.totalPrize,
+                totalEliminated: gameEconomy.playersEliminated,
+                timestamp: new Date().toLocaleString('ar-EG')
+            });
+
+            // إضافة الجائزة للفائز
+            winner.totalEarnings = (winner.totalEarnings || 0) + gameEconomy.totalPrize;
+            winner.wins = (winner.wins || 0) + 1;
+
+            saveGameEconomy();
+            savePlayersData();
+            updateEconomyDisplay();
+
+            // عرض رسالة التهنئة
+            showWinnerCelebration(winner);
+        }
+
+        function showWinnerCelebration(winner) {
+            const celebrationMessage = `🎉 تهانينا للفائز! 🎉
+
+            🏆 الفائز: ${winner.name}
+            💰 الجائزة الكبرى: ${gameEconomy.totalPrize} ريال عماني
+            👥 اللاعبون المُستبعدون: ${gameEconomy.playersEliminated}
+            🎮 عدد الجولات: ${gameEconomy.currentRound}
+
+            🎊 مبروك على الفوز بالجائزة الكبرى!`;
+
+            showNotification(celebrationMessage, 'success', 10000);
+
+            // تأثيرات الاحتفال
+            if (typeof confetti !== 'undefined') {
+                // انفجار احتفالي كبير
+                confetti({
+                    particleCount: 300,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FF6B35', '#9B59B6', '#00ff41']
+                });
+
+                // احتفال متواصل
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 200,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 }
+                    });
+                }, 500);
+
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 200,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 }
+                    });
+                }, 1000);
+            }
+
+            // تشغيل الأصوات الاحتفالية
+            playSound('epic-victory');
+            setTimeout(() => playSound('crowd-cheer'), 1000);
+            setTimeout(() => playSound('crown-ceremony'), 2000);
+            setTimeout(() => playSound('fireworks-burst'), 3000);
+        }
+
+        function nextRound() {
+            if (!gameEconomy.gameActive) {
+                showNotification('اللعبة غير نشطة!', 'error');
+                return;
+            }
+
+            gameEconomy.currentRound++;
+            gameEconomy.kingdomsCompleted++;
+            
+            gameEconomy.prizeHistory.push({
+                round: gameEconomy.currentRound,
+                action: `بداية الجولة ${gameEconomy.currentRound}`,
+                playersRemaining: gameEconomy.playersAlive,
+                currentPrize: gameEconomy.totalPrize,
+                timestamp: new Date().toLocaleString('ar-EG')
+            });
+
+            saveGameEconomy();
+            updateEconomyDisplay();
+
+            showNotification(`🎮 الجولة ${gameEconomy.currentRound}
+            👥 اللاعبون المتبقون: ${gameEconomy.playersAlive}
+            💰 الجائزة الحالية: ${gameEconomy.totalPrize} ريال عماني`, 'info', 4000);
+
+            playSound('battle-horn');
+        }
+
+        function resetGameEconomy() {
+            if (confirm('هل تريد إعادة تعيين الاقتصاد واللعبة؟ سيتم فقدان جميع البيانات!')) {
+                gameEconomy = {
+                    entryFee: 100,
+                    totalPrize: 0,
+                    playersAlive: 0,
+                    playersEliminated: 0,
+                    prizeHistory: [],
+                    kingdomsCompleted: 0,
+                    currentRound: 1,
+                    eliminationBonus: 100,
+                    gameActive: false
+                };
+
+                // إعادة تعيين حالة اللاعبين
+                if (window.playersData) {
+                    window.playersData.forEach(player => {
+                        player.status = 'alive';
+                        delete player.eliminationRound;
+                        delete player.eliminationReason;
+                    });
+                    savePlayersData();
+                }
+
+                saveGameEconomy();
+                updateEconomyDisplay();
+
+                showNotification('تم إعادة تعيين اللعبة بنجاح!', 'success');
+                playSound('achievement-unlock');
+            }
+        }
+
+        function updateEconomyDisplay() {
+            // تحديث عرض الاقتصاد في الواجهة
+            const economyInfo = document.getElementById('economyInfo');
+            if (economyInfo) {
+                economyInfo.innerHTML = generateEconomyHTML();
+            }
+        }
+
+        function generateEconomyHTML() {
+            const gameStatus = gameEconomy.gameActive ? 'نشطة' : 'غير نشطة';
+            const statusColor = gameEconomy.gameActive ? '#00ff41' : '#ff6b6b';
+
+            return `
+                <div class="economy-panel">
+                    <div class="economy-header">
+                        <h3>💰 نظام الجوائز</h3>
+                        <span class="game-status" style="color: ${statusColor}">
+                            🎮 ${gameStatus}
+                        </span>
+                    </div>
+                    
+                    <div class="economy-stats">
+                        <div class="stat-box">
+                            <div class="stat-number">${gameEconomy.totalPrize}</div>
+                            <div class="stat-label">ريال عماني - الجائزة الكبرى</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <div class="stat-number">${gameEconomy.playersAlive}</div>
+                            <div class="stat-label">لاعب حي</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <div class="stat-number">${gameEconomy.playersEliminated}</div>
+                            <div class="stat-label">لاعب مُستبعد</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <div class="stat-number">${gameEconomy.currentRound}</div>
+                            <div class="stat-label">الجولة الحالية</div>
+                        </div>
+                    </div>
+                    
+                    <div class="economy-rules">
+                        <h4>📜 القواعد:</h4>
+                        <ul>
+                            <li>💵 مساهمة كل لاعب: ${gameEconomy.entryFee} ريال عماني</li>
+                            <li>💰 مكافأة الاستبعاد: ${gameEconomy.eliminationBonus} ريال عماني</li>
+                            <li>🏆 الفائز يحصل على كامل الجائزة</li>
+                            <li>❌ لا انسحاب بعد بدء اللعبة</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== SOUND SYSTEM =====
+        let soundEnabled = true;
+
+        // Load sound preference
+        function loadSoundPreference() {
+            const savedSoundSetting = localStorage.getItem('soundEnabled');
+            if (savedSoundSetting !== null) {
+                soundEnabled = JSON.parse(savedSoundSetting);
+                updateSoundButton();
+            }
+        }
+
+        // Toggle sound function
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('soundEnabled', soundEnabled);
+            updateSoundButton();
+            
+            if (soundEnabled) {
+                playSound('clickSound');
+            }
+        }
+
+        // Update sound button appearance
+        function updateSoundButton() {
+            const soundIcon = document.getElementById('soundIcon');
+            const soundText = document.getElementById('soundText');
+            
+            if (soundIcon && soundText) {
+                if (soundEnabled) {
+                    soundIcon.className = 'fas fa-volume-up';
+                    soundText.textContent = 'صوت';
+                } else {
+                    soundIcon.className = 'fas fa-volume-mute';
+                    soundText.textContent = 'صامت';
+                }
+            }
+        }
+
+        // Play sound function using HTML audio elements
+        function playSound(soundId) {
+            if (!soundEnabled) return;
+            
+            const audio = document.getElementById(soundId);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log('Sound play failed:', e));
+            } else {
+                // Fallback to dynamic audio creation
+                try {
+                    const audioFile = getAudioFile(soundId);
+                    if (audioFile) {
+                        const dynamicAudio = new Audio(audioFile);
+                        dynamicAudio.volume = 0.3;
+                        dynamicAudio.play().catch(() => {
+                            // Ignore sound errors
+                        });
+                    }
+                } catch (error) {
+                    // Ignore sound errors
+                }
+            }
+        }
+
+        // Get audio file path based on sound ID
+        function getAudioFile(soundId) {
+            const soundMap = {
+                'welcomeSound': '../assets/media/sounds/kingdom-sounds/crown-ceremony.mp3',
+                'clickSound': '../assets/media/sounds/kingdom-sounds/cosmic-click.mp3',
+                'successSound': '../assets/media/sounds/kingdom-sounds/achievement-unlock.mp3',
+                'celebrationSound': '../assets/media/sounds/kingdom-sounds/epic-victory.mp3',
+                'errorSound': '../assets/media/sounds/wrong_answer.mp3',
+                'warningSound': '../assets/media/sounds/kingdom-sounds/ai-notification.mp3'
+            };
+            
+            return soundMap[soundId] || null;
+        }
+
+        // Play specific sound types
+        function playWelcomeSound() {
+            playSound('welcomeSound');
+        }
+
+        function playClickSound() {
+            playSound('clickSound');
+        }
+
+        function playSuccessSound() {
+            playSound('successSound');
+        }
+
+        function playCelebrationSound() {
+            playSound('celebrationSound');
+        }
+
+        function playErrorSound() {
+            playSound('errorSound');
+        }
+
+        function playWarningSound() {
+            playSound('warningSound');
+        }
+
+        // ===== NOTIFICATION SYSTEM =====
+        function showNotification(message, type = 'info', duration = 4000) {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notif => notif.remove());
+
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            
+            // Get color based on type
+            let backgroundColor;
+            switch(type) {
+                case 'success':
+                    backgroundColor = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                    break;
+                case 'warning':
+                    backgroundColor = 'linear-gradient(135deg, #FF9800, #F57C00)';
+                    break;
+                case 'error':
+                    backgroundColor = 'linear-gradient(135deg, #f44336, #d32f2f)';
+                    break;
+                default:
+                    backgroundColor = 'linear-gradient(135deg, #2196F3, #1976D2)';
+            }
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: ${backgroundColor};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 15px;
+                z-index: 10000;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                transform: translateX(100%);
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                max-width: 350px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255,255,255,0.2);
+                font-size: 0.95rem;
+                line-height: 1.4;
+                cursor: pointer;
+                white-space: pre-line;
+            `;
+            
+            // Add icon based on type
+            const icons = {
+                'success': '✅',
+                'warning': '⚠️',
+                'error': '❌',
+                'info': 'ℹ️'
+            };
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                    <span style="font-size: 1.2rem; margin-top: 2px;">${icons[type] || 'ℹ️'}</span>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show animation
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Click to dismiss
+            notification.addEventListener('click', () => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            });
+            
+            // Auto hide
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, duration);
+        }
+
+        // ===== INTERACTIVE FUNCTIONS =====
+        function showStudentsWelcome() {
+            // منع التكرار
+            if (welcomeShown) return;
+            welcomeShown = true;
+            
+            showSquidGamePlayersView();
+        }
+
+        // ===== SQUID GAME PLAYERS VIEW =====
+        function showSquidGamePlayersView() {
+            playClickSound();
+            
+            if (!classData || !studentsData || studentsData.length === 0) {
+                showNotification('لا توجد بيانات طلاب متاحة. يرجى اختيار صف من صفحة التحديات أولاً.', 'warning');
+                return;
+            }
+
+            // إنشاء نافذة بطاقات اللاعبين
+            createSquidGameModal();
+            playSound('crown-ceremony');
+        }
+
+        function createSquidGameModal() {
+            // إزالة النافذة السابقة إن وجدت
+            const existingModal = document.getElementById('squidGameModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            const modal = document.createElement('div');
+            modal.id = 'squidGameModal';
+            modal.innerHTML = `
+                <div class="squid-game-backdrop" onclick="closeSquidGameModal()"></div>
+                <div class="squid-game-container">
+                    <div class="squid-game-header">
+                        <div class="game-logo">
+                            <div class="logo-shapes">
+                                <span class="shape circle">●</span>
+                                <span class="shape triangle">▲</span>
+                                <span class="shape square">■</span>
+                            </div>
+                            <h2 class="game-title">لوحة اللاعبين</h2>
+                        </div>
+                        <div class="game-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">الصف</span>
+                                <span class="stat-value">${classData}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">اللاعبون</span>
+                                <span class="stat-value">${studentsData.length}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">الأحياء</span>
+                                <span class="stat-value">${window.playersData ? window.playersData.filter(p => p.status === 'alive').length : studentsData.length}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">الجائزة</span>
+                                <span class="stat-value" style="color: #FFD700;">${gameEconomy.totalPrize} ر.ع</span>
+                            </div>
+                        </div>
+                        <button class="close-btn" onclick="closeSquidGameModal()">✕</button>
+                    </div>
+                    <div class="players-grid" id="playersGrid">
+                        ${generatePlayersCards()}
+                    </div>
+                    <div class="squid-game-footer">
+                        <button class="action-btn primary" onclick="startSquidGame()">
+                            <i class="fas fa-play"></i>
+                            بدء اللعبة
+                        </button>
+                        <button class="action-btn economic" onclick="showEconomyPanel()">
+                            <i class="fas fa-coins"></i>
+                            نظام الجوائز
+                        </button>
+                        <button class="action-btn secondary" onclick="resetPlayersStats()">
+                            <i class="fas fa-refresh"></i>
+                            إعادة تعيين
+                        </button>
+                        <button class="action-btn danger" onclick="closeSquidGameModal()">
+                            <i class="fas fa-times"></i>
+                            إغلاق
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // إضافة الستايل
+            const style = document.createElement('style');
+            style.textContent = `
+                #squidGameModal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: var(--arabic-font);
+                }
+
+                .squid-game-backdrop {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.95);
+                    backdrop-filter: blur(10px);
+                }
+
+                .squid-game-container {
+                    position: relative;
+                    width: 95%;
+                    max-width: 1200px;
+                    max-height: 90vh;
+                    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                    border-radius: 20px;
+                    border: 3px solid #00ff41;
+                    box-shadow: 
+                        0 0 50px rgba(0, 255, 65, 0.3),
+                        inset 0 0 30px rgba(0, 255, 65, 0.1);
+                    overflow: hidden;
+                    animation: modalAppear 0.5s ease-out;
+                }
+
+                @keyframes modalAppear {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.8) translateY(50px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: scale(1) translateY(0);
+                    }
+                }
+
+                .squid-game-header {
+                    padding: 2rem;
+                    background: linear-gradient(135deg, #ff1744, #ff6b9d);
+                    border-bottom: 2px solid #00ff41;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    position: relative;
+                }
+
+                .game-logo {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                }
+
+                .logo-shapes {
+                    display: flex;
+                    gap: 0.5rem;
+                }
+
+                .shape {
+                    display: inline-block;
+                    font-size: 2rem;
+                    color: #fff;
+                    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                }
+
+                .circle { color: #00ff41; }
+                .triangle { color: #ff1744; }
+                .square { color: #1976d2; }
+
+                .game-title {
+                    color: white;
+                    font-size: 2rem;
+                    font-weight: 900;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                    margin: 0;
+                }
+
+                .game-stats {
+                    display: flex;
+                    gap: 2rem;
+                }
+
+                .stat-item {
+                    text-align: center;
+                    color: white;
+                }
+
+                .stat-label {
+                    display: block;
+                    font-size: 0.9rem;
+                    opacity: 0.8;
+                    margin-bottom: 0.25rem;
+                }
+
+                .stat-value {
+                    display: block;
+                    font-size: 1.5rem;
+                    font-weight: 900;
+                    color: #00ff41;
+                    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+                }
+
+                .close-btn {
+                    background: rgba(255, 255, 255, 0.2);
+                    border: 2px solid #fff;
+                    color: white;
+                    font-size: 1.5rem;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .close-btn:hover {
+                    background: #ff1744;
+                    transform: scale(1.1);
+                }
+
+                .players-grid {
+                    padding: 2rem;
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 1.5rem;
+                    max-height: 60vh;
+                    overflow-y: auto;
+                    background: #0a0a0a;
+                }
+
+                .player-card {
+                    background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+                    border: 2px solid #333;
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .player-card.alive {
+                    border-color: #00ff41;
+                    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+                }
+
+                .player-card.eliminated {
+                    border-color: #ff1744;
+                    background: linear-gradient(135deg, #2a1e1e, #3a2a2a);
+                    opacity: 0.7;
+                }
+
+                .player-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+                }
+
+                .player-number {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    background: #00ff41;
+                    color: #000;
+                    padding: 0.5rem 1rem;
+                    border-radius: 20px;
+                    font-weight: 900;
+                    font-size: 1.1rem;
+                }
+
+                .player-card.eliminated .player-number {
+                    background: #ff1744;
+                    color: white;
+                }
+
+                .player-status {
+                    position: absolute;
+                    top: 15px;
+                    left: 15px;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 15px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                }
+
+                .status-alive {
+                    background: #00ff41;
+                    color: #000;
+                }
+
+                .status-eliminated {
+                    background: #ff1744;
+                    color: white;
+                }
+
+                .player-info {
+                    margin-top: 2rem;
+                    color: white;
+                }
+
+                .player-name {
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    margin-bottom: 1rem;
+                    color: #00ff41;
+                }
+
+                .player-card.eliminated .player-name {
+                    color: #ff6b6b;
+                }
+
+                .player-stats {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                }
+
+                .stat {
+                    text-align: center;
+                    padding: 0.5rem;
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 8px;
+                }
+
+                .stat-number {
+                    display: block;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: #00ff41;
+                }
+
+                .stat-text {
+                    font-size: 0.8rem;
+                    opacity: 0.8;
+                    margin-top: 0.25rem;
+                }
+
+                .player-achievements {
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                    margin-top: 1rem;
+                }
+
+                .achievement {
+                    background: rgba(255, 215, 0, 0.2);
+                    border: 1px solid #ffd700;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 12px;
+                    font-size: 0.7rem;
+                    color: #ffd700;
+                    cursor: help;
+                }
+
+                .player-rank {
+                    text-align: center;
+                    margin: 1rem 0;
+                }
+
+                .rank-badge {
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    color: white;
+                    padding: 0.5rem 1rem;
+                    border-radius: 20px;
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+                    display: inline-block;
+                }
+
+                .rank-badge:before {
+                    content: '🎖️ ';
+                }
+
+                .elimination-info {
+                    margin: 1rem 0;
+                    padding: 0.75rem;
+                    background: rgba(255, 23, 68, 0.1);
+                    border: 1px solid #ff1744;
+                    border-radius: 8px;
+                    text-align: center;
+                }
+
+                .elimination-round {
+                    font-weight: 700;
+                    color: #ff6b6b;
+                    margin-bottom: 0.25rem;
+                }
+
+                .elimination-reason {
+                    font-size: 0.8rem;
+                    color: #ffcccb;
+                    opacity: 0.9;
+                }
+
+                .player-actions {
+                    margin-top: 1rem;
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+
+                .action-btn-small {
+                    padding: 0.25rem 0.5rem;
+                    border: none;
+                    border-radius: 15px;
+                    font-size: 0.7rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                    font-weight: 600;
+                }
+
+                .action-btn-small.success {
+                    background: #4caf50;
+                    color: white;
+                }
+
+                .action-btn-small.success:hover {
+                    background: #45a049;
+                    transform: scale(1.05);
+                }
+
+                .action-btn-small.warning {
+                    background: #ff9800;
+                    color: white;
+                }
+
+                .action-btn-small.warning:hover {
+                    background: #f57c00;
+                    transform: scale(1.05);
+                }
+
+                .eliminate-btn {
+                    background: #ff1744;
+                    color: white;
+                    border: none;
+                    padding: 0.5rem 1rem;
+                    border-radius: 20px;
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin: 0.5rem auto 0;
+                }
+
+                .eliminate-btn:hover {
+                    background: #d50000;
+                    transform: scale(1.05);
+                }
+
+                .squid-game-footer {
+                    padding: 1.5rem 2rem;
+                    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+                    border-top: 2px solid #00ff41;
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                }
+
+                .action-btn {
+                    padding: 1rem 2rem;
+                    border-radius: 25px;
+                    border: 2px solid;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                .action-btn.primary {
+                    background: #00ff41;
+                    color: #000;
+                    border-color: #00ff41;
+                }
+
+                .action-btn.primary:hover {
+                    background: #00cc35;
+                    transform: scale(1.05);
+                }
+
+                .action-btn.secondary {
+                    background: transparent;
+                    color: #00ff41;
+                    border-color: #00ff41;
+                }
+
+                .action-btn.secondary:hover {
+                    background: #00ff41;
+                    color: #000;
+                }
+
+                .action-btn.danger {
+                    background: transparent;
+                    color: #ff1744;
+                    border-color: #ff1744;
+                }
+
+                .action-btn.danger:hover {
+                    background: #ff1744;
+                    color: white;
+                }
+
+                .action-btn.economic {
+                    background: transparent;
+                    color: #FFD700;
+                    border-color: #FFD700;
+                }
+
+                .action-btn.economic:hover {
+                    background: #FFD700;
+                    color: #000;
+                }
+
+                /* تجاوب الشاشات */
+                @media (max-width: 768px) {
+                    .squid-game-container {
+                        width: 98%;
+                        max-height: 95vh;
+                    }
+
+                    .squid-game-header {
+                        padding: 1rem;
+                        flex-direction: column;
+                        gap: 1rem;
+                    }
+
+                    .game-stats {
+                        gap: 1rem;
+                    }
+
+                    .players-grid {
+                        grid-template-columns: 1fr;
+                        padding: 1rem;
+                    }
+
+                    .squid-game-footer {
+                        flex-direction: column;
+                        gap: 0.5rem;
+                    }
+
+                    .action-btn {
+                        justify-content: center;
+                    }
+                }
+            `;
+
+            document.body.appendChild(style);
+            document.body.appendChild(modal);
+
+            // تأثيرات صوتية
+            setTimeout(() => playSound('cosmic-portal'), 100);
+            setTimeout(() => playSound('ai-notification'), 300);
+        }
+
+        function generatePlayersCards() {
+            if (!window.playersData || window.playersData.length === 0) {
+                return '<div style="color: white; text-align: center; grid-column: 1/-1;">لا توجد بيانات لاعبين</div>';
+            }
+
+            return window.playersData.map(player => `
+                <div class="player-card ${player.status}" data-player-id="${player.id}">
+                    <div class="player-number">${player.playerNumber}</div>
+                    <div class="player-status status-${player.status}">
+                        ${player.status === 'alive' ? 'حي' : 'مُستبعد'}
+                    </div>
+                    
+                    <div class="player-info">
+                        <div class="player-name">${player.name}</div>
+                        
+                        <div class="player-stats">
+                            <div class="stat">
+                                <span class="stat-number">${player.score}</span>
+                                <span class="stat-text">النقاط</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${player.level}</span>
+                                <span class="stat-text">المستوى</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${player.gamesWon}</span>
+                                <span class="stat-text">انتصارات</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${player.currentStreak || 0}</span>
+                                <span class="stat-text">سلسلة حالية</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${player.kingdomsCompleted || 0}</span>
+                                <span class="stat-text">ممالك مكتملة</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${Math.round((player.correctAnswers || 0) / (player.questionsAnswered || 1) * 100)}%</span>
+                                <span class="stat-text">دقة الإجابات</span>
+                            </div>
+                        </div>
+                        
+                        <div class="player-rank">
+                            <span class="rank-badge">${player.rank || 'مبتدئ'}</span>
+                        </div>
+                        
+                        ${player.status === 'eliminated' ? `
+                        <div class="elimination-info">
+                            <div class="elimination-round">الجولة ${player.eliminationRound || 'غير محدد'}</div>
+                            <div class="elimination-reason">${player.eliminationReason || 'سبب غير معروف'}</div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="player-achievements">
+                            ${player.achievements.filter(a => a.earned).map(achievement => 
+                                `<span class="achievement" title="${achievement.description || ''}">${achievement.icon} ${achievement.name}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        ${player.status === 'alive' && gameEconomy.gameActive ? `
+                        <div class="player-actions">
+                            <button class="action-btn-small success" onclick="addPlayerPoints('${player.id}', 50)" title="إضافة 50 نقطة">
+                                <i class="fas fa-plus"></i> +50
+                            </button>
+                            <button class="action-btn-small success" onclick="recordVictoryFromCard('${player.id}')" title="تسجيل انتصار">
+                                <i class="fas fa-trophy"></i> انتصار
+                            </button>
+                            <button class="action-btn-small warning" onclick="recordDefeatFromCard('${player.id}')" title="تسجيل خسارة">
+                                <i class="fas fa-minus"></i> خسارة
+                            </button>
+                            <button class="eliminate-btn" onclick="eliminatePlayerFromCard('${player.id}')">
+                                <i class="fas fa-times"></i>
+                                استبعاد
+                            </button>
+                        </div>
+                        ` : player.status === 'alive' ? `
+                        <div class="player-actions">
+                            <button class="action-btn-small success" onclick="addPlayerPoints('${player.id}', 50)" title="إضافة 50 نقطة">
+                                <i class="fas fa-plus"></i> +50
+                            </button>
+                            <button class="action-btn-small success" onclick="recordVictoryFromCard('${player.id}')" title="تسجيل انتصار">
+                                <i class="fas fa-trophy"></i> انتصار
+                            </button>
+                            <button class="action-btn-small warning" onclick="recordDefeatFromCard('${player.id}')" title="تسجيل خسارة">
+                                <i class="fas fa-minus"></i> خسارة
+                            </button>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function closeSquidGameModal() {
+            playClickSound();
+            const modal = document.getElementById('squidGameModal');
+            if (modal) {
+                modal.style.animation = 'modalDisappear 0.3s ease-in';
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        function startSquidGame() {
+            playSuccessSound();
+            
+            // تحقق من بدء الاقتصاد
+            if (!gameEconomy.gameActive) {
+                if (initializeGameEconomy()) {
+                    showNotification('🎮 تم بدء اللعبة بنجاح! نظام الجوائز مفعل الآن.', 'success');
+                } else {
+                    return;
+                }
+            } else {
+                showNotification('🎮 اللعبة نشطة بالفعل!', 'info');
+            }
+            
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#00ff41', '#ff1744', '#1976d2', '#FFD700']
+                });
+            }
+            
+            setTimeout(() => {
+                updateEconomyDisplay();
+                showNotification(`💰 إجمالي الجائزة: ${gameEconomy.totalPrize} ريال عماني\n🏰 اختر مملكة لبدء التحديات!`, 'info');
+            }, 2000);
+        }
+
+        function showEconomyPanel() {
+            playClickSound();
+            
+            // إنشاء نافذة نظام الجوائز
+            const economyModal = document.createElement('div');
+            economyModal.id = 'economyModal';
+            economyModal.innerHTML = `
+                <div class="economy-backdrop" onclick="closeEconomyModal()"></div>
+                <div class="economy-container">
+                    <div class="economy-header">
+                        <h2>💰 نظام الجوائز والاقتصاد</h2>
+                        <button class="close-btn" onclick="closeEconomyModal()">✕</button>
+                    </div>
+                    
+                    <div class="economy-content">
+                        ${generateEconomyHTML()}
+                        
+                        <div class="prize-history">
+                            <h3>📜 تاريخ الجوائز</h3>
+                            <div class="history-list">
+                                ${gameEconomy.prizeHistory.map(entry => `
+                                    <div class="history-entry">
+                                        <div class="history-action">${entry.action}</div>
+                                        <div class="history-details">
+                                            ${entry.reason ? `<span>السبب: ${entry.reason}</span>` : ''}
+                                            ${entry.playersRemaining !== undefined ? `<span>اللاعبون المتبقون: ${entry.playersRemaining}</span>` : ''}
+                                            ${entry.prizeIncrease ? `<span class="prize-increase">+${entry.prizeIncrease} ر.ع</span>` : ''}
+                                            ${entry.newPrize !== undefined ? `<span class="total-prize">المجموع: ${entry.newPrize} ر.ع</span>` : ''}
+                                        </div>
+                                        <div class="history-time">${entry.timestamp}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="economy-footer">
+                        <button class="action-btn economic" onclick="exportEconomyData()">
+                            <i class="fas fa-download"></i>
+                            تصدير البيانات
+                        </button>
+                        <button class="action-btn secondary" onclick="resetAllPlayersToAliveAction()">
+                            <i class="fas fa-heart"></i>
+                            إحياء جميع اللاعبين
+                        </button>
+                        <button class="action-btn danger" onclick="resetGameEconomy()">
+                            <i class="fas fa-trash"></i>
+                            إعادة تعيين الاقتصاد
+                        </button>
+                        <button class="action-btn secondary" onclick="closeEconomyModal()">
+                            <i class="fas fa-times"></i>
+                            إغلاق
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // إضافة الستايل
+            const economyStyle = document.createElement('style');
+            economyStyle.textContent = `
+                #economyModal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 10001;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: var(--arabic-font);
+                }
+
+                .economy-backdrop {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.95);
+                    backdrop-filter: blur(10px);
+                }
+
+                .economy-container {
+                    position: relative;
+                    width: 90%;
+                    max-width: 1000px;
+                    max-height: 90vh;
+                    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                    border-radius: 20px;
+                    border: 3px solid #FFD700;
+                    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+                    overflow: hidden;
+                    animation: modalAppear 0.5s ease-out;
+                }
+
+                .economy-header {
+                    padding: 2rem;
+                    background: linear-gradient(135deg, #FFD700, #FFA500);
+                    color: #000;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-weight: 900;
+                }
+
+                .economy-content {
+                    padding: 2rem;
+                    max-height: 60vh;
+                    overflow-y: auto;
+                }
+
+                .economy-panel {
+                    background: #2a2a2a;
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    margin-bottom: 2rem;
+                }
+
+                .economy-header h3 {
+                    color: #FFD700;
+                    margin-bottom: 1rem;
+                }
+
+                .game-status {
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                }
+
+                .economy-stats {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 1rem;
+                    margin: 1.5rem 0;
+                }
+
+                .stat-box {
+                    background: rgba(0, 0, 0, 0.3);
+                    padding: 1rem;
+                    border-radius: 10px;
+                    text-align: center;
+                    border: 1px solid #333;
+                }
+
+                .stat-number {
+                    font-size: 2rem;
+                    font-weight: 900;
+                    color: #FFD700;
+                    display: block;
+                }
+
+                .stat-label {
+                    color: white;
+                    font-size: 0.9rem;
+                    margin-top: 0.5rem;
+                }
+
+                .economy-rules {
+                    color: white;
+                }
+
+                .economy-rules ul {
+                    list-style: none;
+                    padding: 0;
+                }
+
+                .economy-rules li {
+                    padding: 0.5rem 0;
+                    border-bottom: 1px solid #333;
+                }
+
+                .prize-history {
+                    color: white;
+                }
+
+                .history-list {
+                    max-height: 300px;
+                    overflow-y: auto;
+                }
+
+                .history-entry {
+                    background: rgba(0, 0, 0, 0.3);
+                    margin: 1rem 0;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    border-left: 4px solid #FFD700;
+                }
+
+                .history-action {
+                    font-weight: 700;
+                    color: #FFD700;
+                    margin-bottom: 0.5rem;
+                }
+
+                .history-details {
+                    display: flex;
+                    gap: 1rem;
+                    flex-wrap: wrap;
+                    margin-bottom: 0.5rem;
+                }
+
+                .history-details span {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                }
+
+                .prize-increase {
+                    color: #00ff41 !important;
+                    font-weight: 700;
+                }
+
+                .total-prize {
+                    color: #FFD700 !important;
+                    font-weight: 700;
+                }
+
+                .history-time {
+                    font-size: 0.7rem;
+                    opacity: 0.7;
+                    text-align: left;
+                }
+
+                .economy-footer {
+                    padding: 1.5rem 2rem;
+                    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+                    border-top: 2px solid #FFD700;
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                }
+            `;
+
+            document.body.appendChild(economyStyle);
+            document.body.appendChild(economyModal);
+
+            playSound('cosmic-portal');
+        }
+
+        function closeEconomyModal() {
+            playClickSound();
+            const modal = document.getElementById('economyModal');
+            if (modal) {
+                modal.style.animation = 'modalDisappear 0.3s ease-in';
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        function exportEconomyData() {
+            playClickSound();
+            
+            const exportData = {
+                gameEconomy: gameEconomy,
+                exportTime: new Date().toLocaleString('ar-EG'),
+                classData: classData,
+                totalStudents: studentsData.length,
+                playersData: window.playersData
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `لعبة-الممالك-الاقتصاد-${new Date().toLocaleDateString('ar-EG').replace(/\//g, '-')}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+
+            showNotification('تم تصدير بيانات الاقتصاد بنجاح!', 'success');
+        }
+
+        function resetAllPlayersToAliveAction() {
+            playClickSound();
+            
+            if (confirm('هل تريد جعل جميع اللاعبين أحياء؟ هذا سيلغي جميع حالات الاستبعاد.')) {
+                resetAllPlayersToAlive();
+                
+                // تحديث العرض
+                updateEconomyDisplay();
+                
+                // إذا كانت نافذة البطاقات مفتوحة، حدثها
+                const playersGrid = document.getElementById('playersGrid');
+                if (playersGrid) {
+                    playersGrid.innerHTML = generatePlayersCards();
+                }
+                
+                // تحديث إحصائيات اللعبة
+                if (window.playersData) {
+                    gameEconomy.playersAlive = window.playersData.length;
+                    gameEconomy.playersEliminated = 0;
+                    saveGameEconomy();
+                }
+                
+                showNotification('تم إحياء جميع اللاعبين بنجاح!', 'success');
+                playSound('achievement-unlock');
+                
+                setTimeout(() => {
+                    closeEconomyModal();
+                }, 1500);
+            }
+        }
+
+        function resetPlayersStats() {
+            playClickSound();
+            
+            if (confirm('هل تريد إعادة تعيين إحصائيات جميع اللاعبين؟')) {
+                createPlayersData(); // إعادة إنشاء البيانات
+                
+                // تحديث العرض
+                const playersGrid = document.getElementById('playersGrid');
+                if (playersGrid) {
+                    playersGrid.innerHTML = generatePlayersCards();
+                }
+                
+                showNotification('تم إعادة تعيين إحصائيات اللاعبين بنجاح!', 'success');
+                playSound('achievement-unlock');
+            }
+        }
+
+        function showSquidGameWelcome() {
+            if (!classData || !studentsData || studentsData.length === 0 || welcomeShown) return;
+            
+            welcomeShown = true; // منع التكرار
+            
+            const welcomeMessage = `� مرحباً بكم في مركز الممالك الذكية!
+
+📚 الصف: ${classData}
+� عدد اللاعبين: ${studentsData.length}
+🎯 مستعدون للتحدي؟
+
+انقر على زر "الطلاب" لرؤية بطاقات اللاعبين!`;
+            
+            showNotification(welcomeMessage, 'success', 6000);
+            
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#00ff41', '#ff1744', '#1976d2']
+                });
+            }
+        }
+
+        function resetWelcomeState() {
+            welcomeShown = false;
+        }
+
+        function closeWelcomeModal() {
+            playClickSound();
+            // This function exists for compatibility
+        }
+
+        function startAdventure() {
+            playSuccessSound();
+            showNotification('اختر مملكة لبدء رحلتك التعليمية! 🏰', 'success');
+            
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 150,
+                    spread: 120,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#FF6B35', '#9B59B6']
+                });
+            }
+        }
+
+        // إضافة keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case 'r':
+                        e.preventDefault();
+                        returnToChallengesUltimate();
+                        break;
+                    case 'h':
+                        e.preventDefault();
+                        goHome();
+                        break;
+                    case 'e':
+                        e.preventDefault();
+                        exportData();
+                        break;
+                    case 'd':
+                        e.preventDefault();
+                        showDiagnosticInfo();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        showSquidGamePlayersView();
+                        break;
+                }
+            } else if (e.key === 'F9') {
+                e.preventDefault();
+                showDiagnosticInfo();
+            } else if (e.key === 'F10') {
+                e.preventDefault();
+                showSquidGamePlayersView();
+            }
+        });
+
+        // ===== ADDITIONAL STYLES =====
+        function addSquidGameStyles() {
+            const additionalStyle = document.createElement('style');
+            additionalStyle.textContent = `
+                @keyframes modalDisappear {
+                    from {
+                        opacity: 1;
+                        transform: scale(1) translateY(0);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: scale(0.8) translateY(50px);
+                    }
+                }
+
+                .player-card {
+                    cursor: pointer;
+                }
+
+                .player-card:hover .player-number {
+                    animation: pulse 1s infinite;
+                }
+
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                }
+
+                .shape:hover {
+                    animation: shapeRotate 0.5s ease;
+                }
+
+                @keyframes shapeRotate {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+
+                /* إضافة تأثيرات متقدمة للبطاقات */
+                .player-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    pointer-events: none;
+                }
+
+                .player-card:hover::before {
+                    opacity: 1;
+                }
+
+                .player-card.eliminated::before {
+                    background: linear-gradient(45deg, transparent, rgba(255, 23, 68, 0.1), transparent);
+                }
+
+                /* تحسين الـ scrollbar */
+                .players-grid::-webkit-scrollbar {
+                    width: 8px;
+                }
+
+                .players-grid::-webkit-scrollbar-track {
+                    background: #1a1a1a;
+                }
+
+                .players-grid::-webkit-scrollbar-thumb {
+                    background: #00ff41;
+                    border-radius: 4px;
+                }
+
+                .players-grid::-webkit-scrollbar-thumb:hover {
+                    background: #00cc35;
+                }
+            `;
+            document.head.appendChild(additionalStyle);
+        }
+
+        // ===== ENHANCED SOUND SYSTEM =====
+        function playSquidGameSound(soundName) {
+            const soundMap = {
+                'card-flip': 'cosmic-click',
+                'player-select': 'crystal-ping',
+                'elimination': 'battle-victory',
+                'status-change': 'notification-pop'
+            };
+            
+            const actualSound = soundMap[soundName] || soundName;
+            playSound(actualSound);
+        }
+
+        // ===== PLAYER INTERACTION FUNCTIONS =====
+        function initializePlayerCardInteractions() {
+            // إضافة تفاعل لبطاقات اللاعبين
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.player-card')) {
+                    const playerCard = e.target.closest('.player-card');
+                    const playerId = playerCard.dataset.playerId;
+                    
+                    if (playerId) {
+                        playSquidGameSound('player-select');
+                        showPlayerDetails(playerId);
+                    }
+                }
+            });
+        }
+
+        function addPlayerPoints(playerId, points) {
+            playClickSound();
+            
+            if (updatePlayerScore(parseInt(playerId), points, 'مكافأة من المعلم')) {
+                // تحديث العرض
+                refreshPlayerCard(playerId);
+                showNotification(`تم إضافة ${points} نقطة!`, 'success', 2000);
+                playSound('crystal-bonus');
+            }
+        }
+
+        function recordVictoryFromCard(playerId) {
+            playClickSound();
+            
+            if (recordVictory(parseInt(playerId), 'نشاط في الفصل')) {
+                // تحديث العرض
+                refreshPlayerCard(playerId);
+                showNotification('تم تسجيل انتصار!', 'success', 2000);
+                playSound('win');
+            }
+        }
+
+        function recordDefeatFromCard(playerId) {
+            playClickSound();
+            
+            if (recordDefeat(parseInt(playerId), 'نشاط في الفصل')) {
+                // تحديث العرض
+                refreshPlayerCard(playerId);
+                showNotification('تم تسجيل خسارة', 'info', 2000);
+                playSound('wrong_answer');
+            }
+        }
+
+        function refreshPlayerCard(playerId) {
+            const playersGrid = document.getElementById('playersGrid');
+            if (playersGrid) {
+                playersGrid.innerHTML = generatePlayersCards();
+            }
+            
+            // تحديث إحصائيات الرأس أيضاً
+            updateEconomyDisplay();
+        }
+
+        function showPlayerDetails(playerId) {
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return;
+
+            const accuracy = player.questionsAnswered > 0 ? 
+                Math.round((player.correctAnswers / player.questionsAnswered) * 100) : 0;
+
+            const detailsMessage = `🎮 تفاصيل اللاعب ${player.playerNumber}
+
+👤 الاسم: ${player.name}
+�️ الرتبة: ${player.rank || 'مبتدئ'}
+�🏆 النقاط: ${player.score}
+📊 المستوى: ${player.level}
+⚡ نقاط الخبرة: ${player.experiencePoints || 0}
+
+📈 الإحصائيات:
+✅ الانتصارات: ${player.gamesWon}
+❌ الخسائر: ${player.gamesLost}
+� السلسلة الحالية: ${player.currentStreak || 0}
+🏅 أفضل سلسلة: ${player.bestStreak || 0}
+
+🎯 الأسئلة:
+📝 إجمالي الأسئلة: ${player.questionsAnswered || 0}
+✔️ الإجابات الصحيحة: ${player.correctAnswers || 0}
+📊 دقة الإجابات: ${accuracy}%
+
+🏰 التقدم:
+🗺️ الممالك المكتملة: ${player.kingdomsCompleted || 0}
+�💰 المكاسب: ${player.totalEarnings || 0} ريال عماني
+⚡ الحالة: ${player.status === 'alive' ? 'حي ونشط' : 'مُستبعد'}
+
+🏅 الإنجازات:
+${player.achievements.filter(a => a.earned).map(a => `${a.icon} ${a.name}`).join('\n')}`;
+
+            showNotification(detailsMessage, 'info', 8000);
+        }
+
+        function eliminatePlayerFromCard(playerId) {
+            playClickSound();
+            
+            const player = window.playersData.find(p => p.id === playerId);
+            if (!player) return;
+
+            const reasons = [
+                'خسر في التحدي',
+                'لم يجب على السؤال',
+                'انتهك القواعد',
+                'وقت منتهي',
+                'خطأ في الإجابة'
+            ];
+
+            // اختيار سبب عشوائي أو يمكن إضافة نافذة اختيار
+            const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+
+            if (confirm(`هل تريد استبعاد ${player.name}؟\nالسبب: ${randomReason}`)) {
+                if (eliminatePlayer(playerId, randomReason)) {
+                    // تحديث العرض
+                    const playersGrid = document.getElementById('playersGrid');
+                    if (playersGrid) {
+                        playersGrid.innerHTML = generatePlayersCards();
+                    }
+                    
+                    // تحديث إحصائيات الرأس
+                    const aliveCount = document.querySelector('.game-stats .stat-item:nth-child(3) .stat-value');
+                    if (aliveCount) {
+                        aliveCount.textContent = window.playersData.filter(p => p.status === 'alive').length;
+                    }
+                    
+                    const prizeDisplay = document.querySelector('.game-stats .stat-item:nth-child(4) .stat-value');
+                    if (prizeDisplay) {
+                        prizeDisplay.textContent = `${gameEconomy.totalPrize} ر.ع`;
+                    }
+                }
+            }
+        }
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            addSquidGameStyles();
+            initializePlayerCardInteractions();
+        });
+
+        console.log('🏰 مركز الممالك الذكية جاهز للاستخدام!');
+        console.log('⌨️ اختصارات لوحة المفاتيح:');
+        console.log('   Ctrl+R: تحديث البيانات');
+        console.log('   Ctrl+H: العودة للرئيسية');
+        console.log('   Ctrl+E: تصدير البيانات');
+        console.log('   Ctrl+D أو F9: تشخيص البيانات');
+        console.log('   Ctrl+S أو F10: عرض بطاقات اللاعبين');
+    </script>
+
+    <!-- Responsive Helper Script -->
+    <script src="../assets/js/responsive-helper.js"></script>
+</body>
+</html>
