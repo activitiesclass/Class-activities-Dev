@@ -2348,15 +2348,12 @@
           currentUser = result.user;
           isLoggedIn = true;
           loginAttempts = 0;
-          
           showLoginMessage(result.message, 'success');
-          
-          // إبقاء نافذة تسجيل الدخول وعدم إغلاقها تلقائيًا
-          // يمكن للمستخدم إغلاقها يدويًا عبر زر الإغلاق
-          showSettingsModal();
-          
+          setTimeout(() => {
+            hideLoginModal();
+            showSettingsModal();
+          }, 1200);
           console.log('✅ تم تسجيل الدخول بنجاح:', currentUser.fullName);
-          
         } else {
           loginAttempts++;
           showLoginMessage(result.message);
