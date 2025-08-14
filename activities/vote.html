@@ -2765,18 +2765,15 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       `;
       voterCard.appendChild(icon);
 
-      // إزالة البطاقة بعد التصويت
+      // إزالة البطاقة بعد التصويت فوراً مع تأثير بصري سريع
+      voterCard.style.transition = 'all 0.5s ease';
+      voterCard.style.opacity = '0';
+      voterCard.style.transform = 'translateX(-100%)';
       setTimeout(() => {
-        voterCard.style.transition = 'all 0.5s ease';
-        voterCard.style.opacity = '0';
-        voterCard.style.transform = 'translateX(-100%)';
-        
-        setTimeout(() => {
-          if (voterCard.parentNode) {
-            voterCard.parentNode.removeChild(voterCard);
-          }
-        }, 500);
-      }, 2000);
+        if (voterCard.parentNode) {
+          voterCard.parentNode.removeChild(voterCard);
+        }
+      }, 500);
 
       voted.add(voterName);
       
