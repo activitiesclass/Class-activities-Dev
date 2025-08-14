@@ -3278,18 +3278,6 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       return true;
     }
 
-    // ربط زر فرز النتائج بالتحقق
-    window.addEventListener('DOMContentLoaded', function() {
-      const showResultsBtn = document.getElementById('showResultsBtn');
-      if (showResultsBtn) {
-        showResultsBtn.onclick = function() {
-          if (checkAllVoted()) {
-            completeVoting();
-          }
-        };
-      }
-    });
-
     // تهيئة النشاط المحسن عند تحميل الصفحة
     window.onload = function() {
       // تهيئة الأنظمة
