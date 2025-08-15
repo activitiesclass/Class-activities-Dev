@@ -797,7 +797,7 @@
 
     /* إحصائيات سريعة */
     .stats-row {
-  /* ...existing code... */
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: var(--spacing-sm);
       margin-bottom: var(--spacing-md);
@@ -1939,6 +1939,7 @@
         <button class="action-button save-btn" id="saveSettings" style="display: none;">
           � حفظ الإعدادات
         </button>
+        <button id="openAbsenceDashboard" class="settings-btn">📋 لوحة إدارة إدارة الغياب</button>
         <button class="close-button" id="closeSettings">
           إغلاق
         </button>
@@ -2820,6 +2821,14 @@
           addClickEffect(e.target);
           playSound(elements.clickSound);
           saveSystemSettings();
+        });
+      }
+
+      // زر لوحة إدارة الغياب
+      const openAbsenceDashboard = document.getElementById('openAbsenceDashboard');
+      if (openAbsenceDashboard) {
+        openAbsenceDashboard.addEventListener('click', function() {
+          window.open('absence-dashboard.html', '_blank');
         });
       }
 
