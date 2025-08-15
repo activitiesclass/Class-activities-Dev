@@ -149,6 +149,40 @@
       .filters { flex-direction: column; align-items: stretch; }
       th, td { font-size: 0.95rem; }
     }
+    /* أضف CSS للصفحات والتظليل */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 0 0 0;
+    }
+    .pagination button {
+      background: #00796B;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .pagination button[disabled] {
+      background: #b2dfdb;
+      color: #eee;
+      cursor: not-allowed;
+    }
+    .pagination span {
+      font-size: 1rem;
+      color: #00796B;
+      margin: 0 6px;
+    }
+    mark {
+      background: #ffe082;
+      color: #222;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
   </style>
   <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -181,6 +215,8 @@
     const SHEETDB_URL = 'https://sheetdb.io/api/v1/njazp2y4wmgej';
     let allData = [];
     let filteredData = [];
+    let currentPage = 1;
+    const rowsPerPage = 25;
 
     // جلب البيانات من SheetDB
     async function fetchAbsenceData() {
@@ -205,6 +241,13 @@
       });
     }
 
+    // تمييز النص المطابق في نتائج البحث
+    function highlightMatch(text, search) {
+      if (!search) return text;
+      const re = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(re, '<mark>$1</mark>');
+    }
+
     // تطبيق الفلاتر
     function applyFilters() {
       const search = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -223,6 +266,7 @@
         }
         return match;
       });
+      currentPage = 1;
       renderTable();
       renderStats();
     }
@@ -234,15 +278,38 @@
         container.innerHTML = '<div class="no-data">لا توجد بيانات مطابقة</div>';
         return;
       }
+      const search = document.getElementById('searchInput').value.trim();
+      const startIdx = (currentPage - 1) * rowsPerPage;
+      const endIdx = Math.min(startIdx + rowsPerPage, filteredData.length);
       let html = `<table><thead><tr>
         <th>الاسم</th><th>الصف</th><th>التاريخ</th><th>الوقت</th>
       </tr></thead><tbody>`;
-      filteredData.forEach(row => {
-        html += `<tr><td>${row.name || ''}</td><td>${row.class || ''}</td><td>${row.date || ''}</td><td>${row.time || ''}</td></tr>`;
-      });
+      for (let i = startIdx; i < endIdx; i++) {
+        const row = filteredData[i];
+        html += `<tr><td>${highlightMatch(row.name || '', search)}</td><td>${highlightMatch(row.class || '', search)}</td><td>${row.date || ''}</td><td>${row.time || ''}</td></tr>`;
+      }
       html += '</tbody></table>';
+      // أزرار التنقل
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      if (totalPages > 1) {
+        html += '<div class="pagination">';
+        html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(1)">الأولى</button>`;
+        html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="gotoPage(${currentPage - 1})">السابق</button>`;
+        html += `<span>صفحة ${currentPage} من ${totalPages}</span>`;
+        html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${currentPage + 1})">التالي</button>`;
+        html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="gotoPage(${totalPages})">الأخيرة</button>`;
+        html += '</div>';
+      }
       container.innerHTML = html;
     }
+
+    window.gotoPage = function(page) {
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderTable();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    };
 
     // عرض الإحصائيات
     function renderStats() {
