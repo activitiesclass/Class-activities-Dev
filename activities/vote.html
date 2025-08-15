@@ -2562,6 +2562,11 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       // عند التأكيد، احرص على أن voterList = جميع الطلاب عدا المرشحين
       const confirmBtn = document.getElementById("confirmCandidatesBtn");
       confirmBtn.onclick = () => {
+        const maxAllowed = Math.floor(fullList.length / 2);
+        if (mode === 'select-group' && selectedManual.length > maxAllowed) {
+          notifications.show(`لا يمكن اختيار أكثر من نصف الطلاب كمرشحين! الحد الأقصى: ${maxAllowed} مرشح.`, 'error', 4000);
+          return;
+        }
         candidateList = [...selectedManual];
         voterList = fullList.filter(name => !candidateList.includes(name));
         renderVotingUI();
