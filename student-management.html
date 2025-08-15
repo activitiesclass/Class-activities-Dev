@@ -1679,11 +1679,14 @@ function sendAbsenceToGoogleSheets() {
       elements.exportBtn.addEventListener('click', exportData);
 
       // زر الغياب: يعمل فقط إذا كان المدير
+
       elements.absentBtn.addEventListener('click', function() {
-        if (!isAdmin) {
-          showError('يجب تسجيل الدخول كمدير النظام من الصفحة الرئيسية (زر الإعدادات)');
-        } else {
+        const pass = prompt('الرجاء إدخال الرقم السري لتسجيل الغياب:');
+        if (pass === null) return; // إلغاء
+        if (pass === 'Demo1234') {
           sendAbsenceToGoogleSheets();
+        } else {
+          showError('الرقم السري غير صحيح!');
         }
       });
 
