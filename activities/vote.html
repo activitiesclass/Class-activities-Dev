@@ -2465,25 +2465,20 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
 
       if (mode === 'single') {
         const index = Math.floor(Math.random() * fullList.length);
-        candidateList = [fullList.splice(index, 1)[0]];
-        voterList = fullList;
-        
-        // تأثير الكشف التدريجي
+        candidateList = [fullList[index]];
+        voterList = fullList.filter(name => name !== candidateList[0]);
         setTimeout(() => {
           renderVotingUI();
           notifications.show(`تم اختيار ${candidateList[0]} كمرشح واحد 🎯`, 'success');
         }, 500);
-        
       } else if (mode === 'group') {
         const shuffled = fullList.sort(() => 0.5 - Math.random());
         candidateList = shuffled.slice(0, 3);
-        voterList = shuffled.slice(3);
-        
+        voterList = shuffled.filter(name => !candidateList.includes(name));
         setTimeout(() => {
           renderVotingUI();
           notifications.show(`تم اختيار ${candidateList.length} مرشحين عشوائياً 👥`, 'success');
         }, 500);
-        
       } else {
         renderManualSelection(fullList, mode);
         notifications.show('اختر المرشحين يدوياً من القائمة 🎯', 'info');
@@ -2563,6 +2558,14 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       const maxCandidates = mode === 'select-single' ? 1 : Math.floor(fullList.length / 2);
       visualEffects.typewriterEffect(display.querySelector('p'), 
         `اختر ${mode === 'select-single' ? 'مرشحاً واحداً' : `من 1 إلى ${maxCandidates} مرشحين`} من القائمة أدناه`);
+
+      // عند التأكيد، احرص على أن voterList = جميع الطلاب عدا المرشحين
+      const confirmBtn = document.getElementById("confirmCandidatesBtn");
+      confirmBtn.onclick = () => {
+        candidateList = [...selectedManual];
+        voterList = fullList.filter(name => !candidateList.includes(name));
+        renderVotingUI();
+      };
     }
 
     // عرض واجهة التصويت المحسنة
