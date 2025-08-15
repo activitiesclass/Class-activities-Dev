@@ -1,3 +1,44 @@
+    // حفظ وتصدير البيانات المعدلة
+    function saveAndExportData() {
+      // تصدير البيانات المعدلة إلى ملف studentData.json
+      const jsonContent = JSON.stringify(studentsData, null, 2);
+      const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'studentData.json');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      playSound(elements.clickSound);
+      showUpdateMessage();
+      filterStudents();
+    }
+
+    // رسالة تفاعلية بعد التحديث
+    function showUpdateMessage() {
+      const msgDiv = document.createElement('div');
+      msgDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--info-color);
+        color: white;
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius);
+        z-index: 3000;
+        box-shadow: 0 8px 32px var(--shadow-dark);
+        font-size: 1.2rem;
+        text-align: center;
+      `;
+      msgDiv.textContent = 'تم تحديث بيانات الطلاب بنجاح! يرجى إرسال الملف للمطور لحفظ التغييرات.';
+      document.body.appendChild(msgDiv);
+      setTimeout(() => {
+        document.body.removeChild(msgDiv);
+      }, 5000);
+    }
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -1219,9 +1260,9 @@
             <span>✗</span>
             <span class="hide-mobile">إلغاء التحديد</span>
           </button>
-          <button class="btn btn-info btn-responsive" id="exportBtn">
-            <span>📊</span>
-            <span class="hide-mobile">تصدير</span>
+          <button class="btn btn-info btn-responsive" id="editExportBtn">
+            <span id="editExportIcon">�️</span>
+            <span class="hide-mobile" id="editExportText">تحديث وتصدير</span>
           </button>
         </div>
       </div>
@@ -1286,7 +1327,10 @@
       search: '',
       grade: '',
       class: ''
-    };
+  };
+
+  // وضع التعديل
+  let isEditMode = false;
 
     // عناصر DOM
     const elements = {
@@ -1301,7 +1345,9 @@
       studentsCount: document.getElementById('studentsCount'),
       selectAllBtn: document.getElementById('selectAllBtn'),
       clearSelectionBtn: document.getElementById('clearSelectionBtn'),
-      exportBtn: document.getElementById('exportBtn'),
+  editExportBtn: document.getElementById('editExportBtn'),
+  editExportIcon: document.getElementById('editExportIcon'),
+  editExportText: document.getElementById('editExportText'),
       homeBtn: document.getElementById('homeBtn'),
       activitiesBtn: document.getElementById('activitiesBtn'),
       fullscreenBtn: document.getElementById('fullscreenBtn'),
@@ -1453,40 +1499,105 @@
     function renderStudents() {
       const grid = elements.studentsGrid;
       const emptyState = elements.emptyState;
-      
+
       if (filteredStudents.length === 0) {
         grid.innerHTML = '';
         emptyState.style.display = 'block';
         return;
       }
-      
+
       emptyState.style.display = 'none';
-      
-      grid.innerHTML = filteredStudents.map(student => `
-        <div class="student-card ${selectedStudents.has(student.id) ? 'selected' : ''}" 
-             data-id="${student.id}" 
-             tabindex="0" 
-             role="button"
-             aria-label="طالب: ${student.name}">
-          <input type="checkbox" class="student-checkbox" 
-                 ${selectedStudents.has(student.id) ? 'checked' : ''}>
-          <div class="student-name">${student.name}</div>
-          <div class="student-class">
-            <span>🏫</span>
-            <span>${student.class}</span>
-          </div>
-        </div>
-      `).join('');
-      
-      // إضافة مستمعي الأحداث للطلاب
-      grid.querySelectorAll('.student-card').forEach(card => {
-        card.addEventListener('click', handleStudentClick);
-        card.addEventListener('keydown', handleStudentKeydown);
-      });
-      
-      // تأثير التلاشي
+
+      grid.innerHTML = filteredStudents.map((student, idx) => {
+        if (isEditMode) {
+          return `
+            <div class="student-card" data-id="${student.id}" tabindex="0" role="form">
+              <input type="text" class="student-edit-name" value="${student.name}" style="width: 70%; margin-bottom: 8px;">
+              <select class="student-edit-class" style="width: 25%; margin-bottom: 8px;">
+                ${Object.keys(studentsData).map(className => `<option value="${className}" ${student.class === className ? 'selected' : ''}>${className}</option>`).join('')}
+              </select>
+              <button class="student-save-btn" title="حفظ" style="margin-left: 4px;">💾</button>
+              <button class="student-delete-btn" title="حذف" style="margin-left: 4px;">🗑️</button>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="student-card ${selectedStudents.has(student.id) ? 'selected' : ''}" 
+                 data-id="${student.id}" 
+                 tabindex="0" 
+                 role="button"
+                 aria-label="طالب: ${student.name}">
+              <input type="checkbox" class="student-checkbox" 
+                     ${selectedStudents.has(student.id) ? 'checked' : ''}>
+              <div class="student-name">${student.name}</div>
+              <div class="student-class">
+                <span>🏫</span>
+                <span>${student.class}</span>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+
+      if (isEditMode) {
+        grid.querySelectorAll('.student-save-btn').forEach((btn, idx) => {
+          btn.addEventListener('click', function() {
+            saveStudentEdit(idx);
+          });
+        });
+        grid.querySelectorAll('.student-delete-btn').forEach((btn, idx) => {
+          btn.addEventListener('click', function() {
+            deleteStudent(idx);
+          });
+        });
+      } else {
+        grid.querySelectorAll('.student-card').forEach(card => {
+          card.addEventListener('click', handleStudentClick);
+          card.addEventListener('keydown', handleStudentKeydown);
+        });
+      }
+
       grid.classList.add('fade-in');
       setTimeout(() => grid.classList.remove('fade-in'), 500);
+    // تفعيل وضع التعديل
+    function enableEditMode() {
+      renderStudents();
+    }
+
+    // حفظ تعديل طالب
+    function saveStudentEdit(idx) {
+      const grid = elements.studentsGrid;
+      const nameInput = grid.querySelectorAll('.student-edit-name')[idx];
+      const classSelect = grid.querySelectorAll('.student-edit-class')[idx];
+      const student = filteredStudents[idx];
+      const newName = nameInput.value.trim();
+      const newClass = classSelect.value;
+      if (!newName) {
+        alert('يجب إدخال اسم الطالب');
+        return;
+      }
+      // حذف الطالب من الشعبة القديمة
+      const oldClassArr = studentsData[student.class];
+      const oldIdx = oldClassArr.indexOf(student.name);
+      if (oldIdx !== -1) {
+        oldClassArr.splice(oldIdx, 1);
+      }
+      // إضافة الطالب للشعبة الجديدة
+      if (!studentsData[newClass]) studentsData[newClass] = [];
+      studentsData[newClass].push(newName);
+      filterStudents();
+    }
+
+    // حذف طالب
+    function deleteStudent(idx) {
+      const student = filteredStudents[idx];
+      const classArr = studentsData[student.class];
+      const sIdx = classArr.indexOf(student.name);
+      if (sIdx !== -1) {
+        classArr.splice(sIdx, 1);
+      }
+      filterStudents();
+    }
     }
 
     // معالجة النقر على الطالب
@@ -1614,7 +1725,19 @@
       // أزرار الأعمال
       elements.selectAllBtn.addEventListener('click', selectAll);
       elements.clearSelectionBtn.addEventListener('click', clearSelection);
-      elements.exportBtn.addEventListener('click', exportData);
+    elements.editExportBtn.addEventListener('click', () => {
+      if (!isEditMode) {
+        isEditMode = true;
+        elements.editExportIcon.textContent = '💾';
+        elements.editExportText.textContent = 'حفظ وتصدير';
+        enableEditMode();
+      } else {
+        isEditMode = false;
+        elements.editExportIcon.textContent = '🛠️';
+        elements.editExportText.textContent = 'تحديث وتصدير';
+        saveAndExportData();
+      }
+    });
       
       // أزرار التنقل
       elements.homeBtn.addEventListener('click', () => {
