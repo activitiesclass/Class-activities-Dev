@@ -1223,7 +1223,7 @@
             <span>💾</span>
             <span class="hide-mobile">تصدير</span>
           </button>
-          <button class="btn btn-warning btn-responsive" id="absentBtn" disabled>
+          <button class="btn btn-warning btn-responsive" id="absentBtn">
             <span>🚫</span>
             <span class="hide-mobile">تسجيل الغياب</span>
           </button>
@@ -1634,16 +1634,7 @@ function sendAbsenceToGoogleSheets() {
   });
 }
 
-    // تفعيل زر الغياب إذا كان المدير مسجلاً
-    function updateAbsentBtnState() {
-      if (isAdmin) {
-        elements.absentBtn.disabled = false;
-        elements.absentBtn.title = '';
-      } else {
-        elements.absentBtn.disabled = true;
-        elements.absentBtn.title = 'يجب تسجيل الدخول كمدير النظام';
-      }
-    }
+
 
 
     // إعداد مستمعي الأحداث
@@ -1674,8 +1665,8 @@ function sendAbsenceToGoogleSheets() {
       elements.clearSelectionBtn.addEventListener('click', clearSelection);
       elements.exportBtn.addEventListener('click', exportData);
 
-      // زر الغياب: يعمل فقط إذا كان المدير
 
+      // زر الغياب: يطلب الرقم السري عند كل ضغطة
       elements.absentBtn.addEventListener('click', function() {
         const pass = prompt('الرجاء إدخال الرقم السري لتسجيل الغياب:');
         if (pass === null) return; // إلغاء
@@ -1716,8 +1707,7 @@ function sendAbsenceToGoogleSheets() {
           toggleFullScreen();
         }
       });
-      // عند تحميل الصفحة، اجعل زر الغياب معطلاً
-      updateAbsentBtnState();
+  // لا حاجة لتعطيل زر الغياب
     }
 
     // ملء الشاشة
