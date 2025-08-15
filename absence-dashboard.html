@@ -217,41 +217,29 @@
       `;
     }
 
-    // تصدير Excel احترافي
-    function exportExcel() {
+    // تصدير CSV احترافي
+    function exportCSV() {
       if (!filteredData.length) return;
-      // إعداد البيانات
-      const ws_data = [
-        ['الاسم','الصف','التاريخ','الوقت'],
-        ...filteredData.map(r => [r.name||'', r.class||'', r.date||'', r.time||''])
-      ];
-      // إنشاء ورقة العمل
-      const ws = XLSX.utils.aoa_to_sheet(ws_data);
-      // تنسيقات الأعمدة
-      ws['!cols'] = [
-        {wch:20}, // الاسم
-        {wch:12}, // الصف
-        {wch:14}, // التاريخ
-        {wch:10}  // الوقت
-      ];
-      // تنسيقات الصفوف (عناوين بخلفية)
-      ws['A1'].s = ws['B1'].s = ws['C1'].s = ws['D1'].s = {
-        font: {bold:true, color:{rgb:'FFFFFF'}},
-        fill: {patternType:'solid', fgColor:{rgb:'00796B'}},
-        alignment: {horizontal:'center'}
-      };
-      // إنشاء ملف Excel
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'غياب الطلاب');
-      // تصدير الملف
-      XLSX.writeFile(wb, 'absence_export.xlsx');
+      // إعداد العناوين
+      const headers = ['الاسم','الصف','التاريخ','الوقت'];
+      const rows = [headers, ...filteredData.map(r => [r.name||'', r.class||'', r.date||'', r.time||''])];
+      // تحويل إلى CSV مع ترميز UTF-8 BOM
+      const csv = rows.map(row => row.map(cell => '"'+(cell||'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+      // إضافة BOM ليظهر بالعربي بشكل صحيح في Excel
+      const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'absence_export.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     // الأحداث
     document.getElementById('searchInput').addEventListener('input', applyFilters);
     document.getElementById('classFilter').addEventListener('change', applyFilters);
     document.getElementById('dateFilter').addEventListener('change', applyFilters);
-  document.getElementById('exportBtn').addEventListener('click', exportExcel);
+  document.getElementById('exportBtn').addEventListener('click', exportCSV);
 
     // بدء التحميل
     fetchAbsenceData();
