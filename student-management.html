@@ -1,12 +1,21 @@
     // حفظ وتصدير البيانات المعدلة
     function saveAndExportData() {
-      // تصدير البيانات المعدلة إلى ملف studentData.json
-      const jsonContent = JSON.stringify(studentsData, null, 2);
+      // تصدير جميع الأسماء المعدلة في ملف جيسون خارجي (مصفوفة)
+      const allNames = [];
+      Object.entries(studentsData).forEach(([className, students]) => {
+        students.forEach(name => {
+          allNames.push({ name, class: className });
+        });
+      });
+      const jsonContent = JSON.stringify(allNames, null, 2);
       const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
+      // اسم الملف مع تاريخ ووقت التصدير
+      const now = new Date();
+      const fileName = `students-export-${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}_${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}.json`;
       link.setAttribute('href', url);
-      link.setAttribute('download', 'studentData.json');
+      link.setAttribute('download', fileName);
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();
