@@ -2766,20 +2766,33 @@ ${labels.map((name, i) => `• ${name}: ${data[i]} ${data[i] === 1 ? 'صوت' : 
       `;
       voterCard.appendChild(icon);
 
-      // إزالة البطاقة بعد التصويت فوراً مع تأثير بصري سريع
+      // إزالة البطاقة بعد التصويت بشكل صارم
       voterCard.style.transition = 'all 0.5s ease';
       voterCard.style.opacity = '0';
       voterCard.style.transform = 'translateX(-100%)';
       setTimeout(() => {
-        // إزالة البطاقة من DOM بشكل قاطع
+        // إزالة البطاقة من DOM بشكل صارم
+        let removed = false;
         if (voterCard.parentNode) {
           voterCard.parentNode.removeChild(voterCard);
-        } else {
-          // محاولة إزالة البطاقة بالقوة إذا بقيت لأي سبب
+          removed = true;
+        }
+        // إذا لم تُزل البطاقة، ابحث عن جميع البطاقات التي تحمل اسم المصوت وأزلها
+        if (!removed) {
           const allCards = document.querySelectorAll('.voter-card');
           allCards.forEach(card => {
-            const name = card.querySelector('.voter-name')?.textContent?.trim();
-            if (name === voterName) {
+            const nameElem = card.querySelector('.voter-name');
+            if (nameElem && nameElem.textContent.trim() === voterName) {
+              card.remove();
+              removed = true;
+            }
+          });
+        }
+        // إذا بقيت أي بطاقة بنفس الاسم لأي سبب، أزلها بالقوة
+        if (!removed) {
+          const allCards = document.querySelectorAll('.voter-card');
+          allCards.forEach(card => {
+            if (card.textContent.includes(voterName)) {
               card.remove();
             }
           });
