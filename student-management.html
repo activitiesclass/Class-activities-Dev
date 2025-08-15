@@ -1223,9 +1223,13 @@
             <span>💾</span>
             <span class="hide-mobile">تصدير</span>
           </button>
-          <button class="btn btn-warning btn-responsive" id="absentBtn">
+          <button class="btn btn-warning btn-responsive" id="absentBtn" disabled>
             <span>🚫</span>
             <span class="hide-mobile">تسجيل الغياب</span>
+          </button>
+          <button class="btn btn-success btn-responsive" id="adminLoginBtn">
+            <span>🔑</span>
+            <span class="hide-mobile">دخول المدير</span>
           </button>
         </div>
       </div>
@@ -1279,6 +1283,8 @@
   <audio id="clickSound" src="assets/media/sounds/Click.mp3" preload="auto" aria-hidden="true"></audio>
   <audio id="selectSound" src="assets/media/sounds/select.mp3" preload="auto" aria-hidden="true"></audio>
 
+
+
   <script>
     console.log('🚀 بدء تحميل نظام إدارة الطلاب...');
 
@@ -1291,6 +1297,11 @@
       grade: '',
       class: ''
     };
+    // تحقق من حالة المدير من localStorage
+    let isAdmin = false;
+    if (localStorage.getItem('isAdmin') === 'true') {
+      isAdmin = true;
+    }
 
     // عناصر DOM
     const elements = {
@@ -1311,7 +1322,8 @@
       fullscreenBtn: document.getElementById('fullscreenBtn'),
       clickSound: document.getElementById('clickSound'),
       selectSound: document.getElementById('selectSound'),
-      absentBtn: document.getElementById('absentBtn')
+  absentBtn: document.getElementById('absentBtn'),
+  adminLoginBtn: document.getElementById('adminLoginBtn')
     };
 
     // تشغيل الصوت
@@ -1626,6 +1638,18 @@ function sendAbsenceToGoogleSheets() {
   });
 }
 
+    // تفعيل زر الغياب إذا كان المدير مسجلاً
+    function updateAbsentBtnState() {
+      if (isAdmin) {
+        elements.absentBtn.disabled = false;
+        elements.absentBtn.title = '';
+      } else {
+        elements.absentBtn.disabled = true;
+        elements.absentBtn.title = 'يجب تسجيل الدخول كمدير النظام';
+      }
+    }
+
+
     // إعداد مستمعي الأحداث
     function setupEventListeners() {
       // البحث
@@ -1653,7 +1677,20 @@ function sendAbsenceToGoogleSheets() {
       elements.selectAllBtn.addEventListener('click', selectAll);
       elements.clearSelectionBtn.addEventListener('click', clearSelection);
       elements.exportBtn.addEventListener('click', exportData);
-      elements.absentBtn.addEventListener('click', sendAbsenceToGoogleSheets);
+
+      // زر الغياب: يعمل فقط إذا كان المدير
+      elements.absentBtn.addEventListener('click', function() {
+        if (!isAdmin) {
+          showError('يجب تسجيل الدخول كمدير النظام من الصفحة الرئيسية (زر الإعدادات)');
+        } else {
+          sendAbsenceToGoogleSheets();
+        }
+      });
+
+      // زر دخول المدير: ينقل المستخدم للصفحة الرئيسية
+      elements.adminLoginBtn.addEventListener('click', function() {
+        window.location.href = 'index.html';
+      });
       
       // أزرار التنقل
       elements.homeBtn.addEventListener('click', () => {
@@ -1683,6 +1720,8 @@ function sendAbsenceToGoogleSheets() {
           toggleFullScreen();
         }
       });
+      // عند تحميل الصفحة، اجعل زر الغياب معطلاً
+      updateAbsentBtnState();
     }
 
     // ملء الشاشة
