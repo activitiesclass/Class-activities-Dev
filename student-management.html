@@ -1599,25 +1599,26 @@ function sendAbsenceToGoogleSheets() {
     const [className, ...nameParts] = id.split('-');
     return {
       name: nameParts.join('-'),
-      class: className
+      class: className,
+      date: new Date().toISOString().split('T')[0]
     };
   });
   if (absentStudents.length === 0) {
     alert('يرجى تحديد الطلاب الغائبين أولاً');
     return;
   }
-  // رابط Webhook العام من Google Apps Script
-  const webhookUrl = 'https://script.google.com/macros/s/AKfycbyRDLJvsp345G6zUy6rSEcAYyT4h0cz6_nih58SbbFEsukHbHjU2WInNPLaGF6fL6eC/exec';
-  fetch(webhookUrl, {
+  // رابط SheetDB API
+  const sheetdbUrl = 'https://sheetdb.io/api/v1/njazp2y4wmgej';
+  fetch(sheetdbUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ absent: absentStudents })
+    body: JSON.stringify({ data: absentStudents })
   })
-  .then(response => response.text())
+  .then(response => response.json())
   .then(data => {
-    showUpdateMessage('تم إرسال الغياب بنجاح إلى Google Sheets');
+    showUpdateMessage('تم إرسال الغياب بنجاح إلى Google Sheets عبر SheetDB');
     clearSelection();
   })
   .catch(error => {
