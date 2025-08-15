@@ -1606,8 +1606,8 @@ function sendAbsenceToGoogleSheets() {
     alert('يرجى تحديد الطلاب الغائبين أولاً');
     return;
   }
-  // رابط Webhook الخاص بك من Google Apps Script
-  const webhookUrl = 'https://script.google.com/macros/s/AKfycbyDZ1j9yfVWCfpykH-fb8w3aeOU_vx7BbWeoIZHY7oB4dKi1rFdae0tYjpWP-Q7joXu/exec';
+  // رابط Webhook العام من Google Apps Script
+  const webhookUrl = 'https://script.google.com/macros/s/AKfycbyRDLJvsp345G6zUy6rSEcAYyT4h0cz6_nih58SbbFEsukHbHjU2WInNPLaGF6fL6eC/exec';
   fetch(webhookUrl, {
     method: 'POST',
     headers: {
