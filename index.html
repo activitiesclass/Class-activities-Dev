@@ -2439,7 +2439,17 @@
       // إعادة تعيين الحالة
       licenseStatus.className = 'license-status';
       licenseIcon.textContent = '🔍';
-  licenseTitle.textContent = 'تم تفعيل البرنامج بنجاح\nالنسخة الكاملة - جميع الملفات الأساسية متوفرة';
+      licenseTitle.textContent = 'تم تفعيل البرنامج بنجاح\nالنسخة الكاملة - جميع الملفات الأساسية متوفرة';
+      // عرض الملفات تلقائياً بعد التفعيل
+      if (typeof showFiles === 'function') {
+        showFiles();
+      } else {
+        // إذا كان هناك عنصر عرض الملفات
+        const statsRowElement = document.getElementById('statsRow');
+        if (statsRowElement) {
+          statsRowElement.style.display = 'block';
+        }
+      }
       licenseSubtitle.textContent = 'يرجى الانتظار';
       filesList.innerHTML = '';
       uploadSection.style.display = 'none';
