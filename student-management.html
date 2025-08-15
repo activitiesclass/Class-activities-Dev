@@ -1615,9 +1615,9 @@ function sendAbsenceToGoogleSheets() {
     alert('يرجى تحديد الطلاب الغائبين أولاً');
     return;
   }
-  // رابط Google Apps Script Web App
-  const scriptUrl = 'https://script.google.com/macros/s/AKfycbw_NwAA4EWDtJIUK193yJHT37GoSHlVylSiGLvrcjSvu1IyyrKVBG20BypG4_NZ7TtM2A/exec';
-  fetch(scriptUrl, {
+  // رابط SheetDB API
+  const sheetdbUrl = 'https://sheetdb.io/api/v1/njazp2y4wmgej';
+  fetch(sheetdbUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -1626,12 +1626,8 @@ function sendAbsenceToGoogleSheets() {
   })
   .then(response => response.json())
   .then(data => {
-    if (data.result === 'success') {
-      showUpdateMessage('تم إرسال الغياب بنجاح إلى Google Sheets');
-      clearSelection();
-    } else {
-      showError('فشل في إرسال الغياب: ' + (data.error || ''));
-    }
+    showUpdateMessage('تم إرسال الغياب بنجاح إلى Google Sheets عبر SheetDB');
+    clearSelection();
   })
   .catch(error => {
     showError('فشل في إرسال الغياب: ' + error);
