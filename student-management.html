@@ -1227,10 +1227,6 @@
             <span>🚫</span>
             <span class="hide-mobile">تسجيل الغياب</span>
           </button>
-          <button class="btn btn-success btn-responsive" id="adminLoginBtn">
-            <span>🔑</span>
-            <span class="hide-mobile">دخول المدير</span>
-          </button>
         </div>
       </div>
     </div>
@@ -1323,7 +1319,7 @@
       clickSound: document.getElementById('clickSound'),
       selectSound: document.getElementById('selectSound'),
   absentBtn: document.getElementById('absentBtn'),
-  adminLoginBtn: document.getElementById('adminLoginBtn')
+  // adminLoginBtn: document.getElementById('adminLoginBtn')
     };
 
     // تشغيل الصوت
@@ -1690,10 +1686,7 @@ function sendAbsenceToGoogleSheets() {
         }
       });
 
-      // زر دخول المدير: ينقل المستخدم للصفحة الرئيسية
-      elements.adminLoginBtn.addEventListener('click', function() {
-        window.location.href = 'index.html';
-      });
+  // تم حذف زر دخول المدير
       
       // أزرار التنقل
       elements.homeBtn.addEventListener('click', () => {
