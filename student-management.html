@@ -1219,9 +1219,13 @@
             <span>✗</span>
             <span class="hide-mobile">إلغاء التحديد</span>
           </button>
-          <button class="btn btn-info btn-responsive" id="exportBtn">
-            <span>📊</span>
-            <span class="hide-mobile">تصدير</span>
+          <button class="btn btn-info btn-responsive" id="editExportBtn">
+            <span id="editExportIcon">💾</span>
+            <span class="hide-mobile" id="editExportText">تحديث وتصدير</span>
+          </button>
+          <button class="btn btn-warning btn-responsive" id="absentBtn">
+            <span>🚫</span>
+            <span class="hide-mobile">تسجيل الغياب</span>
           </button>
         </div>
       </div>
@@ -1306,7 +1310,8 @@
       activitiesBtn: document.getElementById('activitiesBtn'),
       fullscreenBtn: document.getElementById('fullscreenBtn'),
       clickSound: document.getElementById('clickSound'),
-      selectSound: document.getElementById('selectSound')
+      selectSound: document.getElementById('selectSound'),
+      absentBtn: document.getElementById('absentBtn')
     };
 
     // تشغيل الصوت
@@ -1588,6 +1593,38 @@
       console.log('📊 تم تصدير بيانات', selectedData.length, 'طالب');
     }
 
+    // دالة إرسال الغياب إلى Google Sheets عبر Webhook
+function sendAbsenceToGoogleSheets() {
+  const absentStudents = Array.from(selectedStudents).map(id => {
+    const [className, ...nameParts] = id.split('-');
+    return {
+      name: nameParts.join('-'),
+      class: className
+    };
+  });
+  if (absentStudents.length === 0) {
+    alert('يرجى تحديد الطلاب الغائبين أولاً');
+    return;
+  }
+  // رابط Webhook الخاص بك من Google Apps Script
+  const webhookUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+  fetch(webhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ absent: absentStudents })
+  })
+  .then(response => response.text())
+  .then(data => {
+    showUpdateMessage('تم إرسال الغياب بنجاح إلى Google Sheets');
+    clearSelection();
+  })
+  .catch(error => {
+    showError('فشل في إرسال الغياب: ' + error);
+  });
+}
+
     // إعداد مستمعي الأحداث
     function setupEventListeners() {
       // البحث
@@ -1615,6 +1652,7 @@
       elements.selectAllBtn.addEventListener('click', selectAll);
       elements.clearSelectionBtn.addEventListener('click', clearSelection);
       elements.exportBtn.addEventListener('click', exportData);
+      elements.absentBtn.addEventListener('click', sendAbsenceToGoogleSheets);
       
       // أزرار التنقل
       elements.homeBtn.addEventListener('click', () => {
@@ -1681,6 +1719,29 @@
         document.body.removeChild(errorDiv);
       }, 3000);
     }
+
+    function showUpdateMessage(message) {
+  const msgDiv = document.createElement('div');
+  msgDiv.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--info-color);
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    z-index: 3000;
+    box-shadow: 0 8px 32px var(--shadow-dark);
+    font-size: 1.2rem;
+    text-align: center;
+  `;
+  msgDiv.textContent = message || 'تم تحديث بيانات الطلاب بنجاح! يرجى إرسال الملف للمطور لحفظ التغييرات.';
+  document.body.appendChild(msgDiv);
+  setTimeout(() => {
+    document.body.removeChild(msgDiv);
+  }, 5000);
+}
 
     // بدء التطبيق
     document.addEventListener('DOMContentLoaded', () => {
