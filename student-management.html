@@ -19,26 +19,26 @@
     // رسالة تفاعلية بعد التحديث
     function showUpdateMessage() {
       const msgDiv = document.createElement('div');
-      msgDiv.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: var(--info-color);
-        color: white;
-        padding: var(--spacing-lg);
-        border-radius: var(--border-radius);
-        z-index: 3000;
-        box-shadow: 0 8px 32px var(--shadow-dark);
-        font-size: 1.2rem;
-        text-align: center;
-      `;
-      msgDiv.textContent = 'تم تحديث بيانات الطلاب بنجاح! يرجى إرسال الملف للمطور لحفظ التغييرات.';
-      document.body.appendChild(msgDiv);
-      setTimeout(() => {
-        document.body.removeChild(msgDiv);
-      }, 5000);
-    }
+        msgDiv.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: var(--info-color);
+          color: white;
+          padding: var(--spacing-lg);
+          border-radius: var(--border-radius);
+          z-index: 3000;
+          box-shadow: 0 8px 32px var(--shadow-dark);
+          font-size: 1.2rem;
+          text-align: center;
+        `;
+        msgDiv.textContent = 'تم تحديث بيانات الطلاب بنجاح! يرجى إرسال الملف للمطور لحفظ التغييرات.';
+        document.body.appendChild(msgDiv);
+        setTimeout(() => {
+          document.body.removeChild(msgDiv);
+        }, 5000);
+  }
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -1365,14 +1365,17 @@
             playPromise.catch(() => {
               console.log('🔇 تعذر تشغيل الصوت');
             });
+          }
         }
       } catch (error) {
         console.log('🔇 خطأ في تشغيل الصوت:', error);
       }
     }
 
-    // تحميل بيانات الطلاب
-    async function loadStudentsData() {
+// =============================
+// تحميل بيانات الطلاب
+// =============================
+async function loadStudentsData() {
       try {
         console.log('📁 تحميل بيانات الطلاب...');
     const response = await fetch('data/studentData.json'); 
@@ -1754,7 +1757,6 @@
         playSound(elements.clickSound);
         toggleFullScreen();
       });
-      
       // اختصارات لوحة المفاتيح
       document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'a') {
@@ -1767,7 +1769,6 @@
           toggleFullScreen();
         }
       });
-    }
 
     // ملء الشاشة
     async function toggleFullScreen() {
