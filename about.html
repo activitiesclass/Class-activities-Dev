@@ -362,7 +362,7 @@
     window.open(url, '_blank');
   });
 // رسالة شرح خطوات SheetDB
-const sheetdbSteps = `1. إنشاء ورقة عمل Google Sheets\n\n- افتح حساب Gmail الخاص بك.\n- أنشئ ورقة عمل جديدة فارغة في Google Sheets.\n- ضع فيها الأعمدة التي تحتاجها (مثلاً: الاسم، التاريخ، الحالة… إلخ).\n\n2. مشاركة ورقة العمل\n\n- اضغط على زر مشاركة (Share).\n- غيّر إعدادات الوصول إلى: أي شخص لديه الرابط.\n- بدّل الصلاحية من مشاهد إلى محرر.\n- انسخ رابط ورقة العمل.\n\n3. الدخول إلى موقع SheetDB\n\n- ادخل إلى: https://sheetdb.io.\n- سجّل الدخول باستخدام بريدك الإلكتروني (يفضل Gmail).\n- امنح الأذونات المطلوبة.\n\n4. إنشاء API جديد\n\n- اضغط على Create New API.\n- سيطلب منك رابط ورقة Google Sheets → الصق الرابط الذي نسخته.\n- اضغط Create API.\n\n5. الحصول على رابط API\n\n- بعد الإنشاء سيعطيك رابط مثل هذا: https://sheetdb.io/api/v1/xxxxxx`;
+const sheetdbSteps = `1. إنشاء ورقة عمل Google Sheets\n\n- افتح حساب Gmail الخاص بك.\n- أنشئ ورقة عمل جديدة فارغة في Google Sheets.\n\n2. مشاركة ورقة العمل\n\n- اضغط على زر مشاركة (Share).\n- غيّر إعدادات الوصول إلى: أي شخص لديه الرابط.\n- بدّل الصلاحية من مشاهد إلى محرر.\n- انسخ رابط ورقة العمل.\n\n3. الدخول إلى موقع SheetDB\n\n- ادخل إلى: https://sheetdb.io.\n- سجّل الدخول باستخدام بريدك الإلكتروني (يفضل Gmail).\n- امنح الأذونات المطلوبة.\n\n4. إنشاء API جديد\n\n- اضغط على Create New API.\n- سيطلب منك رابط ورقة Google Sheets → الصق الرابط الذي نسخته.\n- اضغط Create API.\n\n5. الحصول على رابط API\n\n- بعد الإنشاء سيعطيك رابط مثل هذا: https://sheetdb.io/api/v1/xxxxxx`;
 document.getElementById('sheetdbHelpLink').addEventListener('click', function(e) {
   e.preventDefault();
   alert(sheetdbSteps);
