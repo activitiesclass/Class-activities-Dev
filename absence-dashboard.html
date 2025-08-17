@@ -208,12 +208,42 @@
   <button class="icon-btn share-btn" id="shareBtn" title="مشاركة البيانات">
     <span class="material-icons">share</span>
   </button>
+  <input type="text" id="studentMonthInput" placeholder="عدد غيابات طالب في هذا الشهر" style="min-width:180px;direction:rtl;">
+  <span id="studentMonthResult" style="font-size:1rem;color:#00796B;margin-right:8px;"></span>
     </div>
     <div id="tableContainer"></div>
   </div>
   <!-- مكتبة SheetJS لتصدير Excel (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.20.0/dist/xlsx.full.min.js"></script>
   <script>
+    // حساب عدد غيابات طالب خلال الشهر الحالي
+    function countStudentAbsencesThisMonth(name) {
+      if (!name) return 0;
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      // صيغة التاريخ المتوقعة yyyy-mm-dd
+      return allData.filter(r => {
+        if (!r.name || !r.date) return false;
+        if (r.name.trim() !== name.trim()) return false;
+        const [y, m] = r.date.split('-');
+        return Number(y) === year && Number(m) === month;
+      }).length;
+    }
+
+    // حدث عند إدخال اسم الطالب
+    document.addEventListener('DOMContentLoaded', function() {
+      const input = document.getElementById('studentMonthInput');
+      const result = document.getElementById('studentMonthResult');
+      if (input) {
+        input.addEventListener('input', function() {
+          const name = input.value.trim();
+          if (!name) { result.textContent = ''; return; }
+          const count = countStudentAbsencesThisMonth(name);
+          result.textContent = count ? `عدد غيابات هذا الطالب في الشهر الحالي: ${count}` : 'لا يوجد غيابات لهذا الطالب هذا الشهر';
+        });
+      }
+    });
     // مشاركة بيانات الغياب باستخدام Web Share API أو نسخ للحافظة
     function shareAbsenceData() {
       if (!filteredData.length) return alert('لا توجد بيانات للمشاركة');
