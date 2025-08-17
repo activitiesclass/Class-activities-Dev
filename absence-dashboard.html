@@ -209,6 +209,22 @@
     <span class="material-icons">share</span>
   </button>
   <input type="text" id="studentMonthInput" placeholder="عدد غيابات طالب في هذا الشهر" style="min-width:180px;direction:rtl;">
+  <select id="studentMonthSelect" style="min-width:90px;">
+    <option value="">الشهر الحالي</option>
+    <option value="1">يناير</option>
+    <option value="2">فبراير</option>
+    <option value="3">مارس</option>
+    <option value="4">أبريل</option>
+    <option value="5">مايو</option>
+    <option value="6">يونيو</option>
+    <option value="7">يوليو</option>
+    <option value="8">أغسطس</option>
+    <option value="9">سبتمبر</option>
+    <option value="10">أكتوبر</option>
+    <option value="11">نوفمبر</option>
+    <option value="12">ديسمبر</option>
+  </select>
+  <input type="number" id="studentYearInput" min="2000" max="2100" placeholder="السنة" style="width:70px;direction:ltr;" />
   <span id="studentMonthResult" style="font-size:1rem;color:#00796B;margin-right:8px;"></span>
     </div>
     <div id="tableContainer"></div>
@@ -216,33 +232,40 @@
   <!-- مكتبة SheetJS لتصدير Excel (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.20.0/dist/xlsx.full.min.js"></script>
   <script>
-    // حساب عدد غيابات طالب خلال الشهر الحالي
-    function countStudentAbsencesThisMonth(name) {
+    // حساب عدد غيابات طالب خلال شهر وسنة محددين
+    function countStudentAbsencesByMonth(name, month, year) {
       if (!name) return 0;
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth() + 1;
-      // صيغة التاريخ المتوقعة yyyy-mm-dd
       return allData.filter(r => {
         if (!r.name || !r.date) return false;
         if (r.name.trim() !== name.trim()) return false;
         const [y, m] = r.date.split('-');
-        return Number(y) === year && Number(m) === month;
+        if (year && Number(y) !== Number(year)) return false;
+        if (month && Number(m) !== Number(month)) return false;
+        return true;
       }).length;
     }
 
-    // حدث عند إدخال اسم الطالب
+    // حدث عند إدخال اسم الطالب أو تغيير الشهر أو السنة
     document.addEventListener('DOMContentLoaded', function() {
       const input = document.getElementById('studentMonthInput');
+      const monthSel = document.getElementById('studentMonthSelect');
+      const yearInput = document.getElementById('studentYearInput');
       const result = document.getElementById('studentMonthResult');
-      if (input) {
-        input.addEventListener('input', function() {
-          const name = input.value.trim();
-          if (!name) { result.textContent = ''; return; }
-          const count = countStudentAbsencesThisMonth(name);
-          result.textContent = count ? `عدد غيابات هذا الطالب في الشهر الحالي: ${count}` : 'لا يوجد غيابات لهذا الطالب هذا الشهر';
-        });
+      // تعبئة السنة الحالية افتراضياً
+      if (yearInput) yearInput.value = new Date().getFullYear();
+      function updateCount() {
+        const name = input.value.trim();
+        let month = monthSel.value;
+        let year = yearInput.value;
+        if (!month) month = (new Date().getMonth() + 1).toString();
+        if (!year) year = new Date().getFullYear().toString();
+        if (!name) { result.textContent = ''; return; }
+        const count = countStudentAbsencesByMonth(name, month, year);
+        result.textContent = count ? `عدد غيابات هذا الطالب في ${monthSel.options[monthSel.selectedIndex].text} ${year}: ${count}` : `لا يوجد غيابات لهذا الطالب في ${monthSel.options[monthSel.selectedIndex].text} ${year}`;
       }
+      if (input) input.addEventListener('input', updateCount);
+      if (monthSel) monthSel.addEventListener('change', updateCount);
+      if (yearInput) yearInput.addEventListener('input', updateCount);
     });
     // مشاركة بيانات الغياب باستخدام Web Share API أو نسخ للحافظة
     function shareAbsenceData() {
