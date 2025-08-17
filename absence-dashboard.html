@@ -205,56 +205,40 @@
       <select id="classFilter"><option value="">كل الصفوف</option></select>
       <input type="date" id="dateFilter">
     <button class="export-btn" id="exportBtn">تصدير Excel</button>
-  <button class="export-btn" id="shareBtn">مشاركة البيانات</button>
+  <button class="icon-btn" id="shareBtn" title="مشاركة البيانات" style="background:#2196F3;margin-right:8px;"><span class="material-icons" style="color:#fff;">share</span></button>
     </div>
     <div id="tableContainer"></div>
   </div>
   <!-- مكتبة SheetJS لتصدير Excel (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.20.0/dist/xlsx.full.min.js"></script>
   <script>
-    // دالة نسخ بيانات الغياب بشكل منظم إلى الحافظة
+    // مشاركة بيانات الغياب باستخدام Web Share API أو نسخ للحافظة
     function shareAbsenceData() {
       if (!filteredData.length) return alert('لا توجد بيانات للمشاركة');
-      // إعداد العناوين
       const headers = ['الاسم','الصف','التاريخ','الوقت'];
-      // تحويل البيانات إلى جدول نصي منسق
       let text = headers.join('\t') + '\n';
       filteredData.forEach(r => {
         text += [r.name||'', r.class||'', r.date||'', r.time||''].join('\t') + '\n';
       });
-      // نسخ إلى الحافظة
+      if (navigator.share) {
+        navigator.share({
+          title: 'بيانات الغياب',
+          text: text
+        }).catch(() => {
+          // إذا رفض المستخدم أو لم تنجح المشاركة، انسخ للحافظة
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
       navigator.clipboard.writeText(text).then(() => {
-        showShareModal();
+        alert('تم نسخ بيانات الغياب إلى الحافظة. يمكنك لصقها في أي تطبيق تواصل.');
       }, () => {
         alert('تعذر نسخ البيانات.');
       });
-    }
-
-    // نافذة منبثقة للتأكيد وروابط مشاركة سريعة
-    function showShareModal() {
-      let modal = document.getElementById('shareModal');
-      if (!modal) {
-        modal = document.createElement('div');
-        modal.id = 'shareModal';
-        modal.innerHTML = `
-          <div style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:9999;display:flex;align-items:center;justify-content:center;">
-            <div style="background:#fff;padding:32px 18px 18px 18px;border-radius:14px;max-width:90vw;min-width:260px;text-align:center;box-shadow:0 4px 24px #0002;">
-              <h2 style='color:#00796B;font-size:1.3rem;margin-bottom:10px;'>تم نسخ بيانات الغياب!</h2>
-              <p style='margin-bottom:18px;'>يمكنك الآن لصقها في أي مكان أو مشاركتها مباشرة:</p>
-              <div style='display:flex;gap:12px;justify-content:center;margin-bottom:10px;'>
-                <a href="https://wa.me/?text=%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A7%D8%A8%3A%5Cn" target="_blank" id="waShare" style="background:#25D366;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:bold;">واتساب</a>
-                <a href="mailto:?subject=بيانات الغياب&body=%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%D8%A7%D9%84%D8%BA%D9%8A%D8%A7%D8%A8%3A%5Cn" id="mailShare" style="background:#2196F3;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:bold;">بريد إلكتروني</a>
-              </div>
-              <button onclick="document.getElementById('shareModal').remove()" style="background:#00796B;color:#fff;padding:7px 22px;border:none;border-radius:7px;cursor:pointer;">إغلاق</button>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(modal);
-      }
-      // تحديث روابط المشاركة بالنص المنسوخ
-      const text = encodeURIComponent(document.querySelector('#tableContainer table') ? Array.from(document.querySelectorAll('#tableContainer table tr')).map(tr => Array.from(tr.children).map(td => td.innerText).join('\t')).join('%0A') : '');
-      document.getElementById('waShare').href = `https://wa.me/?text=${text}`;
-      document.getElementById('mailShare').href = `mailto:?subject=بيانات الغياب&body=${text}`;
     }
     // إعدادات SheetDB API
     const SHEETDB_URL = 'https://sheetdb.io/api/v1/njazp2y4wmgej';
