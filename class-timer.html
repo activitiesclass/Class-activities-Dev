@@ -34,7 +34,7 @@
   </div>
   <div id="currentSession" style="text-align:center; margin:30px 0; font-size:1.3em; color:#006400;"></div>
   <div id="timer" style="text-align:center; font-size:2em; color:#c00; margin-bottom:20px;"></div>
-  <table id="liveEventsTable" style="width:90%; margin: 0 auto 30px; display:none;">
+  <table id="liveEventsTable" class="modern-table">
     <thead>
       <tr>
         <th>اليوم</th>
@@ -102,7 +102,6 @@
       const todayIdx = now.getDay();
       const today = days[todayIdx === 0 ? 6 : todayIdx - 1];
       daySelect.value = today;
-      // ابحث عن الحصة الجارية
       const currentTime = now.toTimeString().slice(0,8);
       let currentPeriod = null;
       for (let period of schedule) {
@@ -115,18 +114,28 @@
       let timerInfo = '';
       const liveTable = document.getElementById('liveEventsTable');
       const liveTbody = liveTable.querySelector('tbody');
+      // عرض جميع الحصص لليوم الحالي
+      const todayEvents = allEvents.filter(ev => ev.day === today);
       liveTbody.innerHTML = '';
+      schedule.forEach(period => {
+        const event = todayEvents.find(ev => ev.period == period.period);
+        const isCurrent = currentPeriod && period.period == currentPeriod.period;
+        liveTbody.innerHTML += `<tr style="${isCurrent ? 'background: #d1f7c4; font-weight:bold;' : ''}">
+          <td>${today}</td>
+          <td>${event ? event.class_name : '-'}</td>
+          <td>${event ? event.teacher : '-'}</td>
+          <td>${period.period}</td>
+          <td>${period.start_time}</td>
+          <td>${period.end_time}</td>
+        </tr>`;
+      });
+      liveTable.style.display = '';
       if (currentPeriod) {
-        // ابحث عن الحدث المطابق لليوم والحصة
-        const event = allEvents.find(ev => ev.day === today && ev.period == currentPeriod.period);
+        const event = todayEvents.find(ev => ev.period == currentPeriod.period);
         if (event) {
           sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
-          // أضف صف الحدث المباشر
-          liveTbody.innerHTML = `<tr><td>${today}</td><td>${event.class_name}</td><td>${event.teacher}</td><td>${currentPeriod.period}</td><td>${currentPeriod.start_time}</td><td>${currentPeriod.end_time}</td></tr>`;
-          liveTable.style.display = '';
         } else {
           sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
-          liveTable.style.display = 'none';
         }
         // حساب الوقت المتبقي
         const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
@@ -139,11 +148,35 @@
       } else {
         sessionInfo = `لا توجد حصة جارية الآن`;
         timerInfo = '';
-        liveTable.style.display = 'none';
       }
       document.getElementById('currentSession').innerHTML = sessionInfo;
       document.getElementById('timer').innerHTML = timerInfo;
     }
   </script>
+  <style>
+    .modern-table {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px #e0e0e0;
+      background: #fff;
+      margin-bottom: 40px;
+      font-size: 1.1em;
+    }
+    .modern-table th {
+      background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
+      color: #006400;
+      font-size: 1.1em;
+      border-bottom: 2px solid #b2f7ef;
+    }
+    .modern-table tr {
+      transition: background 0.2s;
+    }
+    .modern-table tr:hover {
+      background: #f0f8ff;
+    }
+    .modern-table td {
+      border: 1px solid #e0e0e0;
+    }
+  </style>
 </body>
 </html>
