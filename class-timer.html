@@ -99,9 +99,10 @@
 
     function updateCurrentSession() {
       const now = new Date();
-      const todayIdx = now.getDay();
-      const today = days[todayIdx === 0 ? 6 : todayIdx - 1];
-      daySelect.value = today;
+  const todayIdx = now.getDay();
+  // getDay(): 0=الأحد، 1=الإثنين ... 5=الجمعة، 6=السبت
+  const today = days[todayIdx];
+  daySelect.value = today;
       const currentTime = now.toTimeString().slice(0,8);
       let currentPeriod = null;
       for (let period of schedule) {
