@@ -34,6 +34,19 @@
   </div>
   <div id="currentSession" style="text-align:center; margin:30px 0; font-size:1.3em; color:#006400;"></div>
   <div id="timer" style="text-align:center; font-size:2em; color:#c00; margin-bottom:20px;"></div>
+  <table id="liveEventsTable" style="width:90%; margin: 0 auto 30px; display:none;">
+    <thead>
+      <tr>
+        <th>اليوم</th>
+        <th>الصف</th>
+        <th>المعلم</th>
+        <th>الحصة</th>
+        <th>وقت البداية</th>
+        <th>وقت النهاية</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
   <!-- <div class="footer"></div> -->
   <script>
     // بيانات الأيام
@@ -100,13 +113,20 @@
       }
       let sessionInfo = '';
       let timerInfo = '';
+      const liveTable = document.getElementById('liveEventsTable');
+      const liveTbody = liveTable.querySelector('tbody');
+      liveTbody.innerHTML = '';
       if (currentPeriod) {
         // ابحث عن الحدث المطابق لليوم والحصة
         const event = allEvents.find(ev => ev.day === today && ev.period == currentPeriod.period);
         if (event) {
           sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
+          // أضف صف الحدث المباشر
+          liveTbody.innerHTML = `<tr><td>${today}</td><td>${event.class_name}</td><td>${event.teacher}</td><td>${currentPeriod.period}</td><td>${currentPeriod.start_time}</td><td>${currentPeriod.end_time}</td></tr>`;
+          liveTable.style.display = '';
         } else {
           sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
+          liveTable.style.display = 'none';
         }
         // حساب الوقت المتبقي
         const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
@@ -119,6 +139,7 @@
       } else {
         sessionInfo = `لا توجد حصة جارية الآن`;
         timerInfo = '';
+        liveTable.style.display = 'none';
       }
       document.getElementById('currentSession').innerHTML = sessionInfo;
       document.getElementById('timer').innerHTML = timerInfo;
