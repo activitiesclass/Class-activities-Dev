@@ -31,6 +31,7 @@
   <div class="controls">
     <label for="daySelect">اختر اليوم:</label>
     <select id="daySelect"></select>
+    <button id="todayBtn" style="margin-right:15px; font-size:1em; padding:5px 15px; background:#e0ffe0; border:1px solid #b2f7ef; border-radius:6px; cursor:pointer;">اليوم الحالي</button>
   </div>
   <div id="currentSession" style="text-align:center; margin:30px 0; font-size:1.3em; color:#006400;"></div>
   <div id="timer" style="text-align:center; font-size:2em; color:#c00; margin-bottom:20px;"></div>
@@ -59,15 +60,15 @@
       opt.textContent = day;
       daySelect.appendChild(opt);
     });
-    // تعيين اليوم الحالي افتراضيًا عند تحميل الصفحة
+    // تعيين اليوم الحالي افتراضيًا عند تحميل الصفحة أو عند الضغط على زر "اليوم الحالي"
     function setTodaySelect() {
-      // إذا كان اليوم السبت (6)، في بعض الدول يبدأ الأسبوع من الأحد
       let todayIdx = new Date().getDay();
-      // إذا كان اليوم السبت (6) وكان لا يوجد بيانات للسبت، أعده للأحد (0)
       if (todayIdx === 6 && !days.includes("السبت")) todayIdx = 0;
       daySelect.selectedIndex = todayIdx;
+      updateCurrentSession();
     }
     setTodaySelect();
+    document.getElementById('todayBtn').onclick = setTodaySelect;
 
     // تحديث الساعة الرقمية
     function updateClock() {
@@ -100,8 +101,8 @@
       schedule = scheduleData;
       classNames = studentData.map(item => item.class_name);
       allEvents = eventsData;
-      updateCurrentSession();
-      function updateCurrentSession() {
+  updateCurrentSession();
+  function updateCurrentSession() {
         const now = new Date();
         // اليوم المختار من القائمة
         const today = daySelect.value;
@@ -156,8 +157,8 @@
         document.getElementById('timer').innerHTML = timerInfo;
       }
 
-      // تحديث الجدول عند تغيير اليوم يدوياً
-      daySelect.addEventListener('change', updateCurrentSession);
+  // تحديث الجدول عند تغيير اليوم يدوياً
+  daySelect.addEventListener('change', updateCurrentSession);
       document.getElementById('currentSession').innerHTML = sessionInfo;
       document.getElementById('timer').innerHTML = timerInfo;
     }
