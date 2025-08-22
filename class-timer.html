@@ -58,9 +58,12 @@
       opt.textContent = day;
       daySelect.appendChild(opt);
     });
-    // تعيين اليوم الحالي افتراضيًا
-    const todayIdx = new Date().getDay(); // 0=الأحد في السعودية
-    daySelect.selectedIndex = todayIdx === 6 ? 0 : todayIdx + 1;
+    // تعيين اليوم الحالي افتراضيًا عند تحميل الصفحة
+    function setTodaySelect() {
+      const todayIdx = new Date().getDay();
+      daySelect.selectedIndex = todayIdx;
+    }
+    setTodaySelect();
 
     // تحديث الساعة الرقمية
     function updateClock() {
@@ -99,10 +102,10 @@
 
     function updateCurrentSession() {
       const now = new Date();
-  const todayIdx = now.getDay();
-  // getDay(): 0=الأحد، 1=الإثنين ... 5=الجمعة، 6=السبت
-  const today = days[todayIdx];
-  daySelect.value = today;
+      const todayIdx = now.getDay();
+      const today = days[todayIdx];
+      // تحديث اليوم المختار في القائمة تلقائياً
+      daySelect.selectedIndex = todayIdx;
       const currentTime = now.toTimeString().slice(0,8);
       let currentPeriod = null;
       for (let period of schedule) {
