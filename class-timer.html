@@ -22,7 +22,7 @@
 </head>
 <body>
   <header>
-  <img src="../assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
+  <img src="assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
     <span class="school-name" id="schoolName">اسم المدرسة</span>
     <span class="clock" id="clock"></span>
     <div class="clear"></div>
@@ -58,11 +58,14 @@
     updateClock();
 
     // تحميل اسم المدرسة من ملف config/school.json
-    fetch('../config/school.json')
+    fetch('config/school.json')
       .then(r => r.ok ? r.json() : {school_name: 'اسم المدرسة'})
       .then(info => {
         document.getElementById('schoolName').textContent = info.school_name || 'اسم المدرسة';
-        document.getElementById('footerInfo').textContent = `مدير المدرسة: ${info.manager || ''} | المدير المساعد: ${info.assistant || ''}`;
+        const footer = document.getElementById('footerInfo');
+        if (footer) {
+          footer.textContent = `مدير المدرسة: ${info.manager || ''} | المدير المساعد: ${info.assistant || ''}`;
+        }
       });
 
     // تحميل بيانات الحصص والصفوف والأحداث
@@ -70,9 +73,9 @@
     let classNames = [];
     let allEvents = [];
     Promise.all([
-      fetch('../data/schedule.json').then(r => r.json()),
-      fetch('../data/studentData.json').then(r => r.json()),
-      fetch('./data/events.json').then(r => r.json())
+      fetch('data/schedule.json').then(r => r.json()),
+      fetch('data/studentData.json').then(r => r.json()),
+      fetch('data/events.json').then(r => r.json())
     ]).then(([scheduleData, studentData, eventsData]) => {
       schedule = scheduleData;
       classNames = studentData.map(item => item.class_name);
