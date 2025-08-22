@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جدول الحصص - Class Timer</title>
+  <style>
+    body { font-family: 'Cairo', Arial, sans-serif; background: #f7f7f7; margin: 0; }
+    header { background: #fff; box-shadow: 0 2px 8px #eee; padding: 20px; text-align: center; }
+    .logo { float: right; width: 60px; margin-left: 20px; }
+    .school-name { color: #006400; font-size: 2em; font-weight: bold; }
+    .clock { color: #0074D9; font-size: 2em; float: left; margin-right: 20px; }
+    .clear { clear: both; }
+    .controls { margin: 30px auto 10px; text-align: center; }
+    select { font-size: 1.1em; padding: 5px 15px; }
+    table { width: 90%; margin: 20px auto; border-collapse: collapse; background: #fff; box-shadow: 0 2px 8px #eee; }
+    th, td { padding: 12px 8px; border: 1px solid #ddd; text-align: center; }
+    th { background: #e0ffe0; color: #006400; }
+    tfoot td { background: #f9f9f9; color: #888; }
+    .footer { text-align: center; color: #c00; font-weight: bold; margin: 30px 0 10px; }
+  </style>
+</head>
+<body>
+  <header>
+  <img src="../assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
+    <span class="school-name" id="schoolName">اسم المدرسة</span>
+    <span class="clock" id="clock"></span>
+    <div class="clear"></div>
+    <div style="margin-top:10px; color:red; font-size:1.2em;">ساعة المدرسة</div>
+  </header>
+  <div class="controls">
+    <label for="daySelect">اختر اليوم:</label>
+    <select id="daySelect"></select>
+  </div>
+  <div id="currentSession" style="text-align:center; margin:30px 0; font-size:1.3em; color:#006400;"></div>
+  <div id="timer" style="text-align:center; font-size:2em; color:#c00; margin-bottom:20px;"></div>
+  <!-- <div class="footer"></div> -->
+  <script>
+    // بيانات الأيام
+    const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+    const daySelect = document.getElementById('daySelect');
+    days.forEach((day, idx) => {
+      const opt = document.createElement('option');
+      opt.value = day;
+      opt.textContent = day;
+      daySelect.appendChild(opt);
+    });
+    // تعيين اليوم الحالي افتراضيًا
+    const todayIdx = new Date().getDay(); // 0=الأحد في السعودية
+    daySelect.selectedIndex = todayIdx === 6 ? 0 : todayIdx + 1;
+
+    // تحديث الساعة الرقمية
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('ar-EG');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // تحميل اسم المدرسة من ملف config/school.json
+    fetch('../config/school.json')
+      .then(r => r.ok ? r.json() : {school_name: 'اسم المدرسة'})
+      .then(info => {
+        document.getElementById('schoolName').textContent = info.school_name || 'اسم المدرسة';
+        document.getElementById('footerInfo').textContent = `مدير المدرسة: ${info.manager || ''} | المدير المساعد: ${info.assistant || ''}`;
+      });
+
+    // تحميل بيانات الحصص والصفوف والأحداث
+    let schedule = [];
+    let classNames = [];
+    let allEvents = [];
+    Promise.all([
+      fetch('../data/schedule.json').then(r => r.json()),
+      fetch('../data/studentData.json').then(r => r.json()),
+      fetch('./data/events.json').then(r => r.json())
+    ]).then(([scheduleData, studentData, eventsData]) => {
+      schedule = scheduleData;
+      classNames = studentData.map(item => item.class_name);
+      allEvents = eventsData;
+      updateCurrentSession();
+      setInterval(updateCurrentSession, 1000);
+    });
+
+    function updateCurrentSession() {
+      const now = new Date();
+      const todayIdx = now.getDay();
+      const today = days[todayIdx === 0 ? 6 : todayIdx - 1];
+      daySelect.value = today;
+      // ابحث عن الحصة الجارية
+      const currentTime = now.toTimeString().slice(0,8);
+      let currentPeriod = null;
+      for (let period of schedule) {
+        if (currentTime >= period.start_time && currentTime <= period.end_time) {
+          currentPeriod = period;
+          break;
+        }
+      }
+      let sessionInfo = '';
+      let timerInfo = '';
+      if (currentPeriod) {
+        // ابحث عن الحدث المطابق لليوم والحصة
+        const event = allEvents.find(ev => ev.day === today && ev.period == currentPeriod.period);
+        if (event) {
+          sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
+        } else {
+          sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
+        }
+        // حساب الوقت المتبقي
+        const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
+        const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
+        let diff = Math.floor((end - now) / 1000);
+        if (diff < 0) diff = 0;
+        const mm = String(Math.floor(diff/60)).padStart(2,'0');
+        const ss = String(diff%60).padStart(2,'0');
+        timerInfo = `الوقت المتبقي: <b>${mm}:${ss}</b>`;
+      } else {
+        sessionInfo = `لا توجد حصة جارية الآن`;
+        timerInfo = '';
+      }
+      document.getElementById('currentSession').innerHTML = sessionInfo;
+      document.getElementById('timer').innerHTML = timerInfo;
+    }
+  </script>
+</body>
+</html>
