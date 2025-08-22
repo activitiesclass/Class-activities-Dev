@@ -59,9 +59,9 @@
 
     // تحميل اسم المدرسة من ملف config/school.json
     fetch('config/school.json')
-      .then(r => r.ok ? r.json() : {school_name: 'اسم المدرسة'})
+      .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة'})
       .then(info => {
-        document.getElementById('schoolName').textContent = info.school_name || 'اسم المدرسة';
+        document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
         const footer = document.getElementById('footerInfo');
         if (footer) {
           footer.textContent = `مدير المدرسة: ${info.manager || ''} | المدير المساعد: ${info.assistant || ''}`;
