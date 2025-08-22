@@ -22,19 +22,18 @@
 </head>
 <body>
   <header>
-  <img src="assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
+    <img src="assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
     <span class="school-name" id="schoolName">اسم المدرسة</span>
     <span class="clock" id="clock"></span>
     <div class="clear"></div>
-  <!-- تم حذف نص ساعة المدرسة بناءً على طلب المستخدم -->
   </header>
   <div class="controls">
     <label for="daySelect">اختر اليوم:</label>
     <select id="daySelect"></select>
-    <button id="todayBtn" style="margin-right:15px; font-size:1em; padding:5px 15px; background:#e0ffe0; border:1px solid #b2f7ef; border-radius:6px; cursor:pointer;">اليوم الحالي</button>
+    <button id="todayBtn" class="modern-btn">اليوم الحالي</button>
   </div>
-  <div id="currentSession" style="text-align:center; margin:30px 0; font-size:1.3em; color:#006400;"></div>
-  <div id="timer" style="text-align:center; font-size:2em; color:#c00; margin-bottom:20px;"></div>
+  <div id="currentSession" class="current-session"></div>
+  <div id="timer" class="timer"></div>
   <table id="liveEventsTable" class="modern-table">
     <thead>
       <tr>
@@ -79,15 +78,14 @@
     updateClock();
 
     // تحميل اسم المدرسة من ملف config/school.json
-    fetch('config/school.json')
-      .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة'})
-      .then(info => {
-        document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
-        const footer = document.getElementById('footerInfo');
-        if (footer) {
-          footer.textContent = `مدير المدرسة: ${info.manager || ''} | المدير المساعد: ${info.assistant || ''}`;
-        }
-      });
+    function setSchoolName() {
+      fetch('config/school.json')
+        .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة'})
+        .then(info => {
+          document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
+        });
+    }
+    setSchoolName();
 
     // تحميل بيانات الحصص والصفوف والأحداث
     let schedule = [];
@@ -101,64 +99,61 @@
       schedule = scheduleData;
       classNames = studentData.map(item => item.class_name);
       allEvents = eventsData;
-  updateCurrentSession();
-  function updateCurrentSession() {
-        const now = new Date();
-        // اليوم المختار من القائمة
-        const today = daySelect.value;
-        const currentTime = now.toTimeString().slice(0,8);
-        let currentPeriod = null;
-        for (let period of schedule) {
-          if (currentTime >= period.start_time && currentTime <= period.end_time) {
-            currentPeriod = period;
-            break;
-          }
-        }
-        let sessionInfo = '';
-        let timerInfo = '';
-        const liveTable = document.getElementById('liveEventsTable');
-        const liveTbody = liveTable.querySelector('tbody');
-        // عرض جميع الحصص لليوم المختار
-        const todayEvents = allEvents.filter(ev => ev.day === today);
-        liveTbody.innerHTML = '';
-        schedule.forEach(period => {
-          const event = todayEvents.find(ev => ev.period == period.period);
-          const isCurrent = currentPeriod && period.period == currentPeriod.period && today === days[now.getDay()];
-          liveTbody.innerHTML += `<tr style="${isCurrent ? 'background: #d1f7c4; font-weight:bold;' : ''}">
-            <td>${today}</td>
-            <td>${event ? event.class_name : '-'}<\/td>
-            <td>${event ? event.teacher : '-'}<\/td>
-            <td>${period.period}<\/td>
-            <td>${period.start_time}<\/td>
-            <td>${period.end_time}<\/td>
-          <\/tr>`;
-        });
-        liveTable.style.display = '';
-        if (currentPeriod && today === days[now.getDay()]) {
-          const event = todayEvents.find(ev => ev.period == currentPeriod.period);
-          if (event) {
-            sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
-          } else {
-            sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
-          }
-          // حساب الوقت المتبقي
-          const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
-          const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
-          let diff = Math.floor((end - now) / 1000);
-          if (diff < 0) diff = 0;
-          const mm = String(Math.floor(diff/60)).padStart(2,'0');
-          const ss = String(diff%60).padStart(2,'0');
-          timerInfo = `الوقت المتبقي: <b>${mm}:${ss}</b>`;
-        } else {
-          sessionInfo = `لا توجد حصة جارية الآن`;
-          timerInfo = '';
-        }
-        document.getElementById('currentSession').innerHTML = sessionInfo;
-        document.getElementById('timer').innerHTML = timerInfo;
-      }
+      updateCurrentSession();
+      setInterval(updateCurrentSession, 1000);
+      daySelect.addEventListener('change', updateCurrentSession);
+    });
 
-  // تحديث الجدول عند تغيير اليوم يدوياً
-  daySelect.addEventListener('change', updateCurrentSession);
+    function updateCurrentSession() {
+      const now = new Date();
+      const today = daySelect.value;
+      const currentTime = now.toTimeString().slice(0,8);
+      let currentPeriod = null;
+      for (let period of schedule) {
+        if (currentTime >= period.start_time && currentTime <= period.end_time) {
+          currentPeriod = period;
+          break;
+        }
+      }
+      let sessionInfo = '';
+      let timerInfo = '';
+      const liveTable = document.getElementById('liveEventsTable');
+      const liveTbody = liveTable.querySelector('tbody');
+      // عرض جميع الحصص لليوم المختار
+      const todayEvents = allEvents.filter(ev => ev.day === today);
+      liveTbody.innerHTML = '';
+      schedule.forEach(period => {
+        const event = todayEvents.find(ev => ev.period == period.period);
+        const isCurrent = currentPeriod && period.period == currentPeriod.period && today === days[now.getDay()];
+        liveTbody.innerHTML += `<tr style="${isCurrent ? 'background: #d1f7c4; font-weight:bold;' : ''}">
+          <td>${today}</td>
+          <td>${event ? event.class_name : '-'}<\/td>
+          <td>${event ? event.teacher : '-'}<\/td>
+          <td>${period.period}<\/td>
+          <td>${period.start_time}<\/td>
+          <td>${period.end_time}<\/td>
+        <\/tr>`;
+      });
+      liveTable.style.display = '';
+      if (currentPeriod && today === days[now.getDay()]) {
+        const event = todayEvents.find(ev => ev.period == currentPeriod.period);
+        if (event) {
+          sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
+        } else {
+          sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
+        }
+        // حساب الوقت المتبقي
+        const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
+        const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
+        let diff = Math.floor((end - now) / 1000);
+        if (diff < 0) diff = 0;
+        const mm = String(Math.floor(diff/60)).padStart(2,'0');
+        const ss = String(diff%60).padStart(2,'0');
+        timerInfo = `الوقت المتبقي: <b>${mm}:${ss}</b>`;
+      } else {
+        sessionInfo = `لا توجد حصة جارية الآن`;
+        timerInfo = '';
+      }
       document.getElementById('currentSession').innerHTML = sessionInfo;
       document.getElementById('timer').innerHTML = timerInfo;
     }
@@ -171,6 +166,8 @@
       background: #fff;
       margin-bottom: 40px;
       font-size: 1.1em;
+      min-width: 320px;
+      max-width: 100%;
     }
     .modern-table th {
       background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
@@ -186,6 +183,53 @@
     }
     .modern-table td {
       border: 1px solid #e0e0e0;
+    }
+    .modern-btn {
+      margin-right: 15px;
+      font-size: 1em;
+      padding: 5px 15px;
+      background: #e0ffe0;
+      border: 1px solid #b2f7ef;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .modern-btn:hover {
+      background: #b2f7ef;
+      box-shadow: 0 2px 8px #b2f7ef44;
+    }
+    .current-session {
+      text-align: center;
+      margin: 30px 0 10px;
+      font-size: 1.3em;
+      color: #006400;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .timer {
+      text-align: center;
+      font-size: 2em;
+      color: #c00;
+      margin-bottom: 20px;
+      font-family: 'Cairo', Arial, sans-serif;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    @media (max-width: 600px) {
+      .modern-table, .modern-table th, .modern-table td {
+        font-size: 0.9em;
+        padding: 6px 2px;
+      }
+      .school-name {
+        font-size: 1.2em;
+      }
+      .clock {
+        font-size: 1.1em;
+      }
+      .modern-btn {
+        font-size: 0.9em;
+        padding: 4px 8px;
+      }
     }
   </style>
 </body>
