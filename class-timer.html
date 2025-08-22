@@ -50,7 +50,8 @@
   <!-- <div class="footer"></div> -->
   <script>
     // بيانات الأيام
-    const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+  // في جافاسكريبت 0=الأحد، 1=الإثنين ... 6=السبت
+  const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
     const daySelect = document.getElementById('daySelect');
     days.forEach((day, idx) => {
       const opt = document.createElement('option');
@@ -60,7 +61,10 @@
     });
     // تعيين اليوم الحالي افتراضيًا عند تحميل الصفحة
     function setTodaySelect() {
-      const todayIdx = new Date().getDay();
+      // إذا كان اليوم السبت (6)، في بعض الدول يبدأ الأسبوع من الأحد
+      let todayIdx = new Date().getDay();
+      // إذا كان اليوم السبت (6) وكان لا يوجد بيانات للسبت، أعده للأحد (0)
+      if (todayIdx === 6 && !days.includes("السبت")) todayIdx = 0;
       daySelect.selectedIndex = todayIdx;
     }
     setTodaySelect();
@@ -102,10 +106,11 @@
 
     function updateCurrentSession() {
       const now = new Date();
-      const todayIdx = now.getDay();
-      const today = days[todayIdx];
-      // تحديث اليوم المختار في القائمة تلقائياً
-      daySelect.selectedIndex = todayIdx;
+  let todayIdx = now.getDay();
+  // إذا كان اليوم السبت (6) وكان لا يوجد بيانات للسبت، أعده للأحد (0)
+  if (todayIdx === 6 && !days.includes("السبت")) todayIdx = 0;
+  const today = days[todayIdx];
+  daySelect.selectedIndex = todayIdx;
       const currentTime = now.toTimeString().slice(0,8);
       let currentPeriod = null;
       for (let period of schedule) {
