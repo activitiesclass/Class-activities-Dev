@@ -101,63 +101,63 @@
       classNames = studentData.map(item => item.class_name);
       allEvents = eventsData;
       updateCurrentSession();
-      setInterval(updateCurrentSession, 1000);
-    });
-
-    function updateCurrentSession() {
-      const now = new Date();
-  let todayIdx = now.getDay();
-  // إذا كان اليوم السبت (6) وكان لا يوجد بيانات للسبت، أعده للأحد (0)
-  if (todayIdx === 6 && !days.includes("السبت")) todayIdx = 0;
-  const today = days[todayIdx];
-  daySelect.selectedIndex = todayIdx;
-      const currentTime = now.toTimeString().slice(0,8);
-      let currentPeriod = null;
-      for (let period of schedule) {
-        if (currentTime >= period.start_time && currentTime <= period.end_time) {
-          currentPeriod = period;
-          break;
+      function updateCurrentSession() {
+        const now = new Date();
+        // اليوم المختار من القائمة
+        const today = daySelect.value;
+        const currentTime = now.toTimeString().slice(0,8);
+        let currentPeriod = null;
+        for (let period of schedule) {
+          if (currentTime >= period.start_time && currentTime <= period.end_time) {
+            currentPeriod = period;
+            break;
+          }
         }
-      }
-      let sessionInfo = '';
-      let timerInfo = '';
-      const liveTable = document.getElementById('liveEventsTable');
-      const liveTbody = liveTable.querySelector('tbody');
-      // عرض جميع الحصص لليوم الحالي
-      const todayEvents = allEvents.filter(ev => ev.day === today);
-      liveTbody.innerHTML = '';
-      schedule.forEach(period => {
-        const event = todayEvents.find(ev => ev.period == period.period);
-        const isCurrent = currentPeriod && period.period == currentPeriod.period;
-        liveTbody.innerHTML += `<tr style="${isCurrent ? 'background: #d1f7c4; font-weight:bold;' : ''}">
-          <td>${today}</td>
-          <td>${event ? event.class_name : '-'}</td>
-          <td>${event ? event.teacher : '-'}</td>
-          <td>${period.period}</td>
-          <td>${period.start_time}</td>
-          <td>${period.end_time}</td>
-        </tr>`;
-      });
-      liveTable.style.display = '';
-      if (currentPeriod) {
-        const event = todayEvents.find(ev => ev.period == currentPeriod.period);
-        if (event) {
-          sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
+        let sessionInfo = '';
+        let timerInfo = '';
+        const liveTable = document.getElementById('liveEventsTable');
+        const liveTbody = liveTable.querySelector('tbody');
+        // عرض جميع الحصص لليوم المختار
+        const todayEvents = allEvents.filter(ev => ev.day === today);
+        liveTbody.innerHTML = '';
+        schedule.forEach(period => {
+          const event = todayEvents.find(ev => ev.period == period.period);
+          const isCurrent = currentPeriod && period.period == currentPeriod.period && today === days[now.getDay()];
+          liveTbody.innerHTML += `<tr style="${isCurrent ? 'background: #d1f7c4; font-weight:bold;' : ''}">
+            <td>${today}</td>
+            <td>${event ? event.class_name : '-'}<\/td>
+            <td>${event ? event.teacher : '-'}<\/td>
+            <td>${period.period}<\/td>
+            <td>${period.start_time}<\/td>
+            <td>${period.end_time}<\/td>
+          <\/tr>`;
+        });
+        liveTable.style.display = '';
+        if (currentPeriod && today === days[now.getDay()]) {
+          const event = todayEvents.find(ev => ev.period == currentPeriod.period);
+          if (event) {
+            sessionInfo = `اليوم: <b>${today}</b> | الصف: <b>${event.class_name}</b> | المعلم: <b>${event.teacher}</b> | الحصة: <b>${currentPeriod.period}</b>`;
+          } else {
+            sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
+          }
+          // حساب الوقت المتبقي
+          const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
+          const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
+          let diff = Math.floor((end - now) / 1000);
+          if (diff < 0) diff = 0;
+          const mm = String(Math.floor(diff/60)).padStart(2,'0');
+          const ss = String(diff%60).padStart(2,'0');
+          timerInfo = `الوقت المتبقي: <b>${mm}:${ss}</b>`;
         } else {
-          sessionInfo = `اليوم: <b>${today}</b> | الحصة: <b>${currentPeriod.period}</b> (لا يوجد معلم أو صف محدد)`;
+          sessionInfo = `لا توجد حصة جارية الآن`;
+          timerInfo = '';
         }
-        // حساب الوقت المتبقي
-        const [h, m, s] = currentPeriod.end_time.split(":").map(Number);
-        const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
-        let diff = Math.floor((end - now) / 1000);
-        if (diff < 0) diff = 0;
-        const mm = String(Math.floor(diff/60)).padStart(2,'0');
-        const ss = String(diff%60).padStart(2,'0');
-        timerInfo = `الوقت المتبقي: <b>${mm}:${ss}</b>`;
-      } else {
-        sessionInfo = `لا توجد حصة جارية الآن`;
-        timerInfo = '';
+        document.getElementById('currentSession').innerHTML = sessionInfo;
+        document.getElementById('timer').innerHTML = timerInfo;
       }
+
+      // تحديث الجدول عند تغيير اليوم يدوياً
+      daySelect.addEventListener('change', updateCurrentSession);
       document.getElementById('currentSession').innerHTML = sessionInfo;
       document.getElementById('timer').innerHTML = timerInfo;
     }
