@@ -216,9 +216,9 @@
     updateClock();
 
 
-    // تحميل اسم المدرسة والشعار من ملف config/schoolInfo.json
+    // تحميل اسم المدرسة والشعار من ملف config/school.json
     function setSchoolInfo() {
-      fetch('config/schoolInfo.json')
+      fetch('config/school.json')
         .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة', logoUrl: 'assets/media/images/school-logo.png'})
         .then(info => {
           document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
