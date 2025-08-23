@@ -4,37 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>جدول الحصص - Class Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body {
       font-family: 'Cairo', Arial, sans-serif;
-      background: linear-gradient(135deg, #e0ffe0 0%, #b2f7ef 100%);
+      background: linear-gradient(120deg, #e0ffe0 0%, #b2f7ef 100%, #fff 100%);
       margin: 0;
       min-height: 100vh;
+      overflow-x: hidden;
+      animation: bgmove 12s ease-in-out infinite alternate;
+    }
+    @keyframes bgmove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
     header {
-      background: #fff;
-      box-shadow: 0 4px 24px #b2f7ef55;
-      padding: 32px 20px 24px 20px;
+      background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
+      box-shadow: 0 8px 32px #b2f7ef55;
+      padding: 36px 20px 28px 20px;
       text-align: center;
-      border-radius: 0 0 32px 32px;
+      border-radius: 0 0 40px 40px;
       position: relative;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
+      border-bottom: 4px solid #b2f7ef;
+      transition: box-shadow 0.3s;
     }
     .logo {
       float: right;
-      width: 70px;
-      margin-left: 24px;
-      border-radius: 16px;
-      box-shadow: 0 2px 12px #b2f7ef55;
-      background: #f7f7f7;
-      padding: 4px;
+      width: 80px;
+      margin-left: 28px;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px #b2f7ef55;
+      background: #fff;
+      padding: 6px;
+      transition: transform 0.3s;
+    }
+    .logo:hover {
+      transform: scale(1.07) rotate(-3deg);
+      box-shadow: 0 8px 32px #b2f7ef99;
     }
     .school-name {
       color: #009688;
-      font-size: 2.3em;
+      font-size: 2.5em;
       font-weight: bold;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 8px #b2f7ef44;
+      letter-spacing: 2.5px;
+      text-shadow: 0 2px 12px #b2f7ef44;
+      display: inline-block;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      animation: fadein 1.2s;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .clock {
       color: #0074D9;
@@ -42,33 +67,62 @@
       float: left;
       margin-right: 24px;
       background: #e0ffe0;
-      padding: 8px 18px;
-      border-radius: 12px;
+      padding: 8px 22px 8px 18px;
+      border-radius: 14px;
       box-shadow: 0 2px 8px #b2f7ef33;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Cairo', Arial, sans-serif;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      min-width: 120px;
+    }
+    .clock:before {
+      content: '\f017';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: #009688;
+      font-size: 1.1em;
+      margin-left: 7px;
+      margin-right: 2px;
+      vertical-align: middle;
+      display: inline-block;
+      animation: spin 2.5s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     .clear { clear: both; }
     .controls {
       margin: 30px auto 18px;
       text-align: center;
       background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 2px 12px #b2f7ef33;
-      padding: 18px 0 10px 0;
-      width: 90%;
-      max-width: 600px;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px #b2f7ef33;
+      padding: 22px 0 14px 0;
+      width: 92%;
+      max-width: 650px;
+      border: 2px solid #b2f7ef44;
+      transition: box-shadow 0.2s;
+      animation: fadein 1.2s 0.2s backwards;
     }
     select {
       font-size: 1.2em;
-      padding: 7px 22px;
-      border-radius: 8px;
-      border: 1px solid #b2f7ef;
+      padding: 9px 26px;
+      border-radius: 10px;
+      border: 2px solid #b2f7ef;
       background: #e0ffe0;
-      margin: 0 8px;
-      transition: border 0.2s;
+      margin: 0 10px;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #b2f7ef22;
     }
     select:focus {
-      border: 2px solid #009688;
+      border: 2.5px solid #009688;
       outline: none;
+      box-shadow: 0 4px 16px #b2f7ef44;
     }
     table {
       width: 95%;
@@ -272,76 +326,98 @@
     }
     .modern-btn {
       margin-right: 15px;
-      font-size: 1.1em;
-      padding: 8px 22px;
+      font-size: 1.15em;
+      padding: 10px 28px;
       background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
-      border: 1px solid #b2f7ef;
-      border-radius: 8px;
+      border: 2px solid #b2f7ef;
+      border-radius: 12px;
       cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s, border 0.2s;
       font-weight: bold;
       color: #009688;
       box-shadow: 0 2px 8px #b2f7ef33;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    .modern-btn:after {
+      content: '\f061';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: #b2f7ef;
+      font-size: 1em;
+      margin-right: 8px;
+      vertical-align: middle;
+      opacity: 0.7;
+      transition: color 0.2s;
     }
     .modern-btn:hover {
       background: #b2f7ef;
-      box-shadow: 0 4px 16px #b2f7ef44;
+      box-shadow: 0 6px 24px #b2f7ef44;
       color: #00796b;
+      border: 2.5px solid #009688;
+    }
+    .modern-btn:hover:after {
+      color: #009688;
     }
     .current-session {
       text-align: center;
-      margin: 32px 0 12px;
-      font-size: 1.5em;
+      margin: 36px 0 16px;
+      font-size: 1.6em;
       color: #009688;
       font-weight: bold;
       letter-spacing: 1.5px;
-      background: #e0ffe0;
-      border-radius: 12px;
-      padding: 10px 0;
-      box-shadow: 0 2px 8px #b2f7ef33;
-      max-width: 600px;
+      background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
+      border-radius: 16px;
+      padding: 14px 0;
+      box-shadow: 0 4px 18px #b2f7ef33;
+      max-width: 650px;
       margin-left: auto;
       margin-right: auto;
+      border: 2px solid #b2f7ef44;
+      animation: fadein 1.2s 0.3s backwards;
     }
     .timer {
       text-align: center;
-      font-size: 2.2em;
+      font-size: 2.3em;
       color: #c00;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       font-family: 'Cairo', Arial, sans-serif;
       font-weight: bold;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #b2f7ef33;
-      max-width: 300px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px #b2f7ef33;
+      max-width: 320px;
       margin-left: auto;
       margin-right: auto;
-      padding: 8px 0;
+      padding: 12px 0;
+      border: 2px solid #b2f7ef44;
+      animation: fadein 1.2s 0.4s backwards;
     }
     @media (max-width: 600px) {
       .modern-table, .modern-table th, .modern-table td {
-        font-size: 0.95em;
+        font-size: 0.98em;
         padding: 7px 2px;
       }
       .school-name {
-        font-size: 1.2em;
+        font-size: 1.25em;
       }
       .clock {
-        font-size: 1.1em;
+        font-size: 1.15em;
         padding: 4px 8px;
       }
       .modern-btn {
-        font-size: 0.95em;
-        padding: 5px 10px;
+        font-size: 1em;
+        padding: 7px 12px;
       }
       .current-session {
-        font-size: 1.1em;
-        padding: 6px 0;
+        font-size: 1.15em;
+        padding: 8px 0;
       }
       .timer {
-        font-size: 1.2em;
-        padding: 4px 0;
+        font-size: 1.25em;
+        padding: 6px 0;
       }
     }
   </style>
