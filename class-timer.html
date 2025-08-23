@@ -5,25 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>جدول الحصص - Class Timer</title>
   <style>
-    body { font-family: 'Cairo', Arial, sans-serif; background: #f7f7f7; margin: 0; }
-    header { background: #fff; box-shadow: 0 2px 8px #eee; padding: 20px; text-align: center; }
-    .logo { float: right; width: 60px; margin-left: 20px; }
-    .school-name { color: #006400; font-size: 2em; font-weight: bold; }
-    .clock { color: #0074D9; font-size: 2em; float: left; margin-right: 20px; }
+    body {
+      font-family: 'Cairo', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0ffe0 0%, #b2f7ef 100%);
+      margin: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: #fff;
+      box-shadow: 0 4px 24px #b2f7ef55;
+      padding: 32px 20px 24px 20px;
+      text-align: center;
+      border-radius: 0 0 32px 32px;
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .logo {
+      float: right;
+      width: 70px;
+      margin-left: 24px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #b2f7ef55;
+      background: #f7f7f7;
+      padding: 4px;
+    }
+    .school-name {
+      color: #009688;
+      font-size: 2.3em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #b2f7ef44;
+    }
+    .clock {
+      color: #0074D9;
+      font-size: 2em;
+      float: left;
+      margin-right: 24px;
+      background: #e0ffe0;
+      padding: 8px 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #b2f7ef33;
+    }
     .clear { clear: both; }
-    .controls { margin: 30px auto 10px; text-align: center; }
-    select { font-size: 1.1em; padding: 5px 15px; }
-    table { width: 90%; margin: 20px auto; border-collapse: collapse; background: #fff; box-shadow: 0 2px 8px #eee; }
-    th, td { padding: 12px 8px; border: 1px solid #ddd; text-align: center; }
-    th { background: #e0ffe0; color: #006400; }
-    tfoot td { background: #f9f9f9; color: #888; }
-    .footer { text-align: center; color: #c00; font-weight: bold; margin: 30px 0 10px; }
+    .controls {
+      margin: 30px auto 18px;
+      text-align: center;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #b2f7ef33;
+      padding: 18px 0 10px 0;
+      width: 90%;
+      max-width: 600px;
+    }
+    select {
+      font-size: 1.2em;
+      padding: 7px 22px;
+      border-radius: 8px;
+      border: 1px solid #b2f7ef;
+      background: #e0ffe0;
+      margin: 0 8px;
+      transition: border 0.2s;
+    }
+    select:focus {
+      border: 2px solid #009688;
+      outline: none;
+    }
+    table {
+      width: 95%;
+      margin: 24px auto;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 4px 24px #b2f7ef55;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 16px 10px;
+      border: 1px solid #b2f7ef44;
+      text-align: center;
+      font-size: 1.1em;
+    }
+    th {
+      background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
+      color: #009688;
+      font-size: 1.15em;
+      border-bottom: 2px solid #b2f7ef;
+      letter-spacing: 1px;
+    }
+    tfoot td {
+      background: #f9f9f9;
+      color: #888;
+    }
+    .footer {
+      text-align: center;
+      color: #c00;
+      font-weight: bold;
+      margin: 30px 0 10px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
-    <span class="school-name" id="schoolName">اسم المدرسة</span>
+  <img id="schoolLogo" src="assets/media/images/school-logo.png" class="logo" alt="شعار المدرسة">
+  <span class="school-name" id="schoolName">اسم المدرسة</span>
     <span class="clock" id="clock"></span>
     <div class="clear"></div>
   </header>
@@ -77,28 +161,28 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // تحميل اسم المدرسة من ملف config/school.json
-    function setSchoolName() {
-      fetch('config/school.json')
-        .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة'})
+
+    // تحميل اسم المدرسة والشعار من ملف config/schoolInfo.json
+    function setSchoolInfo() {
+      fetch('config/schoolInfo.json')
+        .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة', logoUrl: 'assets/media/images/school-logo.png'})
         .then(info => {
           document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
+          document.getElementById('schoolLogo').src = info.logoUrl || 'assets/media/images/school-logo.png';
         });
     }
-    setSchoolName();
+    setSchoolInfo();
 
-    // تحميل بيانات الحصص والصفوف والأحداث
+
+    // تحميل بيانات الحصص وبيانات اليوم فقط
     let schedule = [];
-    let classNames = [];
-    let allEvents = [];
+    let todayInfo = [];
     Promise.all([
       fetch('data/schedule.json').then(r => r.json()),
-      fetch('data/studentData.json').then(r => r.json()),
-      fetch('data/events.json').then(r => r.json())
-    ]).then(([scheduleData, studentData, eventsData]) => {
+      fetch('data/todayInfo.json').then(r => r.json())
+    ]).then(([scheduleData, todayData]) => {
       schedule = scheduleData;
-      classNames = studentData.map(item => item.class_name);
-      allEvents = eventsData;
+      todayInfo = todayData;
       updateCurrentSession();
       setInterval(updateCurrentSession, 1000);
       daySelect.addEventListener('change', updateCurrentSession);
@@ -120,7 +204,7 @@
       const liveTable = document.getElementById('liveEventsTable');
       const liveTbody = liveTable.querySelector('tbody');
       // عرض جميع الحصص لليوم المختار
-      const todayEvents = allEvents.filter(ev => ev.day === today);
+      const todayEvents = todayInfo.filter(ev => ev.day === today);
       liveTbody.innerHTML = '';
       schedule.forEach(period => {
         const event = todayEvents.find(ev => ev.period == period.period);
@@ -160,20 +244,22 @@
   </script>
   <style>
     .modern-table {
-      border-radius: 12px;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 4px 16px #e0e0e0;
+      box-shadow: 0 4px 24px #b2f7ef55;
       background: #fff;
       margin-bottom: 40px;
       font-size: 1.1em;
       min-width: 320px;
       max-width: 100%;
+      transition: box-shadow 0.2s;
     }
     .modern-table th {
       background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
-      color: #006400;
-      font-size: 1.1em;
+      color: #009688;
+      font-size: 1.15em;
       border-bottom: 2px solid #b2f7ef;
+      letter-spacing: 1px;
     }
     .modern-table tr {
       transition: background 0.2s;
@@ -182,53 +268,80 @@
       background: #f0f8ff;
     }
     .modern-table td {
-      border: 1px solid #e0e0e0;
+      border: 1px solid #b2f7ef44;
     }
     .modern-btn {
       margin-right: 15px;
-      font-size: 1em;
-      padding: 5px 15px;
-      background: #e0ffe0;
+      font-size: 1.1em;
+      padding: 8px 22px;
+      background: linear-gradient(90deg, #e0ffe0 0%, #b2f7ef 100%);
       border: 1px solid #b2f7ef;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background 0.2s, box-shadow 0.2s;
+      font-weight: bold;
+      color: #009688;
+      box-shadow: 0 2px 8px #b2f7ef33;
     }
     .modern-btn:hover {
       background: #b2f7ef;
-      box-shadow: 0 2px 8px #b2f7ef44;
+      box-shadow: 0 4px 16px #b2f7ef44;
+      color: #00796b;
     }
     .current-session {
       text-align: center;
-      margin: 30px 0 10px;
-      font-size: 1.3em;
-      color: #006400;
+      margin: 32px 0 12px;
+      font-size: 1.5em;
+      color: #009688;
       font-weight: bold;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      background: #e0ffe0;
+      border-radius: 12px;
+      padding: 10px 0;
+      box-shadow: 0 2px 8px #b2f7ef33;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .timer {
       text-align: center;
-      font-size: 2em;
+      font-size: 2.2em;
       color: #c00;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       font-family: 'Cairo', Arial, sans-serif;
       font-weight: bold;
       letter-spacing: 2px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #b2f7ef33;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 8px 0;
     }
     @media (max-width: 600px) {
       .modern-table, .modern-table th, .modern-table td {
-        font-size: 0.9em;
-        padding: 6px 2px;
+        font-size: 0.95em;
+        padding: 7px 2px;
       }
       .school-name {
         font-size: 1.2em;
       }
       .clock {
         font-size: 1.1em;
+        padding: 4px 8px;
       }
       .modern-btn {
-        font-size: 0.9em;
-        padding: 4px 8px;
+        font-size: 0.95em;
+        padding: 5px 10px;
+      }
+      .current-session {
+        font-size: 1.1em;
+        padding: 6px 0;
+      }
+      .timer {
+        font-size: 1.2em;
+        padding: 4px 0;
       }
     }
   </style>
