@@ -1,0 +1,6 @@
+[
+  { "day": "الأحد", "period": 1, "class_name": "د", "teacher": "أ. سارة", "subject": "فيزياء" },
+  { "day": "الأحد", "period": 2, "class_name": "هـ", "teacher": "أ. يوسف", "subject": "كيمياء" },
+  { "day": "الأحد", "period": 3, "class_name": "و", "teacher": "أ. ليلى", "subject": "تاريخ" },
+  { "day": "الإثنين", "period": 1, "class_name": "د", "teacher": "أ. سارة", "subject": "فيزياء" }
+]
