@@ -222,7 +222,7 @@
         .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة', logoUrl: 'assets/media/images/school-logo.png'})
         .then(info => {
           document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
-          document.getElementById('schoolLogo').src = info.logoUrl || 'assets/media/images/school-logo.png';
+          document.getElementById('schoolLogo').src = info.schoolLogo || 'assets/media/images/school-logo.png';
         });
     }
     setSchoolInfo();
