@@ -221,7 +221,10 @@
       fetch('config/school.json')
         .then(r => r.ok ? r.json() : {schoolName: 'اسم المدرسة', logoUrl: 'assets/media/images/school-logo.png'})
         .then(info => {
-          document.getElementById('schoolName').textContent = info.schoolName || 'اسم المدرسة';
+          // معالجة ذكية لاسم الخاصية حتى لو كان هناك مسافة أو خطأ بسيط
+          let schoolName = info.schoolName || info["schoolName "] || info[" schoolName"] || info["schoolname"] || info["school_name"] || '';
+          schoolName = (schoolName || '').toString().trim();
+          document.getElementById('schoolName').textContent = schoolName ? schoolName : '⚠️ لم يتم العثور على اسم المدرسة في ملف school.json';
           document.getElementById('schoolLogo').src = info.schoolLogo || 'assets/media/images/school-logo.png';
         });
     }
